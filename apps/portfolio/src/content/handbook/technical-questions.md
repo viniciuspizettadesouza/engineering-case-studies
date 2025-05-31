@@ -4,29 +4,9 @@ This file contains a collection of technical questions focused on JavaScript, Re
 
 ---
 
-## 🧠 Variable Behavior
+## 🧠 Variable Declaration
 
-### 1. Hoisting with `var` e `const`
-
-```js
-function test() {
-  console.log(id); // undefined -> var is hoisted but uninitialized
-  console.log(i2); // ReferenceError because i2 is not hoisted like var
-  var id = 1;
-  const i2 = 2;
-}
-```
-
-**Expected output:**
-
-```txt
-undefined
-ReferenceError: Cannot access 'i2' before initialization
-```
-
----
-
-### 2. Objects with `const`
+### 1. Objects with `const`
 
 ```js
 function test() {
@@ -44,7 +24,7 @@ Not John Doe
 
 ---
 
-### 3. Block scope with `let`
+### 2. Block scope with `let`
 
 ```js
 function test() {
@@ -59,6 +39,28 @@ function test() {
 
 ```txt
 ReferenceError: myName is not defined
+```
+
+---
+
+## 🧠 Variable Behavior
+
+### 3. Hoisting with `var` e `const`
+
+```js
+function test() {
+  console.log(id); // undefined -> var is hoisted but uninitialized
+  console.log(i2); // ReferenceError because i2 is not hoisted like var
+  var id = 1;
+  const i2 = 2;
+}
+```
+
+**Expected output:**
+
+```txt
+undefined
+ReferenceError: Cannot access 'i2' before initialization
 ```
 
 ---
@@ -146,7 +148,43 @@ undefined
 
 ---
 
-## 7. 🕰️ Asynchronous: Promise vs setTimeout
+### 7. `props` is undefined
+
+```js
+const HelloComponent = ({ greeting }) => {
+  return <div>{greeting}</div>;
+};
+
+console.log(HelloComponent()); // call without props
+```
+
+**Expected output:**
+
+```txt
+TypeError: Cannot read properties of undefined (reading 'greeting')
+```
+
+---
+
+### 8. Hook not defined
+
+```js
+const UserProfile = () => {
+  const userContext = useContext(...); // ReferenceError
+  console.log("Profile render");
+  return <div> ... </div>;
+};
+```
+
+**Expected output:**
+
+```txt
+ReferenceError: useContext is not defined
+```
+
+---
+
+### 9. 🕰️ Asynchronous: Promise vs setTimeout
 
 ```js
 function asyncTest() {
@@ -188,7 +226,7 @@ Almost done
 
 ---
 
-## 8. 🧪 Logger Example with Class and Object
+### 10. 🧪 Logger Example with Class and Object
 
 ```js
 class Logger {
@@ -215,50 +253,53 @@ function logMessageWithLogger(logger) {
 }
 ```
 
----
-
-### 9. `props` is undefined
-
-```js
-const HelloComponent = ({ greeting }) => {
-  return <div>{greeting}</div>;
-};
-
-console.log(HelloComponent()); // call without props
-```
-
 **Expected output:**
 
 ```txt
-TypeError: Cannot read properties of undefined (reading 'greeting')
+Test log
 ```
 
 ---
 
-### 10. Hook not defined
+### 11. 🧑‍💻 Tabs by City
 
-```js
-const UserProfile = () => {
-  const userContext = useContext(...); // ReferenceError
-  console.log("Profile render");
-  return <div> ... </div>;
-};
-```
-
-**Expected output:**
-
-```txt
-ReferenceError: useContext is not defined
-```
-
----
-
-## 11. 🧑‍💻 Tabs by City
+Create a React component called TabsByCity that displays a list of cities as tabs (buttons). When a user clicks on a city, it should show the names of users associated with that city.
 
 **Requirements:**
 
 - List with duplicate cities and non-unique names
 - Clicking a tab (city) should show users from that city
+
+**Initial code (incomplete):**
+
+```jsx
+import { useState } from "react";
+
+const TabsByCity = () => {
+  const [city, setCity] = useState('');
+  const citiesData = [
+  { cityName: 'Rio de Janeiro', userName: 'Pelé' },
+  { cityName: 'Orlando', userName: 'Elon Musk' },
+  { cityName: 'Orlando', userName: 'Walt Disney' },
+  { cityName: 'Washington', userName: 'Barack Obama' },
+];
+
+  return (
+    <>
+      <div>
+        {/* TODO: Render one button per unique city, call setCity on click */}
+      </div>
+      <div>
+        {/* TODO: Show userName entries that match the selected city */}
+      </div>
+    </>
+  );
+};
+
+export default TabsByCity;
+```
+
+**Expected output:**
 
 ```jsx
 import { useState } from 'react';
@@ -298,7 +339,51 @@ export default App;
 
 ---
 
-## 12. 🧪 Another Test with State and Colors
+### 12. 🧪 Color Toggle and Square Spawner on Count
+
+**Prompt:**
+
+Create a React component with a button that increases a counter on click. Each click toggles the square's background color between red and blue. When the counter reaches 10, a second square should appear.
+
+**Requirements:**
+
+- Toggle square color on each click  
+- Add another square when the count reaches 10
+
+---
+
+**Initial code (incomplete):**
+
+```jsx
+import React, { useState } from 'react';
+
+const App = () => {
+  const [count, setCount] = useState(0);
+  const [color, setColor] = useState("red");
+  const [squareCount, setSquareCount] = useState([1]);
+
+  const handleClick = () => {
+    // TODO: Increase count
+    // TODO: Toggle color
+    // TODO: Add square when count is 10
+  };
+
+  return (
+    <div>
+      <button className="btn" onClick={handleClick}>⚛️ {count}</button>
+      {squareCount.map((_, idx) => (
+        <div key={idx} style={{ backgroundColor: color, height: "50px", width: "50px" }} />
+      ))}
+    </div>
+  );
+};
+
+export default App;
+```
+
+---
+
+**Expected output:**
 
 ```jsx
 import React, { useState } from 'react';
@@ -331,7 +416,58 @@ export default App;
 
 ---
 
-## 13. 🎠 Carousel Component
+### 13. 🎠 Carousel Component
+
+**Prompt:**
+
+Create a simple carousel component using React that cycles through a list of items. Use "Next" and "Back" buttons to move between items.
+
+**Requirements:**
+
+- Display a single item at a time inside a card
+- Implement circular navigation (loop back to start/end)
+- Add "Back" and "Next" buttons for navigation
+
+---
+
+**Initial code (incomplete):**
+
+```jsx
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+const Carousel = () => {
+  const items = ["Item 1", "Item 2", "Item 3"];
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    // TODO: go to next item, wrap around
+  };
+
+  const handlePrev = () => {
+    // TODO: go to previous item, wrap around
+  };
+
+  return (
+    <div className="flex flex-col items-center space-y-4">
+      <Card className="w-64 h-32 flex items-center justify-center text-lg">
+        <CardContent className="text-center">{items[currentIndex]}</CardContent>
+      </Card>
+      <div className="flex space-x-4">
+        <Button onClick={handlePrev}>← Back</Button>
+        <Button onClick={handleNext}>Next →</Button>
+      </div>
+    </div>
+  );
+};
+
+export default Carousel;
+```
+
+---
+
+**Expected output:**
 
 ```jsx
 import { useState } from "react";
@@ -368,17 +504,17 @@ export default Carousel;
 
 ---
 
-## 14. 📦 Prop Drilling and Component Composition
+### 14. Prop Drilling and Component Composition
 
-You have a component structure where the Parent component needs to pass data down to the Grandchild.
+You're given a component tree where a `Parent` passes data to a `Grandchild` through a `Child` component.
 
 ```jsx
-function Grandchild({ data }) {
-  return <div>Data: {data}</div>;
+function Grandchild(props) {
+  return <div>Data: {props.data}</div>;
 }
 
-function Child({ data }) {
-  return <Grandchild data={data} />;
+function Child(props) {
+  return <Grandchild data={props.data} />;
 }
 
 function Parent() {
@@ -387,13 +523,80 @@ function Parent() {
 }
 ```
 
-- **1.** What is the issue with "prop drilling" in this example, and why is it considered a problem?
-- **2.** How would you use React Context to avoid prop drilling in this scenario?
-- **3.** What are the potential downsides of using Context in cases like this?
+---
+
+#### ❓ Questions
+
+1. What is the issue with "prop drilling" in this example, and why is it considered a problem?
+2. How would you use React Context to avoid prop drilling in this scenario?
+3. What are the potential downsides of using Context in cases like this?
 
 ---
 
-## 15. 🚀 Optimizing Re-Renders with React.memo and useCallback
+### ✅ Answers
+
+**1. What is the issue with "prop drilling" in this example, and why is it considered a problem?**  
+Prop drilling refers to the process of passing data from a top-level component down to deeply nested child components through intermediate components that do not use the data themselves.  
+In this example, the `Parent` passes `data` to `Child`, which in turn passes it to `Grandchild`.  
+The issue here is that if the component tree becomes deeply nested or the structure changes frequently, it becomes hard to maintain and reason about, leading to tightly coupled components and unnecessary prop-passing.
+
+---
+
+**2. How would you use React Context to avoid prop drilling in this scenario?**  
+React Context allows you to share values across the component tree without having to pass props manually at every level. Here's how you could apply it:
+
+```jsx
+import React, { createContext, useContext } from 'react';
+
+const DataContext = createContext();
+
+function Grandchild() {
+  const data = useContext(DataContext);
+  return <div>Data: {data}</div>;
+}
+
+function Child() {
+  return <Grandchild />;
+}
+
+function Parent() {
+  const data = "Hello from Parent";
+  return (
+    <DataContext.Provider value={data}>
+      <Child />
+    </DataContext.Provider>
+  );
+}
+```
+
+---
+
+**3. What are the potential downsides of using Context in cases like this?**  
+While Context simplifies prop-passing, especially in large trees, it comes with trade-offs:
+
+- **Re-rendering:** Any change to the context value will re-render all components that consume it, which might hurt performance if not managed carefully.
+- **Coupling:** Components become tightly coupled to the context, making them harder to reuse in different parts of the app.
+- **Overuse:** It may be overkill for small or isolated cases, where simply passing a prop is easier and more readable.
+- **Testing:** Testing components that consume context often requires wrapping them with providers, which adds boilerplate.
+
+You're given a component tree where a `Parent` passes data to a `Grandchild` through a `Child` component.
+
+```jsx
+function Grandchild(props) {
+  return <div>Data: {props.data}</div>;
+}
+
+function Child(props) {
+  return <Grandchild data={props.data} />;
+}
+
+function Parent() {
+  const data = "Hello from Parent";
+  return <Child data={data} />;
+}
+```
+
+### 15. 🚀 Optimizing Re-Renders with React.memo and useCallback
 
 You are optimizing a component to avoid unnecessary re-renders.
 
@@ -435,7 +638,7 @@ function Parent() {
 
 ---
 
-## 16. ⏱️ Countdown Timer with Render Props
+### 16. ⏱️ Countdown Timer with Render Props
 
 A countdown timer component uses the render props pattern to define how the countdown is displayed.
 
@@ -474,7 +677,7 @@ function Parent() {
 
 ---
 
-## 17. 🌐 Asynchronous Request Handling in Hooks
+### 17. 🌐 Asynchronous Request Handling in Hooks
 
 A component fetches data from an API using `useEffect`.
 
@@ -509,7 +712,7 @@ function Posts() {
 
 ---
 
-## 18. ⚙️ Using TypeScript Generics in a Custom Hook
+### 18. ⚙️ Using TypeScript Generics in a Custom Hook
 
 A reusable and type-safe custom hook using TypeScript generics.
 
@@ -544,7 +747,7 @@ function useFetchData<T>(url: string) {
 
 ---
 
-## 19. 🎂 Debugging a Custom Hook (useFetchCakes.ts)
+### 19. 🎂 Debugging a Custom Hook (useFetchCakes.ts)
 
 You need to fetch cakes and filter by ingredient.
 
