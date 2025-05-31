@@ -1,4 +1,4 @@
-# 2. JavaScript and React Technical Questions
+# JavaScript and React Technical Questions
 
 This file contains a collection of technical questions focused on JavaScript, React, and logical reasoning. It includes commented examples, expected outputs, and practical interview tests.
 
@@ -6,7 +6,7 @@ This file contains a collection of technical questions focused on JavaScript, Re
 
 ## 🧠 Variable Behavior
 
-### ❓ Hoisting with `var` e `const`
+### 1. Hoisting with `var` e `const`
 
 ```js
 function test() {
@@ -26,7 +26,7 @@ ReferenceError: Cannot access 'i2' before initialization
 
 ---
 
-### ❓ Objects with `const`
+### 2. Objects with `const`
 
 ```js
 function test() {
@@ -44,7 +44,7 @@ Not John Doe
 
 ---
 
-### ❓ Block scope with `let`
+### 3. Block scope with `let`
 
 ```js
 function test() {
@@ -63,7 +63,7 @@ ReferenceError: myName is not defined
 
 ---
 
-### ❓ Hoisting of functions and expressions
+### 4. Hoisting of functions and expressions
 
 ```js
 function test() {
@@ -89,7 +89,7 @@ TypeError: sayBy is not a function
 
 ---
 
-### ❓ Arrow functions are not constructors
+### 5. Arrow functions are not constructors
 
 ```js
 function test() {
@@ -110,7 +110,7 @@ TypeError: HumanConstructor is not a constructor
 
 ---
 
-### ❓ `this` in Arrow Functions vs Functions
+### 6. `this` in Arrow Functions vs Functions
 
 ```js
 function test() {
@@ -146,7 +146,7 @@ undefined
 
 ---
 
-## 🕰️ Asynchronous: Promise vs setTimeout
+## 7. 🕰️ Asynchronous: Promise vs setTimeout
 
 ```js
 function asyncTest() {
@@ -188,7 +188,7 @@ Almost done
 
 ---
 
-## 🧪 Logger Example with Class and Object
+## 8. 🧪 Logger Example with Class and Object
 
 ```js
 class Logger {
@@ -217,9 +217,7 @@ function logMessageWithLogger(logger) {
 
 ---
 
-## ⚛️ React: Common Errors
-
-### ❌ `props` is undefined
+### 9. `props` is undefined
 
 ```js
 const HelloComponent = ({ greeting }) => {
@@ -237,7 +235,7 @@ TypeError: Cannot read properties of undefined (reading 'greeting')
 
 ---
 
-### ❌ Hook not defined
+### 10. Hook not defined
 
 ```js
 const UserProfile = () => {
@@ -255,7 +253,7 @@ ReferenceError: useContext is not defined
 
 ---
 
-## 🧑‍💻 Practical Exercise: Tabs by City
+## 11. 🧑‍💻 Tabs by City
 
 **Requirements:**
 
@@ -300,7 +298,7 @@ export default App;
 
 ---
 
-## 🧪 Another Test with State and Colors
+## 12. 🧪 Another Test with State and Colors
 
 ```jsx
 import React, { useState } from 'react';
@@ -333,7 +331,7 @@ export default App;
 
 ---
 
-## 🎠 Carousel Component
+## 13. 🎠 Carousel Component
 
 ```jsx
 import { useState } from "react";
@@ -368,11 +366,9 @@ const Carousel = () => {
 export default Carousel;
 ```
 
-# React Interview: Advanced Conceptual Questions
-
 ---
 
-## 📦 Prop Drilling and Component Composition
+## 14. 📦 Prop Drilling and Component Composition
 
 You have a component structure where the Parent component needs to pass data down to the Grandchild.
 
@@ -391,14 +387,13 @@ function Parent() {
 }
 ```
 
-### 🧠 Question Set 1
-
 - **1.** What is the issue with "prop drilling" in this example, and why is it considered a problem?
 - **2.** How would you use React Context to avoid prop drilling in this scenario?
 - **3.** What are the potential downsides of using Context in cases like this?
 
 ---
-## 🚀 Optimizing Re-Renders with React.memo and useCallback
+
+## 15. 🚀 Optimizing Re-Renders with React.memo and useCallback
 
 You are optimizing a component to avoid unnecessary re-renders.
 
@@ -434,14 +429,13 @@ function Parent() {
 }
 ```
 
-### 🧠 Question Set 2
-
 - **1.** Explain how React.memo is used in this code to optimize re-renders. Why is this optimization necessary here?
 - **2.** Is there a problem in the Child or Parent component?
 - **3.** What are potential downsides of using React.memo and useCallback? When should you avoid these optimizations?
 
 ---
-## ⏱️ Countdown Timer with Render Props
+
+## 16. ⏱️ Countdown Timer with Render Props
 
 A countdown timer component uses the render props pattern to define how the countdown is displayed.
 
@@ -474,14 +468,13 @@ function Parent() {
 }
 ```
 
-### 🧠 Question Set 3
-
 - **1.** Why is the render props pattern necessary in this example?
 - **2.** How does it improve reusability or flexibility compared to hardcoding the rendering logic inside the Countdown component?
 - **3.** What are the potential drawbacks of using the render props pattern in React? Are there better alternatives in modern React?
 
 ---
-## 🌐 Asynchronous Request Handling in Hooks
+
+## 17. 🌐 Asynchronous Request Handling in Hooks
 
 A component fetches data from an API using `useEffect`.
 
@@ -511,13 +504,12 @@ function Posts() {
 }
 ```
 
-### 🧠 Question Set 4
-
 - **1.** What problems could arise if the component unmounts while the fetch request is still in progress?
 - **2.** How can you modify this code to prevent potential problems?
 
 ---
-## ⚙️ Using TypeScript Generics in a Custom Hook
+
+## 18. ⚙️ Using TypeScript Generics in a Custom Hook
 
 A reusable and type-safe custom hook using TypeScript generics.
 
@@ -547,13 +539,12 @@ function useFetchData<T>(url: string) {
 }
 ```
 
-### 🧠 Question Set 5
-
 - **1.** What are the issues with using `any` as the type for data in this hook?
 - **2.** How does using a generic `<T>` improve this hook?
 
 ---
-## 🎂 Debugging a Custom Hook (useFetchCakes.ts)
+
+## 19. 🎂 Debugging a Custom Hook (useFetchCakes.ts)
 
 You need to fetch cakes and filter by ingredient.
 
@@ -580,8 +571,6 @@ export function useFetchCakes(ingredient) {
   return { cakes, responseCode };
 }
 ```
-
-### 🧠 Question Set 6
 
 - **1.**  Why would a front-end engineer use a custom hook?
 - **2.**  Identify critical bugs in this code that prevent it from working.
