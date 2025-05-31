@@ -4,8 +4,6 @@ This file contains a collection of technical questions focused on JavaScript, Re
 
 ---
 
-## 🧠 Variable Declaration
-
 ### 1. Objects with `const`
 
 ```js
@@ -42,8 +40,6 @@ ReferenceError: myName is not defined
 ```
 
 ---
-
-## 🧠 Variable Behavior
 
 ### 3. Hoisting with `var` e `const`
 
@@ -341,16 +337,12 @@ export default App;
 
 ### 12. 🧪 Color Toggle and Square Spawner on Count
 
-**Prompt:**
-
 Create a React component with a button that increases a counter on click. Each click toggles the square's background color between red and blue. When the counter reaches 10, a second square should appear.
 
 **Requirements:**
 
 - Toggle square color on each click  
 - Add another square when the count reaches 10
-
----
 
 **Initial code (incomplete):**
 
@@ -380,8 +372,6 @@ const App = () => {
 
 export default App;
 ```
-
----
 
 **Expected output:**
 
@@ -418,8 +408,6 @@ export default App;
 
 ### 13. 🎠 Carousel Component
 
-**Prompt:**
-
 Create a simple carousel component using React that cycles through a list of items. Use "Next" and "Back" buttons to move between items.
 
 **Requirements:**
@@ -427,8 +415,6 @@ Create a simple carousel component using React that cycles through a list of ite
 - Display a single item at a time inside a card
 - Implement circular navigation (loop back to start/end)
 - Add "Back" and "Next" buttons for navigation
-
----
 
 **Initial code (incomplete):**
 
@@ -464,8 +450,6 @@ const Carousel = () => {
 
 export default Carousel;
 ```
-
----
 
 **Expected output:**
 
@@ -523,24 +507,18 @@ function Parent() {
 }
 ```
 
----
-
 #### ❓ Questions
 
 1. What is the issue with "prop drilling" in this example, and why is it considered a problem?
 2. How would you use React Context to avoid prop drilling in this scenario?
 3. What are the potential downsides of using Context in cases like this?
 
----
-
-### ✅ Answers
+#### ✅ Answers
 
 **1. What is the issue with "prop drilling" in this example, and why is it considered a problem?**  
 Prop drilling refers to the process of passing data from a top-level component down to deeply nested child components through intermediate components that do not use the data themselves.  
 In this example, the `Parent` passes `data` to `Child`, which in turn passes it to `Grandchild`.  
 The issue here is that if the component tree becomes deeply nested or the structure changes frequently, it becomes hard to maintain and reason about, leading to tightly coupled components and unnecessary prop-passing.
-
----
 
 **2. How would you use React Context to avoid prop drilling in this scenario?**  
 React Context allows you to share values across the component tree without having to pass props manually at every level. Here's how you could apply it:
@@ -569,8 +547,6 @@ function Parent() {
 }
 ```
 
----
-
 **3. What are the potential downsides of using Context in cases like this?**  
 While Context simplifies prop-passing, especially in large trees, it comes with trade-offs:
 
@@ -596,9 +572,11 @@ function Parent() {
 }
 ```
 
-### 15. 🚀 Optimizing Re-Renders with React.memo and useCallback
+---
 
-You are optimizing a component to avoid unnecessary re-renders.
+### 15. Optimizing Re-Renders with React.memo and useCallback
+
+You're optimizing a component to avoid unnecessary re-renders.
 
 ```jsx
 import React, { useState } from 'react';
@@ -632,17 +610,31 @@ function Parent() {
 }
 ```
 
-- **1.** Explain how React.memo is used in this code to optimize re-renders. Why is this optimization necessary here?
-- **2.** Is there a problem in the Child or Parent component?
-- **3.** What are potential downsides of using React.memo and useCallback? When should you avoid these optimizations?
+#### ❓ Questions
+
+1. Explain how React.memo is used in this code to optimize re-renders. Why is this optimization necessary here?
+2. Is there a problem in the Child or Parent component?
+3. What are potential downsides of using React.memo and useCallback? When should you avoid these optimizations?
+
+#### ✅ Answers
+
+1. `React.memo` prevents unnecessary re-renders when props haven't changed. It's used to optimize the `Child` component by skipping re-renders when `text` changes in the `Parent`.
+
+2. Yes. `handleIncrement` is a new function on every render of `Parent`, so `Child` sees a new `onIncrement` prop each time, causing it to re-render. This defeats the purpose of `React.memo`.
+
+3. Downsides:
+   - **Performance Overhead:** Wrapping many components in `memo` or `useCallback` can backfire by increasing complexity and computation.
+   - **Over-optimization:** Not all components benefit from memoization.
+   - **Readability:** Adds complexity to the code.
+   Avoid them in simple or frequently changing components.
 
 ---
 
-### 16. ⏱️ Countdown Timer with Render Props
+### 16. Countdown Timer with Render Props
 
 A countdown timer component uses the render props pattern to define how the countdown is displayed.
 
-```tsx
+```jsx
 interface ICountdownProps {
   initialCount: number;
   render: (count: number) => JSX.Element;
@@ -671,15 +663,28 @@ function Parent() {
 }
 ```
 
-- **1.** Why is the render props pattern necessary in this example?
-- **2.** How does it improve reusability or flexibility compared to hardcoding the rendering logic inside the Countdown component?
-- **3.** What are the potential drawbacks of using the render props pattern in React? Are there better alternatives in modern React?
+#### ❓ Questions
+
+1. Why is the render props pattern necessary in this example?
+2. How does it improve reusability or flexibility compared to hardcoding the rendering logic inside the Countdown component?
+3. What are the potential drawbacks of using the render props pattern in React? Are there better alternatives in modern React?
+
+#### ✅ Answers
+
+1. The render prop pattern allows custom rendering logic to be passed from the parent. Here, it enables different visual representations of the countdown from different parents.
+
+2. It allows the `Countdown` component to be reused with different visual UIs, without changing its internal countdown logic.
+
+3. Drawbacks:
+   - **Nested JSX:** Can cause deeply nested code.
+   - **Readability:** Can be hard to follow when chaining multiple render props.
+   Alternatives: Hooks or children-as-function patterns may be cleaner in some modern codebases.
 
 ---
 
-### 17. 🌐 Asynchronous Request Handling in Hooks
+### 17. Asynchronous Request Handling in Hooks
 
-A component fetches data from an API using `useEffect`.
+A component fetches data from an API using useEffect.
 
 ```jsx
 import { useEffect, useState } from 'react';
@@ -707,12 +712,35 @@ function Posts() {
 }
 ```
 
-- **1.** What problems could arise if the component unmounts while the fetch request is still in progress?
-- **2.** How can you modify this code to prevent potential problems?
+#### ❓ Questions
+
+1. What problems could arise if the component unmounts while the fetch request is still in progress?
+2. How can you modify this code to prevent potential problems?
+
+#### ✅ Answers
+
+1. If the component unmounts before `setPosts` is called, you'll get a memory leak warning or even an error because the state update happens after unmounting.
+
+2. Use an abort controller or a `didCancel` flag:
+
+```jsx
+useEffect(() => {
+  let didCancel = false;
+  async function fetchPosts() {
+    const response = await fetch('https://example.com/api/posts');
+    const data = await response.json();
+    if (!didCancel) setPosts(data);
+  }
+  fetchPosts();
+  return () => {
+    didCancel = true;
+  };
+}, []);
+```
 
 ---
 
-### 18. ⚙️ Using TypeScript Generics in a Custom Hook
+### 18. Using TypeScript Generics in a Custom Hook
 
 A reusable and type-safe custom hook using TypeScript generics.
 
@@ -742,12 +770,20 @@ function useFetchData<T>(url: string) {
 }
 ```
 
-- **1.** What are the issues with using `any` as the type for data in this hook?
-- **2.** How does using a generic `<T>` improve this hook?
+#### ❓ Questions
+
+1. What are the issues with using `any` as the type for data in this hook?
+2. How does using a generic `<T>` improve this hook?
+
+#### ✅ Answers
+
+1. `any` disables type checking, reducing the benefits of TypeScript. You lose autocompletion, and errors might go unnoticed.
+
+2. Using `<T>` allows the hook to be strongly typed. The consumer specifies what type to expect, improving safety and IDE support.
 
 ---
 
-### 19. 🎂 Debugging a Custom Hook (useFetchCakes.ts)
+### 19. Debugging a Custom Hook (useFetchCakes.ts)
 
 You need to fetch cakes and filter by ingredient.
 
@@ -775,6 +811,24 @@ export function useFetchCakes(ingredient) {
 }
 ```
 
-- **1.**  Why would a front-end engineer use a custom hook?
-- **2.**  Identify critical bugs in this code that prevent it from working.
-- **3.**  Identify non-critical areas for improvement.
+#### ❓ Questions
+
+1. Why would a front-end engineer use a custom hook?
+2. Identify critical bugs in this code that prevent it from working.
+3. Identify non-critical areas for improvement.
+
+#### ✅ Answers
+
+1. Custom hooks encapsulate and reuse logic like fetching data or managing state, improving modularity and readability.
+
+2. Critical bugs:
+   - `cakes` and `responseCode` are regular variables, not state → won't trigger re-renders.
+   - Data fetching logic runs but doesn't update the component.
+   - No error handling.
+
+   Fix: useState for `cakes` and `responseCode`.
+
+3. Improvements:
+   - Add loading and error state.
+   - Abort fetch on cleanup.
+   - Move API URL to a constant/config.
