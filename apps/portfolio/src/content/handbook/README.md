@@ -395,10 +395,61 @@ const Status = {
    - `display: none`: Completely removes the element from the document flow, as if it doesn't exist on the page.  
    - `visibility: hidden`: Hides the element, but it still occupies space in the layout.  
    - `opacity: 0`: Makes the element completely transparent but it still occupies space and is interactable.
-2. **What is BEM?**  
-   BEM (Block Element Modifier) is a methodology that helps you to create reusable components and code sharing in front‑end development.  
-   - To use BEM, you only need to employ BEM’s naming convention.  
-   - Independent blocks and CSS selectors make your code reusable and modular.
+
+2. **CSS Methodologies: OOCSS, SMACSS and BEM**  
+   Essas metodologias ajudam a organizar, escalar e manter folhas de estilo mais limpas e reutilizáveis, especialmente em grandes projetos.
+
+   - **OOCSS (Object-Oriented CSS)**  
+     Criada por Nicole Sullivan, propõe separar **estrutura** de **estilo visual** e tratar CSS como "componentes reutilizáveis", similares a objetos.
+
+     ```css
+     .box {
+       padding: 20px;
+       border: 1px solid #ccc;
+     }
+
+     .skin-blue {
+       background-color: blue;
+       color: white;
+     }
+     ```
+
+   - **SMACSS (Scalable and Modular Architecture for CSS)**  
+     Criada por Jonathan Snook, organiza o CSS em cinco categorias principais:
+       - Base (reset, estilos globais)
+       - Layout (estrutura da página)
+       - Module (componentes reutilizáveis)
+       - State (modificadores como `.is-active`)
+       - Theme (variações visuais)
+
+     ```css
+     .l-header {
+       display: flex;
+     }
+
+     .btn {
+       padding: 1rem;
+     }
+
+     .is-disabled {
+       opacity: 0.5;
+     }
+     ```
+
+   - **BEM (Block Element Modifier)**  
+     BEM (Block Element Modifier) é uma convenção de nomenclatura que deixa a estrutura dos componentes mais clara e previsível.
+
+     ```html
+     <div class="card card--highlighted">
+       <h2 class="card__title">Título</h2>
+       <p class="card__description">Texto</p>
+     </div>
+     ```
+
+     - `card`: bloco principal  
+     - `card__title`: elemento interno  
+     - `card--highlighted`: variação (modificador)
+
 3. **What are mixins in SCSS?**  
    Mixins are reusable blocks of CSS properties and rules that can be included in other style rules.
 
