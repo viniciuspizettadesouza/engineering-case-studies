@@ -1,4 +1,4 @@
-# 16. Everyday Command Line Cheat Sheet
+# Everyday Command Line Cheat Sheet
 
 - `git config --global user.name`
 - `git config --global user.email`
