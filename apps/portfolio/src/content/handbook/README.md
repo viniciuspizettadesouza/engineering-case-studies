@@ -1296,27 +1296,6 @@ Example VS Code configuration: `settings.json`
 
 ---
 
-# 16. Everyday Command Line Cheat Sheet
-
-- `git commit --amend -m`
-- Exit vim: press `Esc` and type `:wq`
-- `npm outdated`
-- `git config --global user.name`
-- `git config --global user.email`
-- `git config --list`
-- `git config user.name`
-- `git config user.email`
-- `git config commit.gpgsign false`
-- `export GPG_TTY=$(tty)`
-- `latexindent cv.tex -w`
-- `npx npm-check-updates -u`
-- `sudo visudo`
-- `find . -name "*:Zone.Identifier" -type f -delete` (for WSL2 zone identifier)
-- Ask MR agent: `/ask "do a full files walkthrough"`
-- To find error in pipeline, search `FAIL`
-- `.next/`, `node_modules/`, `coverage/`, `storybook-static/` (common ignored folders)
-- Husky: `git commit --no-verify`
-
 # 17. Testes e Qualidade de Código
 
 ## Testes
