@@ -42,7 +42,7 @@ export const caseStudies: readonly CaseStudy[] = [
     summary:
       'A fictional vehicle marketplace where a buyer selects a vehicle and completes a reservation request.',
     narrative:
-      'This study will examine vehicle discovery, reservation UX, content, analytics boundaries and performance while keeping every integration local and fictional.',
+      'This study examines vehicle discovery, reservation UX, content, analytics boundaries and performance while keeping every integration local and fictional.',
     capabilities: ['Performance', 'Reservation UX', 'Analytics boundaries'],
     workflow: [
       'Search fictional vehicles',
@@ -50,7 +50,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Complete reservation details',
       'Review and submit the request',
     ],
-    status: 'next',
+    status: 'complete',
   },
   {
     slug: 'accessible-transit-platform',
@@ -69,7 +69,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Enter passenger details',
       'Review and confirm the ticket',
     ],
-    status: 'planned',
+    status: 'next',
   },
   {
     slug: 'modular-enterprise-workspace',

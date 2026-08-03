@@ -125,3 +125,64 @@ test('an application can be submitted and reviewed by an agent', async ({
   await page.getByRole('button', { name: 'Retry loading' }).click()
   await expect(filteredReviewLink).toBeVisible()
 })
+
+test('a vehicle can be filtered, reviewed and reserved after recoverable errors', async ({
+  page,
+}) => {
+  await page.goto(
+    '/engineering-case-studies/#/case-studies/commerce-experience/vehicles',
+  )
+
+  await page.getByLabel('Collection location').selectOption('Northbridge')
+  await page.getByLabel('Minimum sleeping capacity').selectOption('4')
+  await page.getByLabel('Maximum daily price').selectOption('130')
+  await expect(page).toHaveURL(/location=Northbridge/)
+  await expect(page.getByRole('heading', { name: '1 vehicle' })).toBeVisible()
+  await expect(
+    page.getByRole('img', { name: /Bramble Four/i }),
+  ).toHaveAttribute('src', '/engineering-case-studies/vehicles/bramble.svg')
+  const imageResponse = await page.request.get(
+    '/engineering-case-studies/vehicles/bramble.svg',
+  )
+  expect(imageResponse.ok()).toBe(true)
+  await page.getByRole('link', { name: 'View Bramble Four' }).click()
+
+  await expect(
+    page.getByRole('heading', { name: 'Bramble Four' }),
+  ).toBeVisible()
+  await page.getByRole('link', { name: 'Reserve Bramble Four' }).click()
+
+  await page.getByLabel('Collection date').fill('2027-07-03')
+  await page.getByLabel('Return date').fill('2027-07-07')
+  await page.getByLabel('Full name').fill('Demo Traveller')
+  await page.getByLabel('Email address').fill('traveller@example.test')
+  await page.getByLabel('Phone number').fill('0000000000')
+  await page.getByLabel(/contact details are fictional/i).check()
+  await page.getByRole('button', { name: 'Review reservation' }).click()
+
+  const summary = page.getByRole('alert')
+  await expect(summary).toBeFocused()
+  await expect(summary).toContainText('Those dates are unavailable')
+  await expect(page.getByLabel('Full name')).toHaveValue('Demo Traveller')
+
+  await page.getByLabel('Collection date').fill('2027-07-07')
+  await page.getByLabel('Return date').fill('2027-07-10')
+  await page.getByRole('button', { name: 'Review reservation' }).click()
+
+  await expect(
+    page.getByRole('heading', { name: 'Review your reservation request' }),
+  ).toBeVisible()
+  await expect(page.getByText('traveller@example.test')).toBeVisible()
+  await page.getByLabel(/simulate one recoverable submission failure/i).check()
+  await page.getByRole('button', { name: 'Submit reservation request' }).click()
+  await expect(page.getByRole('alert')).toBeFocused()
+  await page.getByRole('button', { name: 'Retry reservation' }).click()
+
+  await expect(
+    page.getByRole('heading', { name: 'Your request has been received' }),
+  ).toBeVisible()
+  await expect(
+    page.getByText(/no payment, inventory hold or real reservation occurred/i),
+  ).toBeVisible()
+  await expect(page.getByText(/WR-[A-F0-9-]+/)).toBeVisible()
+})

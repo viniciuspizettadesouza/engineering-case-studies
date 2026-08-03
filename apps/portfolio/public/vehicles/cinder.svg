@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Cinder adventure camper illustration</title><desc id="desc">A blue adventure camper under a stylised sunset.</desc>
+  <rect width="800" height="450" fill="#e0f2fe"/><circle cx="635" cy="105" r="60" fill="#fbbf24"/><path d="M0 290 150 170l90 85 125-120 190 150 90-70 155 100v135H0Z" fill="#94a3b8"/><path d="M0 345c260-35 520-30 800 0v105H0Z" fill="#57534e"/>
+  <g transform="translate(150 215)"><path d="M40 8h365c28 0 52 22 55 50l12 125H15V33C15 19 26 8 40 8Z" fill="#0369a1"/><path d="M42 38h112v76H42Zm145 0h95v76h-95Zm127 0h95l31 76H314Z" fill="#e0f2fe"/><path d="M0 162h490v29H0Z" fill="#1c1917"/><circle cx="105" cy="194" r="37" fill="#1c1917"/><circle cx="105" cy="194" r="15" fill="#cbd5e1"/><circle cx="390" cy="194" r="37" fill="#1c1917"/><circle cx="390" cy="194" r="15" fill="#cbd5e1"/></g>
+</svg>

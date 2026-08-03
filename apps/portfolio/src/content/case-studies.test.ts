@@ -18,13 +18,15 @@ describe('case-study catalogue', () => {
     )
     expect(
       caseStudies.filter(({ status }) => status === 'complete'),
-    ).toHaveLength(1)
+    ).toHaveLength(2)
   })
 
   it('retrieves studies by slug', () => {
     expect(getCaseStudy('financial-operations-platform')?.status).toBe(
       'complete',
     )
+    expect(getCaseStudy('commerce-experience')?.status).toBe('complete')
+    expect(getCaseStudy('accessible-transit-platform')?.status).toBe('next')
     expect(getCaseStudy('not-real')).toBeUndefined()
   })
 })

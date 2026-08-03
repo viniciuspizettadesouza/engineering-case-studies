@@ -8,6 +8,11 @@ import { ConfirmationPage } from '../case-studies/financial-operations/routes/co
 import { FinancialDetailsPage } from '../case-studies/financial-operations/routes/financial-details-page'
 import { OperationsDashboardPage } from '../case-studies/financial-operations/routes/operations-dashboard-page'
 import { PersonalDetailsPage } from '../case-studies/financial-operations/routes/personal-details-page'
+import { CataloguePage } from '../case-studies/commerce-experience/routes/catalogue-page'
+import { ReservationConfirmationPage } from '../case-studies/commerce-experience/routes/reservation-confirmation-page'
+import { ReservationPage } from '../case-studies/commerce-experience/routes/reservation-page'
+import { ReservationReviewPage } from '../case-studies/commerce-experience/routes/reservation-review-page'
+import { VehicleDetailPage } from '../case-studies/commerce-experience/routes/vehicle-detail-page'
 
 export function App() {
   const skipToMainContent = () => {
@@ -41,6 +46,26 @@ export function App() {
         <Route
           path="/case-studies/financial-operations-platform/operations/:id"
           element={<ApplicationDetailPage />}
+        />
+        <Route
+          path="/case-studies/commerce-experience/vehicles"
+          element={<CataloguePage />}
+        />
+        <Route
+          path="/case-studies/commerce-experience/vehicles/:vehicleId"
+          element={<VehicleDetailPage />}
+        />
+        <Route
+          path="/case-studies/commerce-experience/vehicles/:vehicleId/reserve"
+          element={<ReservationPage />}
+        />
+        <Route
+          path="/case-studies/commerce-experience/vehicles/:vehicleId/review"
+          element={<ReservationReviewPage />}
+        />
+        <Route
+          path="/case-studies/commerce-experience/confirmation/:reservationId"
+          element={<ReservationConfirmationPage />}
         />
         <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
         <Route path="*" element={<CaseStudyPage />} />

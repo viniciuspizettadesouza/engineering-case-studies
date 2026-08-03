@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+  <title id="title">Aurora camper illustration</title><desc id="desc">A compact amber camper beside abstract hills.</desc>
+  <rect width="800" height="450" fill="#fef3c7"/><path d="M0 280 170 150l150 115 155-175 325 250v110H0Z" fill="#fde68a"/><path d="M0 342c180-50 360-15 800-52v160H0Z" fill="#d6d3d1"/>
+  <g transform="translate(155 210)"><path d="M55 20h350c30 0 54 24 54 54v112H25V50c0-17 13-30 30-30Z" fill="#b45309"/><path d="M50 48h105v76H50Zm135 0h92v76h-92Zm122 0h100l25 76H307Z" fill="#e0f2fe"/><path d="M0 166h485v30H0Z" fill="#78350f"/><circle cx="105" cy="198" r="36" fill="#292524"/><circle cx="105" cy="198" r="15" fill="#a8a29e"/><circle cx="386" cy="198" r="36" fill="#292524"/><circle cx="386" cy="198" r="15" fill="#a8a29e"/></g>
+</svg>

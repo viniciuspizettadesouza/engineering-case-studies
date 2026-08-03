@@ -30,6 +30,7 @@ export function CaseStudyPage() {
   }
 
   const isFinancialStudy = study.slug === 'financial-operations-platform'
+  const isCommerceStudy = study.slug === 'commerce-experience'
   const statusLabel =
     study.status === 'complete'
       ? 'Complete'
@@ -96,6 +97,31 @@ export function CaseStudyPage() {
           </section>
         ) : null}
 
+        {isCommerceStudy ? (
+          <section
+            aria-labelledby="commerce-prototype-heading"
+            className="mt-12 rounded-2xl border border-amber-300 bg-amber-50 p-6 dark:border-amber-800 dark:bg-amber-950/30"
+          >
+            <Eyebrow>Executable prototype</Eyebrow>
+            <h2
+              className="mt-3 text-2xl font-semibold text-slate-950 dark:text-white"
+              id="commerce-prototype-heading"
+            >
+              Find and reserve a fictional vehicle
+            </h2>
+            <p className="mt-3 max-w-2xl leading-7 text-slate-700 dark:text-slate-300">
+              Filter the catalogue, inspect availability, enter fictional
+              reservation details, review the request and simulate submission.
+            </p>
+            <Link
+              className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-amber-700 px-5 py-2.5 font-semibold text-white outline-offset-4 hover:bg-amber-800 focus-visible:outline-2 focus-visible:outline-amber-700 dark:bg-amber-400 dark:text-slate-950"
+              to="/case-studies/commerce-experience/vehicles"
+            >
+              Browse fictional vehicles
+            </Link>
+          </section>
+        ) : null}
+
         <div className="mt-16 grid gap-12 border-t border-slate-300 pt-12 lg:grid-cols-2 dark:border-slate-700">
           <section aria-labelledby="intent-heading">
             <Eyebrow>What this will explore</Eyebrow>
@@ -147,10 +173,10 @@ export function CaseStudyPage() {
           </aside>
         ) : (
           <aside className="mt-16 rounded-2xl border border-teal-300 bg-teal-50 p-6 text-sm leading-6 text-teal-950 dark:border-teal-800 dark:bg-teal-950/30 dark:text-teal-100">
-            <strong>MVP complete.</strong> The applicant and agent journeys are
-            executable, tested and documented. Production authentication,
-            external integrations and real credit decisions remain explicitly
-            out of scope.
+            <strong>MVP complete.</strong>{' '}
+            {isCommerceStudy
+              ? 'The catalogue-to-confirmation journey is executable, tested and documented. Real inventory, payments, finance and dealer integrations remain explicitly out of scope.'
+              : 'The applicant and agent journeys are executable, tested and documented. Production authentication, external integrations and real credit decisions remain explicitly out of scope.'}
           </aside>
         )}
       </Container>

@@ -63,7 +63,7 @@ This phase produced the first complete case study. Its domain rules, local persi
 
 ## Phase 4 — Vehicle reservation MVP
 
-Status: next.
+Status: complete.
 
 - present a small, fictional vehicle catalogue with a limited set of useful filters;
 - show vehicle details and a clear reservation action;
@@ -75,6 +75,8 @@ Status: next.
 - keep real inventory, payments, finance and dealer integrations out of scope.
 
 ## Phase 5 — Public transport ticketing MVP
+
+Status: next.
 
 - configure two invented transport tenants with distinct tokens and fare catalogues;
 - let a passenger select a fictional origin, destination and travel time;
