@@ -18,6 +18,7 @@ import { JourneyPlanPage } from '../case-studies/accessible-transit/routes/journ
 import { PassengerPage } from '../case-studies/accessible-transit/routes/passenger-page'
 import { TicketConfirmationPage } from '../case-studies/accessible-transit/routes/ticket-confirmation-page'
 import { TicketReviewPage } from '../case-studies/accessible-transit/routes/ticket-review-page'
+import { CatalogueWorkspacePage } from '../case-studies/modular-enterprise/routes/catalogue-workspace-page'
 
 export function App() {
   const skipToMainContent = () => {
@@ -100,6 +101,19 @@ export function App() {
         <Route
           path="/case-studies/accessible-transit-platform/tickets/:tenantId/ticket/:ticketId"
           element={<TicketConfirmationPage />}
+        />
+        <Route
+          path="/case-studies/modular-enterprise-workspace/catalogue"
+          element={
+            <Navigate
+              replace
+              to="/case-studies/modular-enterprise-workspace/catalogue/northstar"
+            />
+          }
+        />
+        <Route
+          path="/case-studies/modular-enterprise-workspace/catalogue/:tenantId"
+          element={<CatalogueWorkspacePage />}
         />
         <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
         <Route path="*" element={<CaseStudyPage />} />

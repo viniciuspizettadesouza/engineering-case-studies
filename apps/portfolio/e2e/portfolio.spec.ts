@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-test('the collection and the next planned study can be explored', async ({
+test('the collection and a completed study can be explored', async ({
   page,
 }) => {
   await page.goto('/engineering-case-studies/')
@@ -18,7 +18,10 @@ test('the collection and the next planned study can be explored', async ({
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
     'Modular Enterprise Workspace',
   )
-  await expect(page.getByText('Planning state.')).toBeVisible()
+  await expect(page.getByText('MVP complete.')).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: 'Open bulk catalogue' }),
+  ).toBeVisible()
 })
 
 test('the core navigation is keyboard accessible', async ({ page }) => {
@@ -254,4 +257,86 @@ test('a tenant-scoped accessible journey can produce a simulated ticket', async 
   ).toBeVisible()
   await expect(page.getByText(/TK-MOS-[A-F0-9-]+/)).toBeVisible()
   await expect(page.getByText('Not valid for travel.')).toBeVisible()
+})
+
+test('bulk catalogue rows stay tenant-scoped and accepted products can be published', async ({
+  page,
+}) => {
+  await page.goto(
+    '/engineering-case-studies/#/case-studies/modular-enterprise-workspace/catalogue/northstar',
+  )
+
+  await expect(
+    page.getByRole('heading', { name: 'Import and validate products' }),
+  ).toBeVisible()
+  await page.getByRole('button', { name: 'Preview and validate' }).click()
+
+  const summary = page.getByRole('alert')
+  await expect(summary).toBeFocused()
+  await expect(summary.getByRole('link').first()).toHaveAttribute(
+    'href',
+    '#row-2-sku',
+  )
+  await expect(page.getByLabel('Row 2 SKU')).toHaveAttribute(
+    'aria-invalid',
+    'true',
+  )
+  await expect(
+    page.getByText('2 total · 1 accepted · 1 rejected'),
+  ).toBeVisible()
+
+  const downloadPromise = page.waitForEvent('download')
+  await page.getByRole('button', { name: 'Export 1 rejected row' }).focus()
+  await page.keyboard.press('Enter')
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toBe('northstar-rejected-products.csv')
+
+  await page.getByLabel('Retail tenant').selectOption('bluehaven')
+  await expect(page).toHaveURL(/catalogue\/bluehaven$/)
+  await expect(
+    page.getByText(/Required columns:.*package_size\./),
+  ).toBeVisible()
+  await expect(page.getByText(/2 total/)).not.toBeVisible()
+
+  await page.getByLabel('Retail tenant').selectOption('northstar')
+  await expect(
+    page.getByText('2 total · 1 accepted · 1 rejected'),
+  ).toBeVisible()
+  await page.getByRole('button', { name: 'Publish 1 accepted product' }).focus()
+  await page.keyboard.press('Enter')
+  await expect(page.getByRole('status')).toContainText(
+    '1 accepted product published for Northstar Market',
+  )
+  await expect(page.getByRole('status')).toContainText(
+    '1 rejected row stayed in the draft',
+  )
+})
+
+test('bulk catalogue accepts an uploaded CSV and supports inline correction', async ({
+  page,
+}) => {
+  await page.goto(
+    '/engineering-case-studies/#/case-studies/modular-enterprise-workspace/catalogue/bluehaven',
+  )
+  await page.getByRole('tab', { name: 'Upload CSV' }).click()
+  await page.getByLabel('Product CSV file').setInputFiles({
+    name: 'bluehaven-products.csv',
+    mimeType: 'text/csv',
+    buffer: Buffer.from(
+      'sku,name,description,category,price,currency,package_size\nBHG-3001,Coast towel,A fictional quick dry trail towel,Outdoor,19.90,EUR,large',
+    ),
+  })
+
+  await expect(page.getByRole('alert')).toBeFocused()
+  await expect(page.getByLabel('Row 1 Package size')).toHaveAttribute(
+    'aria-describedby',
+    'row-1-tenantValue-error',
+  )
+  await page.getByLabel('Row 1 Package size').fill('2pack')
+  await expect(
+    page.getByText('Every row is ready for simulated publishing.'),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('button', { name: 'Publish 1 accepted product' }),
+  ).toBeEnabled()
 })

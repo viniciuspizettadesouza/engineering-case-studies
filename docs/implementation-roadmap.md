@@ -88,7 +88,7 @@ Status: complete.
 
 ## Phase 6 — Multi-tenant bulk catalogue MVP
 
-Status: next.
+Status: complete.
 
 - configure two invented retail tenants with separate product rules and visual tokens;
 - build the workspace with selectively adopted shadcn components;
@@ -99,6 +99,8 @@ Status: next.
 - keep real retailer catalogues, production authentication, AI enrichment and external APIs out of scope.
 
 ## Phase 7 — Retail insights MVP
+
+Status: next.
 
 - provide a portfolio-level view across several invented stores and a focused single-store view;
 - show fictional daily sales, category and time-series summaries;

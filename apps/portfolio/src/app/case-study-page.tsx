@@ -32,6 +32,7 @@ export function CaseStudyPage() {
   const isFinancialStudy = study.slug === 'financial-operations-platform'
   const isCommerceStudy = study.slug === 'commerce-experience'
   const isTransitStudy = study.slug === 'accessible-transit-platform'
+  const isCatalogueStudy = study.slug === 'modular-enterprise-workspace'
   const statusLabel =
     study.status === 'complete'
       ? 'Complete'
@@ -149,6 +150,32 @@ export function CaseStudyPage() {
           </section>
         ) : null}
 
+        {isCatalogueStudy ? (
+          <section
+            aria-labelledby="catalogue-prototype-heading"
+            className="mt-12 rounded-2xl border border-indigo-300 bg-indigo-50 p-6 dark:border-indigo-800 dark:bg-indigo-950/30"
+          >
+            <Eyebrow>Executable prototype</Eyebrow>
+            <h2
+              className="mt-3 text-2xl font-semibold text-slate-950 dark:text-white"
+              id="catalogue-prototype-heading"
+            >
+              Import a fictional product batch
+            </h2>
+            <p className="mt-3 max-w-2xl leading-7 text-slate-700 dark:text-slate-300">
+              Switch isolated retail tenants, paste rows or upload CSV, correct
+              tenant-specific issues, publish accepted products and export
+              rejected rows.
+            </p>
+            <Link
+              className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-indigo-700 px-5 py-2.5 font-semibold text-white outline-offset-4 hover:bg-indigo-800 focus-visible:outline-2 focus-visible:outline-indigo-700 dark:bg-indigo-300 dark:text-slate-950"
+              to="/case-studies/modular-enterprise-workspace/catalogue/northstar"
+            >
+              Open bulk catalogue
+            </Link>
+          </section>
+        ) : null}
+
         <div className="mt-16 grid gap-12 border-t border-slate-300 pt-12 lg:grid-cols-2 dark:border-slate-700">
           <section aria-labelledby="intent-heading">
             <Eyebrow>What this will explore</Eyebrow>
@@ -205,7 +232,9 @@ export function CaseStudyPage() {
               ? 'The catalogue-to-confirmation journey is executable, tested and documented. Real inventory, payments, finance and dealer integrations remain explicitly out of scope.'
               : isTransitStudy
                 ? 'The multi-tenant journey-to-ticket workflow is executable, tested and documented. Real routes, fares, payments and ticket fulfilment remain explicitly out of scope.'
-                : 'The applicant and agent journeys are executable, tested and documented. Production authentication, external integrations and real credit decisions remain explicitly out of scope.'}
+                : isCatalogueStudy
+                  ? 'The tenant-isolated import-to-publication workflow is executable, tested and documented. Real catalogues, production authentication and external APIs remain explicitly out of scope.'
+                  : 'The applicant and agent journeys are executable, tested and documented. Production authentication, external integrations and real credit decisions remain explicitly out of scope.'}
           </aside>
         )}
       </Container>

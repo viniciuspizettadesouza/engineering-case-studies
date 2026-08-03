@@ -18,7 +18,7 @@ describe('case-study catalogue', () => {
     )
     expect(
       caseStudies.filter(({ status }) => status === 'complete'),
-    ).toHaveLength(3)
+    ).toHaveLength(4)
   })
 
   it('retrieves studies by slug', () => {
@@ -27,7 +27,9 @@ describe('case-study catalogue', () => {
     )
     expect(getCaseStudy('commerce-experience')?.status).toBe('complete')
     expect(getCaseStudy('accessible-transit-platform')?.status).toBe('complete')
-    expect(getCaseStudy('modular-enterprise-workspace')?.status).toBe('next')
+    expect(getCaseStudy('modular-enterprise-workspace')?.status).toBe(
+      'complete',
+    )
     expect(getCaseStudy('not-real')).toBeUndefined()
   })
 })

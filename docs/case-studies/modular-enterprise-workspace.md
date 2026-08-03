@@ -1,6 +1,6 @@
 # Modular Enterprise Workspace — MVP Brief
 
-Status: planned.
+Status: complete.
 
 ## Fictional premise
 
@@ -62,6 +62,55 @@ One tenant may require a fictional compliance label while the other may require 
 - supplier integrations, media management or inventory;
 - AI enrichment in the MVP;
 - installing the entire shadcn catalogue when only a few components are required.
+
+## Implementation notes
+
+The executable workflow uses a small set of local, composable form, tab, table,
+notification and button patterns styled with the same token-driven approach as
+the rest of the portfolio. The domain parser and validation rules do not depend
+on React. Browser storage keys include the tenant identifier for drafts and
+publication records, so switching tenants restores only that tenant's state.
+
+Publication is a deterministic local simulation: accepted rows contribute to a
+tenant-scoped batch record, while rejected rows remain editable. Export creates
+a CSV containing rejected rows and their current validation messages; accepted
+product data is excluded.
+
+## Accessibility review
+
+- import modes use an explicitly labelled tab list and tab panels;
+- validation summaries receive focus after an invalid import and link to cells;
+- every table input has a row-specific accessible name, `aria-invalid` state and
+  an associated error message;
+- counts and successful validation use live status semantics;
+- controls meet the 44-pixel minimum target used throughout the portfolio;
+- tables remain horizontally scrollable without removing semantic headers;
+- tenant focus and colour tokens keep a visible non-colour focus indicator;
+- reduced-motion behaviour is inherited from the global application stylesheet.
+
+## Threat and privacy boundary
+
+All examples are fictional and remain in the browser. Local storage demonstrates
+client-side state isolation, not production security. A real implementation
+would derive tenant identity on the server, enforce authorisation on every read
+and write, scan uploads, set size and rate limits, and audit publication actions.
+
+## Limitations
+
+- the CSV parser supports quoted cells and spreadsheet tabs, but not mappings or
+  locale-specific numeric formats;
+- simulated publication has no backend durability, authentication or retries;
+- local storage can be inspected or changed by anyone using the browser;
+- automated accessibility checks complement rather than replace assistive
+  technology and keyboard review.
+
+## What I would do differently today
+
+For production, I would stream large files into a tenant-authorised ingestion
+service, validate rows in bounded background jobs, provide resumable job status,
+and keep the client table virtualised. I would retain the configuration-driven
+rules, but version schemas and publication contracts so drafts remain explainable
+when tenant policy changes.
 
 ## Later increments
 

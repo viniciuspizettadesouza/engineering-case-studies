@@ -92,7 +92,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Validate and correct rows',
       'Publish the accepted batch',
     ],
-    status: 'next',
+    status: 'complete',
   },
   {
     slug: 'retail-insights-workspace',
@@ -115,7 +115,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Inspect a generated insight',
       'Explore its supporting visualisation',
     ],
-    status: 'planned',
+    status: 'next',
   },
 ]
 
