@@ -51,3 +51,6 @@ Before merging a study, confirm:
 - Do the staged files contain credentials or personal information?
 
 If an answer creates doubt, replace the material with a more generic, independently designed alternative before publication.
+
+The five-MVP fixture inventory and completed provenance review are recorded in
+[Cross-product hardening](cross-product-hardening.md).

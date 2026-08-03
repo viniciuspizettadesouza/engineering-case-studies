@@ -112,6 +112,10 @@ and keep the client table virtualised. I would retain the configuration-driven
 rules, but version schemas and publication contracts so drafts remain explainable
 when tenant policy changes.
 
+## Supporting review
+
+- [Accessibility review](modular-enterprise-workspace-accessibility.md)
+
 ## Later increments
 
 Candidate additions after all five MVPs exist include role permissions, saved mappings, asynchronous jobs, server-enforced tenancy, catalogue versioning and human-reviewed AI enrichment.

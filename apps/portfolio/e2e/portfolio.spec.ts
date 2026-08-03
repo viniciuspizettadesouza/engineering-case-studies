@@ -302,6 +302,20 @@ test('bulk catalogue rows stay tenant-scoped and accepted products can be publis
   await expect(
     page.getByText('2 total · 1 accepted · 1 rejected'),
   ).toBeVisible()
+  const failureToggle = page.getByLabel(
+    /simulate one catalogue service failure/i,
+  )
+  await failureToggle.focus()
+  await page.keyboard.press('Space')
+  await page.getByRole('button', { name: 'Publish 1 accepted product' }).focus()
+  await page.keyboard.press('Enter')
+  const publicationAlert = page
+    .getByRole('alert')
+    .filter({ hasText: 'catalogue service' })
+  await expect(publicationAlert).toBeFocused()
+  await expect(publicationAlert).toContainText('draft is safe')
+  await failureToggle.focus()
+  await page.keyboard.press('Space')
   await page.getByRole('button', { name: 'Publish 1 accepted product' }).focus()
   await page.keyboard.press('Enter')
   await expect(page.getByRole('status')).toContainText(
@@ -350,6 +364,13 @@ test('retail insights stay consistent and preserve data when analysis fails', as
   await expect(
     page.getByRole('heading', { name: 'Daily retail insights' }),
   ).toBeVisible()
+  await page.getByLabel('Demo service state').selectOption('loading')
+  await expect(page.getByRole('status')).toContainText('Loading')
+  await page.getByLabel('Demo service state').selectOption('empty')
+  await expect(
+    page.getByRole('heading', { name: 'No data for this selection' }),
+  ).toBeVisible()
+  await page.getByLabel('Demo service state').selectOption('ready')
   await expect(page.getByText('£46,280')).toBeVisible()
   await page.getByLabel('View', { exact: true }).selectOption('harbour')
   await expect(page.getByText('£18,420', { exact: true })).toBeVisible()

@@ -19,6 +19,7 @@ case studies:
 - unit and browser smoke tests;
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation.
+- a completed cross-product accessibility, test and fixture-provenance review.
 
 All five MVPs are complete. Together they cover a fictional credit application
 and agent review, vehicle reservation, multi-tenant ticketing, tenant-isolated
@@ -97,6 +98,7 @@ Pushes to `main` run validation and then deploy `apps/portfolio/dist` through th
 - [Public transport ticketing MVP](docs/case-studies/accessible-transit-platform.md)
 - [Bulk catalogue MVP](docs/case-studies/modular-enterprise-workspace.md)
 - [Retail insights MVP](docs/case-studies/retail-insights-workspace.md)
+- [Cross-product hardening review](docs/cross-product-hardening.md)
 - [Architecture decisions](docs/decisions/)
 
 ## Working agreement

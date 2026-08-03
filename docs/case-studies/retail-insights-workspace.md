@@ -95,3 +95,7 @@ All stores, aggregates, comparisons and observations are deterministic fiction. 
 ## What I would do differently today
 
 I would version the aggregate and insight provenance contracts, calculate snapshots in an observable server-side pipeline, and expose freshness per source. Any future generative layer would be constrained to cited aggregates, evaluated for unsupported claims and kept away from automated staffing, pricing or employment decisions.
+
+## Supporting review
+
+- [Accessibility review](retail-insights-workspace-accessibility.md)

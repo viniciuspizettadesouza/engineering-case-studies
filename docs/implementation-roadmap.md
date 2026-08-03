@@ -113,6 +113,8 @@ Status: complete.
 
 ## Phase 8 — Cross-product hardening
 
+Status: complete.
+
 - make loading, empty, validation, failure and success states consistent;
 - complete unit, integration and critical Playwright coverage for every MVP;
 - perform manual keyboard and accessibility reviews;
