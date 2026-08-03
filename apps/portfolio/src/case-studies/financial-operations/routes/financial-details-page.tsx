@@ -11,8 +11,10 @@ import {
 } from '../domain/application'
 import {
   BrowserApplicationRepository,
-  clearPersonalDraft,
+  clearApplicationDrafts,
+  readFinancialDraft,
   readPersonalDraft,
+  saveFinancialDraft,
 } from '../services/application-repository'
 import {
   ErrorSummary,
@@ -42,13 +44,29 @@ function getPersonalDraft(): PersonalDetails | undefined {
   return hasErrors(validatePersonalDetails(details)) ? undefined : details
 }
 
+function getFinancialDraft(): FinancialFormValues {
+  const draft = readFinancialDraft(window.localStorage)
+
+  if (!draft || typeof draft !== 'object') return emptyFinancialDetails
+
+  return {
+    ...emptyFinancialDetails,
+    ...(draft as Partial<FinancialFormValues>),
+  }
+}
+
 export function FinancialDetailsPage() {
   const navigate = useNavigate()
   const [personal] = useState(getPersonalDraft)
-  const [details, setDetails] = useState(emptyFinancialDetails)
+  const [details, setDetails] = useState(getFinancialDraft)
   const [errors, setErrors] = useState<FieldErrors<FinancialFormValues>>({})
   const [submitted, setSubmitted] = useState(false)
+  const [simulateFailure, setSimulateFailure] = useState(false)
+  const [submissionState, setSubmissionState] = useState<
+    'idle' | 'submitting' | 'failed'
+  >('idle')
   const summaryRef = useRef<HTMLDivElement>(null)
+  const serviceErrorRef = useRef<HTMLDivElement>(null)
 
   if (!personal) {
     return (
@@ -81,6 +99,7 @@ export function FinancialDetailsPage() {
   ) => {
     const next = { ...details, [field]: value }
     setDetails(next)
+    saveFinancialDraft(window.localStorage, next)
     if (submitted) setErrors(validateFinancialDetails(next))
   }
 
@@ -95,16 +114,27 @@ export function FinancialDetailsPage() {
       return
     }
 
-    const id = crypto.randomUUID()
-    const application = createCreditApplication(
-      id,
-      new Date().toISOString(),
-      personal,
-      details,
-    )
-    new BrowserApplicationRepository(window.localStorage).save(application)
-    clearPersonalDraft(window.localStorage)
-    void navigate(`${financialBasePath}/confirmation/${id}`)
+    setSubmissionState('submitting')
+
+    window.setTimeout(() => {
+      if (simulateFailure) {
+        setSimulateFailure(false)
+        setSubmissionState('failed')
+        requestAnimationFrame(() => serviceErrorRef.current?.focus())
+        return
+      }
+
+      const id = crypto.randomUUID()
+      const application = createCreditApplication(
+        id,
+        new Date().toISOString(),
+        personal,
+        details,
+      )
+      new BrowserApplicationRepository(window.localStorage).save(application)
+      clearApplicationDrafts(window.localStorage)
+      void navigate(`${financialBasePath}/confirmation/${id}`)
+    }, 350)
   }
 
   return (
@@ -117,6 +147,22 @@ export function FinancialDetailsPage() {
       <div className="mt-6 grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(16rem,1fr)]">
         <form className="space-y-6" noValidate onSubmit={submit}>
           <ErrorSummary errors={errorEntries} summaryRef={summaryRef} />
+          {submissionState === 'failed' ? (
+            <div
+              className="rounded-xl border-2 border-red-600 bg-red-50 p-5 text-red-950 dark:bg-red-950/30 dark:text-red-100"
+              ref={serviceErrorRef}
+              role="alert"
+              tabIndex={-1}
+            >
+              <h2 className="font-semibold">
+                The application was not submitted
+              </h2>
+              <p className="mt-2 text-sm">
+                This is a simulated service failure. Your details are still
+                available; try the submission again.
+              </p>
+            </div>
+          ) : null}
           <SelectField
             error={visibleErrors.employmentStatus}
             id="employmentStatus"
@@ -201,6 +247,26 @@ export function FinancialDetailsPage() {
               </p>
             ) : null}
           </div>
+          <fieldset className="rounded-xl border border-dashed border-slate-300 p-4 dark:border-slate-700">
+            <legend className="px-2 text-sm font-semibold text-slate-700 dark:text-slate-200">
+              Demo controls
+            </legend>
+            <div className="flex items-start gap-3">
+              <input
+                checked={simulateFailure}
+                className="mt-1 size-5 accent-teal-700"
+                id="simulateFailure"
+                onChange={(event) => setSimulateFailure(event.target.checked)}
+                type="checkbox"
+              />
+              <label
+                className="text-sm leading-6 text-slate-700 dark:text-slate-300"
+                htmlFor="simulateFailure"
+              >
+                Simulate one recoverable submission failure
+              </label>
+            </div>
+          </fieldset>
           <div className="flex flex-wrap gap-3">
             <Link
               className={secondaryLinkClassName}
@@ -208,9 +274,20 @@ export function FinancialDetailsPage() {
             >
               Back
             </Link>
-            <button className={primaryButtonClassName} type="submit">
-              Submit for verification
+            <button
+              className={primaryButtonClassName}
+              disabled={submissionState === 'submitting'}
+              type="submit"
+            >
+              {submissionState === 'submitting'
+                ? 'Submitting…'
+                : submissionState === 'failed'
+                  ? 'Retry submission'
+                  : 'Submit for verification'}
             </button>
+            <span aria-live="polite" className="sr-only">
+              {submissionState === 'submitting' ? 'Submitting application' : ''}
+            </span>
           </div>
         </form>
 

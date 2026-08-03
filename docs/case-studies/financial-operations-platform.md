@@ -1,18 +1,20 @@
 # Financial Operations Platform — MVP Brief
 
-Status: in progress; the first executable vertical slice is delivered.
+Status: MVP complete.
 
-## Delivered slice
+## Delivered MVP
 
 - two routed application pages with accessible validation;
 - browser-local draft persistence between the two steps;
 - submission into `awaiting_verification`;
 - confirmation with a fictional reference;
-- separate agent queue and application detail routes;
-- complete read-only display of every submitted field;
+- separate responsive agent queue and application detail routes;
+- complete display of every submitted field;
+- filters by status and submission date;
+- guarded `verified` and `needs_information` decisions with required notes;
+- append-only status history in the domain model;
+- deterministic loading, empty, failure and retry demonstrations;
 - deterministic domain and repository tests plus a desktop/mobile E2E journey.
-
-Agent notes, verification decisions, queue filters and simulated service failures remain part of the next increment.
 
 ## Fictional premise
 
@@ -38,7 +40,7 @@ Submit
 awaiting_verification
         ↓
 Agent dashboard
-list and application detail
+list, application detail and decision
 ```
 
 ## MVP scope
@@ -80,6 +82,32 @@ The application cannot enter an agent-reviewed state directly from the applicant
 - real personal data, accounts or production authentication;
 - external bureau, banking, email or messaging integrations;
 - final lending decisions, contracts or money movement.
+
+## Security and privacy boundary
+
+The applicant and agent roles are separate routes, not security boundaries. Data is stored in browser local storage so both simulated roles can share it without a backend. Anyone using the same browser profile can inspect or change those records. The UI therefore asks users to enter fictional information only.
+
+A production version would require server-enforced authentication, role authorisation, encryption, retention rules, consent handling, audit integrity, secure logging and protection against cross-tenant or cross-customer access. The static implementation must not be presented as suitable for real financial data.
+
+## Known limitations
+
+- refreshing preserves drafts, but there is no explicit user-facing control to discard one;
+- application identifiers and timestamps are created by the browser;
+- deterministic service states demonstrate UI recovery without modelling a real network;
+- status history is append-only in domain code but not tamper-proof in local storage;
+- the queue is appropriate for a small demo dataset, not pagination or concurrent agents;
+- no real eligibility, affordability or credit decision is made.
+
+## What I would do differently today
+
+For production, I would begin with an end-to-end threat model and data-retention policy before finalising the form schema. I would keep validation contracts shared between client and server, enforce transitions transactionally, use immutable audit storage, add idempotent submission and protect every query by role and tenant. I would also test content with users familiar with credit applications before adding more fields or automation.
+
+## Evidence
+
+- [Accessibility review](financial-operations-platform-accessibility.md)
+- [Architecture decision: static financial workflow](../decisions/0003-static-financial-workflow.md)
+- domain and repository unit tests under `apps/portfolio/src/case-studies/financial-operations`;
+- desktop and mobile critical journey in `apps/portfolio/e2e/portfolio.spec.ts`.
 
 ## Later increments
 

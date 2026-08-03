@@ -31,11 +31,13 @@ export function CaseStudyPage() {
 
   const isFinancialStudy = study.slug === 'financial-operations-platform'
   const statusLabel =
-    study.status === 'in-progress'
-      ? 'In progress'
-      : study.status === 'next'
-        ? 'Building next'
-        : 'Planned'
+    study.status === 'complete'
+      ? 'Complete'
+      : study.status === 'in-progress'
+        ? 'In progress'
+        : study.status === 'next'
+          ? 'Building next'
+          : 'Planned'
 
   return (
     <main id="main-content" tabIndex={-1}>
@@ -132,16 +134,23 @@ export function CaseStudyPage() {
           </section>
         </div>
 
-        {study.status === 'planned' ? (
+        {study.status === 'planned' || study.status === 'next' ? (
           <aside className="mt-16 rounded-2xl border border-amber-300 bg-amber-50 p-6 text-sm leading-6 text-amber-950 dark:border-amber-800 dark:bg-amber-950/30 dark:text-amber-100">
             <strong>Planning state.</strong> This page describes intended scope;
             it does not claim that the executable study has been delivered yet.
           </aside>
-        ) : (
+        ) : study.status === 'in-progress' ? (
           <aside className="mt-16 rounded-2xl border border-teal-300 bg-teal-50 p-6 text-sm leading-6 text-teal-950 dark:border-teal-800 dark:bg-teal-950/30 dark:text-teal-100">
             <strong>Incremental delivery.</strong> The submission and
             agent-review slice is executable. Verification decisions and
             production security boundaries remain planned.
+          </aside>
+        ) : (
+          <aside className="mt-16 rounded-2xl border border-teal-300 bg-teal-50 p-6 text-sm leading-6 text-teal-950 dark:border-teal-800 dark:bg-teal-950/30 dark:text-teal-100">
+            <strong>MVP complete.</strong> The applicant and agent journeys are
+            executable, tested and documented. Production authentication,
+            external integrations and real credit decisions remain explicitly
+            out of scope.
           </aside>
         )}
       </Container>

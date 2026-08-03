@@ -20,7 +20,11 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
           </p>
           {study.status !== 'planned' ? (
             <Tag>
-              {study.status === 'in-progress' ? 'In progress' : 'Building next'}
+              {study.status === 'complete'
+                ? 'Complete'
+                : study.status === 'in-progress'
+                  ? 'In progress'
+                  : 'Building next'}
             </Tag>
           ) : null}
         </div>

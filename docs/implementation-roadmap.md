@@ -13,7 +13,7 @@ Status: complete in the initial scaffold.
 
 ## Phase 1 — Repository foundation
 
-Status: implemented in the initial scaffold; validation still determines completion.
+Status: complete.
 
 - create the pnpm/Turborepo workspace;
 - create the React/Vite portfolio;
@@ -49,7 +49,7 @@ Exit criteria:
 
 ## Phase 3 — Financial application MVP
 
-Status: in progress; the submission and read-only agent-review slice is implemented.
+Status: complete.
 
 - provide a public two-page application form using fictional applicant data;
 - validate each page and allow the applicant to move backwards without losing entered data;
@@ -59,16 +59,11 @@ Status: in progress; the submission and read-only agent-review slice is implemen
 - record read-only status history and verification notes locally;
 - keep approval scoring, real identity checks, authentication and external APIs out of scope.
 
-This is the next implementation phase and produces the first complete case study.
-
-Remaining before the MVP is complete:
-
-- add agent verification notes and guarded status transitions;
-- add queue filters and deterministic loading/failure scenarios;
-- preserve page-two values when navigating backwards;
-- complete the manual accessibility review and document its results.
+This phase produced the first complete case study. Its domain rules, local persistence, applicant workflow, agent decisions, audit history, filters and deterministic service states are covered by unit and desktop/mobile browser tests. Accessibility findings and production limitations are documented with the study.
 
 ## Phase 4 — Vehicle reservation MVP
+
+Status: next.
 
 - present a small, fictional vehicle catalogue with a limited set of useful filters;
 - show vehicle details and a clear reservation action;

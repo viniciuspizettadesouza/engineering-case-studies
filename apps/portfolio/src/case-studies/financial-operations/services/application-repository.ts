@@ -2,6 +2,8 @@ import type { CreditApplication } from '../domain/application'
 
 const applicationsKey = 'engineering-case-studies.credit-applications.v1'
 const personalDraftKey = 'engineering-case-studies.credit-application-draft.v1'
+const financialDraftKey =
+  'engineering-case-studies.credit-application-financial-draft.v1'
 
 export interface ApplicationRepository {
   list(): readonly CreditApplication[]
@@ -58,6 +60,23 @@ export function savePersonalDraft(storage: Storage, draft: unknown): void {
   storage.setItem(personalDraftKey, JSON.stringify(draft))
 }
 
-export function clearPersonalDraft(storage: Storage): void {
+export function readFinancialDraft(storage: Storage): unknown {
+  const stored = storage.getItem(financialDraftKey)
+
+  if (!stored) return undefined
+
+  try {
+    return JSON.parse(stored)
+  } catch {
+    return undefined
+  }
+}
+
+export function saveFinancialDraft(storage: Storage, draft: unknown): void {
+  storage.setItem(financialDraftKey, JSON.stringify(draft))
+}
+
+export function clearApplicationDrafts(storage: Storage): void {
   storage.removeItem(personalDraftKey)
+  storage.removeItem(financialDraftKey)
 }

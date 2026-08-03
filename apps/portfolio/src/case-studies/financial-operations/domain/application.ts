@@ -24,6 +24,8 @@ export interface FinancialDetails {
 export interface StatusEvent {
   readonly status: ApplicationStatus
   readonly occurredAt: string
+  readonly actor: 'applicant' | 'agent'
+  readonly note?: string
 }
 
 export interface CreditApplication {
@@ -116,9 +118,75 @@ export function createCreditApplication(
       requestedAmount: Number(financial.requestedAmount),
     },
     statusHistory: [
-      { status: 'awaiting_verification', occurredAt: submittedAt },
+      {
+        status: 'awaiting_verification',
+        occurredAt: submittedAt,
+        actor: 'applicant',
+      },
     ],
   }
+}
+
+export type AgentDecision = Exclude<ApplicationStatus, 'awaiting_verification'>
+
+export type ReviewResult =
+  | { readonly ok: true; readonly application: CreditApplication }
+  | { readonly ok: false; readonly error: string }
+
+export function reviewApplication(
+  application: CreditApplication,
+  decision: AgentDecision,
+  note: string,
+  occurredAt: string,
+): ReviewResult {
+  if (application.status !== 'awaiting_verification') {
+    return {
+      ok: false,
+      error: 'Only applications awaiting verification can be reviewed.',
+    }
+  }
+
+  const trimmedNote = note.trim()
+  if (trimmedNote.length < 5) {
+    return {
+      ok: false,
+      error: 'Enter a review note with at least five characters.',
+    }
+  }
+
+  return {
+    ok: true,
+    application: {
+      ...application,
+      status: decision,
+      statusHistory: [
+        ...application.statusHistory,
+        {
+          status: decision,
+          occurredAt,
+          actor: 'agent',
+          note: trimmedNote,
+        },
+      ],
+    },
+  }
+}
+
+export interface ApplicationFilters {
+  readonly status: ApplicationStatus | 'all'
+  readonly submittedDate: string
+}
+
+export function filterApplications(
+  applications: readonly CreditApplication[],
+  filters: ApplicationFilters,
+): readonly CreditApplication[] {
+  return applications.filter(
+    (application) =>
+      (filters.status === 'all' || application.status === filters.status) &&
+      (!filters.submittedDate ||
+        application.submittedAt.startsWith(filters.submittedDate)),
+  )
 }
 
 export function hasErrors<T extends object>(errors: FieldErrors<T>): boolean {

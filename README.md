@@ -12,14 +12,14 @@ This repository is both a portfolio and a working engineering notebook. Each com
 Version `0.1.0` is the repository foundation:
 
 - an accessible landing page;
-- a focused catalogue of five planned MVP studies;
+- a focused catalogue of five MVP studies with honest delivery statuses;
 - data-driven placeholder pages that clearly identify unfinished work;
 - a minimal shared design system;
 - unit and browser smoke tests;
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation.
 
-The first executable slice of **Financial Operations Platform** is now available: a fictional two-page credit application followed by a separate read-only agent-verification dashboard. Agent decisions and failure scenarios remain in progress. The other planned MVPs cover vehicle reservation, accessible public-transport ticketing, multi-tenant bulk product registration and AI-assisted retail data visualisation.
+The **Financial Operations Platform** MVP is complete: a fictional two-page credit application, recoverable submission, agent queue, complete application review and audited verification decisions. **Commerce Experience** is next. The other planned MVPs cover accessible public-transport ticketing, multi-tenant bulk product registration and AI-assisted retail data visualisation.
 
 ## Technology
 

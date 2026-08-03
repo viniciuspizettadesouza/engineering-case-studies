@@ -1,6 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { createCreditApplication } from '../domain/application'
-import { BrowserApplicationRepository } from './application-repository'
+import {
+  BrowserApplicationRepository,
+  clearApplicationDrafts,
+  readFinancialDraft,
+  saveFinancialDraft,
+  savePersonalDraft,
+} from './application-repository'
 
 describe('browser application repository', () => {
   beforeEach(() => window.localStorage.clear())
@@ -40,5 +46,18 @@ describe('browser application repository', () => {
     expect(
       new BrowserApplicationRepository(window.localStorage).list(),
     ).toEqual([])
+  })
+
+  it('persists and clears both application drafts', () => {
+    savePersonalDraft(window.localStorage, { fullName: 'Demo Applicant' })
+    saveFinancialDraft(window.localStorage, { requestedAmount: '5000' })
+
+    expect(readFinancialDraft(window.localStorage)).toEqual({
+      requestedAmount: '5000',
+    })
+
+    clearApplicationDrafts(window.localStorage)
+
+    expect(readFinancialDraft(window.localStorage)).toBeUndefined()
   })
 })

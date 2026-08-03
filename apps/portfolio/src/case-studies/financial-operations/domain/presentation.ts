@@ -12,3 +12,15 @@ export function formatDate(value: string): string {
     timeStyle: 'short',
   }).format(new Date(value))
 }
+
+export function formatApplicationStatus(
+  status: 'awaiting_verification' | 'verified' | 'needs_information',
+): string {
+  const labels = {
+    awaiting_verification: 'Awaiting verification',
+    verified: 'Verified',
+    needs_information: 'Needs information',
+  } as const
+
+  return labels[status]
+}

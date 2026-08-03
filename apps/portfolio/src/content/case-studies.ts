@@ -1,4 +1,4 @@
-export type CaseStudyStatus = 'planned' | 'next' | 'in-progress'
+export type CaseStudyStatus = 'planned' | 'next' | 'in-progress' | 'complete'
 
 export interface CaseStudy {
   readonly slug: string
@@ -31,7 +31,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Submit for verification',
       'Review in the agent dashboard',
     ],
-    status: 'in-progress',
+    status: 'complete',
   },
   {
     slug: 'commerce-experience',
@@ -50,7 +50,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Complete reservation details',
       'Review and submit the request',
     ],
-    status: 'planned',
+    status: 'next',
   },
   {
     slug: 'accessible-transit-platform',
