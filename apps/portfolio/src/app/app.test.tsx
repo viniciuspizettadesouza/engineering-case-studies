@@ -19,5 +19,11 @@ describe('App', () => {
       screen.getByRole('link', { name: 'Accessible Transit Platform' }),
     ).toBeInTheDocument()
     expect(screen.getByText(/no employer source code/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Inspect the source' }),
+    ).toHaveAttribute(
+      'href',
+      'https://github.com/viniciuspizettadesouza/engineering-case-studies',
+    )
   })
 })

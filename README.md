@@ -18,7 +18,7 @@ case studies:
 - a minimal shared design system;
 - unit and browser smoke tests;
 - CI and GitHub Pages deployment configuration;
-- initial architecture, roadmap and privacy documentation.
+- initial architecture, roadmap and privacy documentation;
 - a completed cross-product accessibility, test and fixture-provenance review.
 
 All five MVPs are complete. Together they cover a fictional credit application
@@ -87,6 +87,8 @@ The production Vite base path is `/engineering-case-studies/`. `HashRouter` keep
 
 Pushes to `main` run validation and then deploy `apps/portfolio/dist` through the official GitHub Pages actions. The repository must have GitHub Pages configured to use **GitHub Actions** as its source.
 
+Published collection: <https://viniciuspizettadesouza.github.io/engineering-case-studies/>
+
 ## Documentation
 
 - [Project brief](docs/project-brief.md)
@@ -99,6 +101,7 @@ Pushes to `main` run validation and then deploy `apps/portfolio/dist` through th
 - [Bulk catalogue MVP](docs/case-studies/modular-enterprise-workspace.md)
 - [Retail insights MVP](docs/case-studies/retail-insights-workspace.md)
 - [Cross-product hardening review](docs/cross-product-hardening.md)
+- [Portfolio integration and release handoff](docs/portfolio-integration.md)
 - [Architecture decisions](docs/decisions/)
 
 ## Working agreement

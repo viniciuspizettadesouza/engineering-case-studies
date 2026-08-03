@@ -122,16 +122,24 @@ Status: complete.
 - verify fixture provenance and the fictional-content boundary;
 - publish all five MVPs with honest status labels.
 
-## Phase 9 — Incremental product expansion
+## Phase 9 — Portfolio integration
 
-After all five vertical slices exist, prioritise enhancements from evidence gathered during implementation. Candidate additions include localisation, persistence behind a real backend, richer role permissions, optional payments and a chatbot that can request new visualisations from the retail-insights data boundary. Each addition requires its own boundary and must not import real company rules or data.
-
-## Phase 10 — Portfolio integration
+Status: complete within this repository; the external portfolio link remains a manual handoff.
 
 - link the published collection from the existing personal portfolio;
 - add concise summaries and source links;
 - review résumé and LinkedIn positioning;
 - run a final privacy, accessibility and content-quality review.
+
+## Phase 10 — Evidence-led product expansion
+
+Status: future and intentionally uncommitted.
+
+After the completed collection is published, prioritise enhancements from actual
+review and usage feedback. Candidate additions include localisation, persistence
+behind a real backend, richer role permissions, optional payments and a chatbot
+that requests new visualisations only from the typed retail-insights data
+boundary. Each addition requires its own evidence, scope and privacy boundary.
 
 ## Definition of done for a study
 

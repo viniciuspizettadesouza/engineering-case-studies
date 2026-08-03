@@ -1,5 +1,6 @@
 import { Container } from '@engineering-case-studies/design-system'
 import { Link } from 'react-router-dom'
+import { personalPortfolioUrl, repositoryUrl } from '../content/project-links'
 
 export function SiteHeader() {
   return (
@@ -21,10 +22,18 @@ export function SiteHeader() {
                 Studies
               </Link>
             </li>
+            <li className="hidden sm:list-item">
+              <a
+                className="rounded-sm outline-offset-4 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-teal-600 dark:hover:text-white"
+                href={repositoryUrl}
+              >
+                Source
+              </a>
+            </li>
             <li>
               <a
                 className="rounded-sm outline-offset-4 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-teal-600 dark:hover:text-white"
-                href="https://viniciuspizettadesouza.github.io/"
+                href={personalPortfolioUrl}
               >
                 Portfolio
               </a>

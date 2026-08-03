@@ -5,11 +5,13 @@ import {
 } from '@engineering-case-studies/design-system'
 import { CaseStudyCard } from './case-study-card'
 import { caseStudies } from '../content/case-studies'
+import { repositoryUrl } from '../content/project-links'
+import { Link } from 'react-router-dom'
 
 const principles = [
   [
     'Executable',
-    'Each finished study will contain one focused workflow that can be explored and tested.',
+    'Each study contains one focused workflow that can be explored and tested.',
   ],
   [
     'Transparent',
@@ -48,6 +50,20 @@ export function HomePage() {
               <Tag>Architecture</Tag>
               <Tag>Accessibility</Tag>
               <Tag>Product thinking</Tag>
+            </div>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                className="inline-flex min-h-11 items-center rounded-lg bg-teal-700 px-5 py-2.5 font-semibold text-white outline-offset-4 focus-visible:outline-2 focus-visible:outline-teal-600"
+                to="/#case-studies"
+              >
+                Explore the studies
+              </Link>
+              <a
+                className="inline-flex min-h-11 items-center rounded-lg border border-slate-400 px-5 py-2.5 font-semibold text-slate-800 outline-offset-4 focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-slate-100"
+                href={repositoryUrl}
+              >
+                Inspect the source
+              </a>
             </div>
           </div>
         </Container>
@@ -92,7 +108,7 @@ export function HomePage() {
         <Container>
           <div className="mb-14 grid gap-6 md:grid-cols-[1fr_1fr] md:items-end">
             <div>
-              <Eyebrow>Planned collection</Eyebrow>
+              <Eyebrow>Completed collection</Eyebrow>
               <h2
                 id="studies-heading"
                 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl dark:text-white"
@@ -101,9 +117,9 @@ export function HomePage() {
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-slate-600 md:justify-self-end dark:text-slate-300">
-              Each product starts with one complete end-to-end workflow. The
-              MVPs stay intentionally small so they can be delivered, evaluated
-              and expanded over time.
+              Each product delivers one complete end-to-end workflow. The MVPs
+              remain intentionally small so the architecture, accessibility,
+              tests and trade-offs are easy to inspect.
             </p>
           </div>
           <div>

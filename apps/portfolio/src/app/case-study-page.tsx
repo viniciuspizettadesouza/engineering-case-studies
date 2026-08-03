@@ -5,6 +5,7 @@ import {
 } from '@engineering-case-studies/design-system'
 import { Link, useParams } from 'react-router-dom'
 import { getCaseStudy } from '../content/case-studies'
+import { studySourceUrl } from '../content/project-links'
 
 export function CaseStudyPage() {
   const { slug } = useParams()
@@ -46,12 +47,20 @@ export function CaseStudyPage() {
   return (
     <main id="main-content" tabIndex={-1}>
       <Container className="py-16 sm:py-24">
-        <Link
-          className="rounded-sm text-sm font-medium text-slate-600 outline-offset-4 hover:text-teal-700 focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-slate-300 dark:hover:text-teal-300"
-          to="/"
-        >
-          ← All case studies
-        </Link>
+        <div className="flex flex-wrap justify-between gap-4 text-sm font-medium">
+          <Link
+            className="rounded-sm text-slate-600 outline-offset-4 hover:text-teal-700 focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-slate-300"
+            to="/"
+          >
+            ← All case studies
+          </Link>
+          <a
+            className="rounded-sm text-teal-700 underline underline-offset-4 outline-offset-4 focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-teal-300"
+            href={studySourceUrl(study.slug)}
+          >
+            View this study’s source
+          </a>
+        </div>
         <div className="mt-14 max-w-4xl">
           <div className="flex flex-wrap items-center gap-4">
             <Eyebrow>

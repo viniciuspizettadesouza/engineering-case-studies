@@ -22,6 +22,9 @@ test('the collection and a completed study can be explored', async ({
   await expect(
     page.getByRole('link', { name: 'Open bulk catalogue' }),
   ).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: /view this study’s source/i }),
+  ).toHaveAttribute('href', /modular-enterprise$/)
 })
 
 test('the core navigation is keyboard accessible', async ({ page }) => {
