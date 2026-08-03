@@ -1,6 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-test('the collection and a planned study can be explored', async ({ page }) => {
+test('the collection and the next planned study can be explored', async ({
+  page,
+}) => {
   await page.goto('/engineering-case-studies/')
 
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
@@ -10,11 +12,11 @@ test('the collection and a planned study can be explored', async ({ page }) => {
     page.getByRole('heading', { name: /five products/i }),
   ).toBeVisible()
 
-  await page.getByRole('link', { name: 'Accessible Transit Platform' }).click()
+  await page.getByRole('link', { name: 'Modular Enterprise Workspace' }).click()
 
-  await expect(page).toHaveURL(/#\/case-studies\/accessible-transit-platform$/)
+  await expect(page).toHaveURL(/#\/case-studies\/modular-enterprise-workspace$/)
   await expect(page.getByRole('heading', { level: 1 })).toHaveText(
-    'Accessible Transit Platform',
+    'Modular Enterprise Workspace',
   )
   await expect(page.getByText('Planning state.')).toBeVisible()
 })
@@ -185,4 +187,71 @@ test('a vehicle can be filtered, reviewed and reserved after recoverable errors'
     page.getByText(/no payment, inventory hold or real reservation occurred/i),
   ).toBeVisible()
   await expect(page.getByText(/WR-[A-F0-9-]+/)).toBeVisible()
+})
+
+test('a tenant-scoped accessible journey can produce a simulated ticket', async ({
+  page,
+}) => {
+  await page.goto(
+    '/engineering-case-studies/#/case-studies/accessible-transit-platform/tickets/mossline/plan',
+  )
+
+  await expect(
+    page.getByRole('heading', { name: 'Where would you like to travel?' }),
+  ).toBeVisible()
+  await expect(page.getByText('Mossline Transit').first()).toBeVisible()
+  await page.getByLabel('Origin').selectOption('fern-quay')
+
+  await page.getByLabel('Transport operator').selectOption('sunmere')
+  await expect(page).toHaveURL(/tickets\/sunmere\/plan$/)
+  await expect(page.getByLabel('Origin')).toHaveValue('')
+  await expect(page.getByLabel('Origin')).toContainText('Ember Cross')
+  await expect(page.getByLabel('Origin')).not.toContainText('Fern Quay')
+
+  await page.getByLabel('Transport operator').selectOption('mossline')
+  await expect(page.getByLabel('Origin')).toHaveValue('fern-quay')
+  await page.getByLabel('Destination').selectOption('mossbank')
+  await page.getByLabel('Travel time').selectOption('2027-10-14T07:10')
+  await page.getByRole('button', { name: 'Find journeys' }).click()
+  await expect(page.getByRole('status')).toContainText('has expired')
+
+  await page.getByLabel('Travel time').selectOption('2027-10-14T09:10')
+  await page.getByRole('button', { name: 'Find journeys' }).click()
+  await page.getByLabel('Select this journey').check()
+  await page.getByRole('button', { name: 'Continue to fares' }).click()
+
+  await expect(
+    page.getByRole('group', { name: 'Eligible fares' }),
+  ).toBeVisible()
+  await page.getByLabel(/Fernwater Flexible/).check()
+  await expect(
+    page.getByText(/Use the selected service or the next/i),
+  ).toBeVisible()
+  await page
+    .getByRole('button', { name: 'Continue to passenger details' })
+    .click()
+
+  await page.getByRole('button', { name: 'Review ticket order' }).click()
+  await expect(page.getByRole('alert')).toBeFocused()
+  await expect(page.getByRole('alert')).toContainText('correct format')
+  await page.getByLabel('Passenger name').fill('Demo Passenger')
+  await page.getByLabel('Email address').fill('passenger@example.test')
+  await page.getByLabel(/fictional assistance request/i).check()
+  await page.getByRole('button', { name: 'Review ticket order' }).click()
+
+  await expect(
+    page.getByRole('heading', { name: 'Review your fictional ticket' }),
+  ).toBeVisible()
+  await expect(page.getByText('passenger@example.test')).toBeVisible()
+  await page.getByLabel(/simulate one recoverable purchase failure/i).check()
+  await page.getByRole('button', { name: 'Simulate ticket purchase' }).click()
+  await expect(page.getByRole('alert')).toBeFocused()
+  await expect(page.getByRole('alert')).toContainText('not purchased')
+  await page.getByRole('button', { name: 'Retry simulated purchase' }).click()
+
+  await expect(
+    page.getByRole('heading', { name: 'Your fictional ticket is ready' }),
+  ).toBeVisible()
+  await expect(page.getByText(/TK-MOS-[A-F0-9-]+/)).toBeVisible()
+  await expect(page.getByText('Not valid for travel.')).toBeVisible()
 })

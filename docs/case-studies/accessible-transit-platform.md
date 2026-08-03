@@ -1,6 +1,6 @@
 # Accessible Transit Platform — MVP Brief
 
-Status: planned.
+Status: complete.
 
 ## Fictional premise
 
@@ -62,3 +62,37 @@ The MVP targets relevant WCAG 2.2 AA criteria through semantic landmarks, persis
 ## Later increments
 
 Candidate additions after all five MVPs exist include localisation, saved passengers, ticket wallets, additional fare types and a typed backend adapter.
+
+## Delivered architecture
+
+The executable study lives under `apps/portfolio/src/case-studies/accessible-transit`. Two readonly tenant configurations provide independent names, design tokens, stops, journeys and fare catalogues to one shared set of React routes. Search, fare eligibility, passenger validation and ticket creation remain framework-independent domain rules.
+
+Every ticket route includes the tenant identifier. Browser-local drafts use separate tenant-prefixed keys, and values read from storage are checked before use. Switching operators remounts the planning state and loads only the selected tenant's draft and fixtures. Simulated ticket confirmations are also checked against the tenant in their route.
+
+The workflow exposes deterministic loading and service-error controls, natural no-result searches, visibly expired fixture journeys, expiry during review, recoverable purchase failure and success. These states do not call or imitate a production transport API.
+
+## Test evidence
+
+Vitest covers tenant separation, token and fixture differences, journey validation, matching and no-result searches, expired journeys, eligible fares, passenger validation, ticket creation, malformed browser state and tenant-scoped persistence.
+
+The critical Playwright journey runs in desktop Chromium and the Pixel 7 project. It verifies that switching tenant clears the visible form and changes stop fixtures, an earlier tenant draft does not leak into the new tenant, an expired journey cannot be selected, fare explanations remain visible, validation focuses a linked error summary, a recoverable purchase failure preserves the order, and confirmation is explicitly invalid for real travel.
+
+## Privacy and threat boundary
+
+This static frontend provides visual tenancy, not a security boundary. Browser users can inspect or alter fixtures, drafts and tickets; forge references; change tenant route identifiers; replay actions; or delete all state. A production system must enforce tenant ownership, fare rules, expiry, purchase idempotency and ticket validity on trusted services.
+
+The demo requests only a fictional passenger name, fictional email and optional fictional assistance preference. It displays warnings that no operator or assistance service is contacted. Real identity, disability, contact or payment information must not be entered. A production implementation would require a lawful data basis, clear retention, access controls, sensitive-data review, payment isolation, fraud controls and auditable fulfilment.
+
+## Limitations
+
+- timetables contain a few fixed invented journeys on one fictional day;
+- search matches an exact selected departure rather than planning connections;
+- tenant styling proves configuration boundaries, not server-enforced isolation;
+- fare eligibility uses small local lists and omits discount or identity rules;
+- tickets are editable browser records with no barcode, signing or validation;
+- no payment, notification, disruption, assistance or fulfilment service exists;
+- automated checks and semantic inspection do not replace user research or assistive-technology testing.
+
+## What I would do differently today
+
+For production, I would put timetable and fare evaluation behind typed, versioned service contracts and use an authoritative server to issue short-lived order quotes. Purchase would be idempotent, ticket artefacts cryptographically verifiable, tenant access server-enforced and payment data isolated with a specialist processor. I would test the shared journey with disabled passengers across each tenant theme, localise date and fare presentation, and collect privacy-reviewed performance and error telemetry without passenger details.

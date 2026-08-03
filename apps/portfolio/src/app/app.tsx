@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { CaseStudyPage } from './case-study-page'
 import { HomePage } from './home-page'
 import { SiteFooter } from './site-footer'
@@ -13,6 +13,11 @@ import { ReservationConfirmationPage } from '../case-studies/commerce-experience
 import { ReservationPage } from '../case-studies/commerce-experience/routes/reservation-page'
 import { ReservationReviewPage } from '../case-studies/commerce-experience/routes/reservation-review-page'
 import { VehicleDetailPage } from '../case-studies/commerce-experience/routes/vehicle-detail-page'
+import { FarePage } from '../case-studies/accessible-transit/routes/fare-page'
+import { JourneyPlanPage } from '../case-studies/accessible-transit/routes/journey-plan-page'
+import { PassengerPage } from '../case-studies/accessible-transit/routes/passenger-page'
+import { TicketConfirmationPage } from '../case-studies/accessible-transit/routes/ticket-confirmation-page'
+import { TicketReviewPage } from '../case-studies/accessible-transit/routes/ticket-review-page'
 
 export function App() {
   const skipToMainContent = () => {
@@ -66,6 +71,35 @@ export function App() {
         <Route
           path="/case-studies/commerce-experience/confirmation/:reservationId"
           element={<ReservationConfirmationPage />}
+        />
+        <Route
+          path="/case-studies/accessible-transit-platform/tickets"
+          element={
+            <Navigate
+              replace
+              to="/case-studies/accessible-transit-platform/tickets/mossline/plan"
+            />
+          }
+        />
+        <Route
+          path="/case-studies/accessible-transit-platform/tickets/:tenantId/plan"
+          element={<JourneyPlanPage />}
+        />
+        <Route
+          path="/case-studies/accessible-transit-platform/tickets/:tenantId/fares"
+          element={<FarePage />}
+        />
+        <Route
+          path="/case-studies/accessible-transit-platform/tickets/:tenantId/passenger"
+          element={<PassengerPage />}
+        />
+        <Route
+          path="/case-studies/accessible-transit-platform/tickets/:tenantId/review"
+          element={<TicketReviewPage />}
+        />
+        <Route
+          path="/case-studies/accessible-transit-platform/tickets/:tenantId/ticket/:ticketId"
+          element={<TicketConfirmationPage />}
         />
         <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
         <Route path="*" element={<CaseStudyPage />} />

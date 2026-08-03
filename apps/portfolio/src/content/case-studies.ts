@@ -61,7 +61,7 @@ export const caseStudies: readonly CaseStudy[] = [
     summary:
       'A themeable ticket-purchase journey for fictional transport operators, built for keyboard and screen-reader users.',
     narrative:
-      'This study will use configuration and design tokens to serve distinct fictional tenants through one accessible ticketing foundation.',
+      'This study uses configuration and design tokens to serve distinct fictional tenants through one accessible ticketing foundation.',
     capabilities: ['Accessibility', 'White-label UI', 'Design systems'],
     workflow: [
       'Plan a fictional journey',
@@ -69,7 +69,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Enter passenger details',
       'Review and confirm the ticket',
     ],
-    status: 'next',
+    status: 'complete',
   },
   {
     slug: 'modular-enterprise-workspace',
@@ -92,7 +92,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Validate and correct rows',
       'Publish the accepted batch',
     ],
-    status: 'planned',
+    status: 'next',
   },
   {
     slug: 'retail-insights-workspace',

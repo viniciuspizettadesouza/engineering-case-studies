@@ -76,7 +76,7 @@ Status: complete.
 
 ## Phase 5 — Public transport ticketing MVP
 
-Status: next.
+Status: complete.
 
 - configure two invented transport tenants with distinct tokens and fare catalogues;
 - let a passenger select a fictional origin, destination and travel time;
@@ -87,6 +87,8 @@ Status: next.
 - keep real routes, timetables, fares, payments and ticket fulfilment out of scope.
 
 ## Phase 6 — Multi-tenant bulk catalogue MVP
+
+Status: next.
 
 - configure two invented retail tenants with separate product rules and visual tokens;
 - build the workspace with selectively adopted shadcn components;
