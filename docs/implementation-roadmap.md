@@ -100,7 +100,7 @@ Status: complete.
 
 ## Phase 7 — Retail insights MVP
 
-Status: next.
+Status: complete.
 
 - provide a portfolio-level view across several invented stores and a focused single-store view;
 - show fictional daily sales, category and time-series summaries;

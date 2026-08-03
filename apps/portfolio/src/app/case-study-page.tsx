@@ -33,6 +33,7 @@ export function CaseStudyPage() {
   const isCommerceStudy = study.slug === 'commerce-experience'
   const isTransitStudy = study.slug === 'accessible-transit-platform'
   const isCatalogueStudy = study.slug === 'modular-enterprise-workspace'
+  const isInsightsStudy = study.slug === 'retail-insights-workspace'
   const statusLabel =
     study.status === 'complete'
       ? 'Complete'
@@ -175,6 +176,31 @@ export function CaseStudyPage() {
             </Link>
           </section>
         ) : null}
+        {isInsightsStudy ? (
+          <section
+            aria-labelledby="insights-prototype-heading"
+            className="mt-12 rounded-2xl border border-violet-300 bg-violet-50 p-6 dark:border-violet-800 dark:bg-violet-950/30"
+          >
+            <Eyebrow>Executable prototype</Eyebrow>
+            <h2
+              className="mt-3 text-2xl font-semibold"
+              id="insights-prototype-heading"
+            >
+              Verify fictional retail insights
+            </h2>
+            <p className="mt-3 max-w-2xl leading-7">
+              Compare portfolio and store snapshots, inspect transparent
+              simulated observations, and verify each one against accessible
+              supporting data.
+            </p>
+            <Link
+              className="mt-6 inline-flex min-h-11 items-center rounded-lg bg-violet-700 px-5 py-2.5 font-semibold text-white"
+              to="/case-studies/retail-insights-workspace/insights"
+            >
+              Open retail insights
+            </Link>
+          </section>
+        ) : null}
 
         <div className="mt-16 grid gap-12 border-t border-slate-300 pt-12 lg:grid-cols-2 dark:border-slate-700">
           <section aria-labelledby="intent-heading">
@@ -234,7 +260,9 @@ export function CaseStudyPage() {
                 ? 'The multi-tenant journey-to-ticket workflow is executable, tested and documented. Real routes, fares, payments and ticket fulfilment remain explicitly out of scope.'
                 : isCatalogueStudy
                   ? 'The tenant-isolated import-to-publication workflow is executable, tested and documented. Real catalogues, production authentication and external APIs remain explicitly out of scope.'
-                  : 'The applicant and agent journeys are executable, tested and documented. Production authentication, external integrations and real credit decisions remain explicitly out of scope.'}
+                  : isInsightsStudy
+                    ? 'The portfolio-to-evidence insight workflow is executable, tested and documented. Live AI, real retailer data and autonomous recommendations remain out of scope.'
+                    : 'The applicant and agent journeys are executable, tested and documented. Production authentication, external integrations and real credit decisions remain explicitly out of scope.'}
           </aside>
         )}
       </Container>

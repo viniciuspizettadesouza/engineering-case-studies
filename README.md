@@ -9,7 +9,7 @@ This repository is both a portfolio and a working engineering notebook. Each com
 
 ## Current state
 
-The repository currently contains the foundation and four complete executable
+The repository currently contains the foundation and five complete executable
 case studies:
 
 - an accessible landing page;
@@ -20,11 +20,9 @@ case studies:
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation.
 
-The **Financial Operations Platform**, **Commerce Experience**, **Accessible
-Transit Platform**, and **Modular Enterprise Workspace** MVPs are complete. They
-cover a fictional credit application and agent review, vehicle reservation,
-multi-tenant ticketing, and tenant-isolated bulk product registration. The
-**Retail Insights Workspace** is next.
+All five MVPs are complete. Together they cover a fictional credit application
+and agent review, vehicle reservation, multi-tenant ticketing, tenant-isolated
+bulk product registration, and explainable simulated retail insights.
 
 ## Technology
 

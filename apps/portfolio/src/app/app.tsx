@@ -19,6 +19,7 @@ import { PassengerPage } from '../case-studies/accessible-transit/routes/passeng
 import { TicketConfirmationPage } from '../case-studies/accessible-transit/routes/ticket-confirmation-page'
 import { TicketReviewPage } from '../case-studies/accessible-transit/routes/ticket-review-page'
 import { CatalogueWorkspacePage } from '../case-studies/modular-enterprise/routes/catalogue-workspace-page'
+import { InsightsPage } from '../case-studies/retail-insights/routes/insights-page'
 
 export function App() {
   const skipToMainContent = () => {
@@ -114,6 +115,10 @@ export function App() {
         <Route
           path="/case-studies/modular-enterprise-workspace/catalogue/:tenantId"
           element={<CatalogueWorkspacePage />}
+        />
+        <Route
+          path="/case-studies/retail-insights-workspace/insights"
+          element={<InsightsPage />}
         />
         <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
         <Route path="*" element={<CaseStudyPage />} />

@@ -340,3 +340,31 @@ test('bulk catalogue accepts an uploaded CSV and supports inline correction', as
     page.getByRole('button', { name: 'Publish 1 accepted product' }),
   ).toBeEnabled()
 })
+
+test('retail insights stay consistent and preserve data when analysis fails', async ({
+  page,
+}) => {
+  await page.goto(
+    '/engineering-case-studies/#/case-studies/retail-insights-workspace/insights',
+  )
+  await expect(
+    page.getByRole('heading', { name: 'Daily retail insights' }),
+  ).toBeVisible()
+  await expect(page.getByText('£46,280')).toBeVisible()
+  await page.getByLabel('View', { exact: true }).selectOption('harbour')
+  await expect(page.getByText('£18,420', { exact: true })).toBeVisible()
+  await page
+    .getByRole('button', { name: 'Harbour Row sales increased' })
+    .click()
+  await expect(page.getByText(/does not account for promotions/)).toBeVisible()
+  await expect(
+    page.getByRole('table', { name: 'Category data table' }),
+  ).toBeVisible()
+  await page.getByLabel('Demo service state').selectOption('failure')
+  await expect(page.getByRole('alert')).toContainText(
+    'underlying sales overview remains available',
+  )
+  await expect(page.getByText('£18,420', { exact: true })).toBeVisible()
+  await page.getByLabel('Reporting date').selectOption('2027-06-17')
+  await expect(page.getByRole('status')).toContainText('Stale snapshot')
+})

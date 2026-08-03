@@ -14,11 +14,11 @@ describe('case-study catalogue', () => {
       '05',
     ])
     expect(caseStudies.filter(({ status }) => status === 'next')).toHaveLength(
-      1,
+      0,
     )
     expect(
       caseStudies.filter(({ status }) => status === 'complete'),
-    ).toHaveLength(4)
+    ).toHaveLength(5)
   })
 
   it('retrieves studies by slug', () => {

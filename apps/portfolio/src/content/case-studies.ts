@@ -115,7 +115,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Inspect a generated insight',
       'Explore its supporting visualisation',
     ],
-    status: 'next',
+    status: 'complete',
   },
 ]
 
