@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { caseStudies, getCaseStudy } from './case-studies'
 
 describe('case-study catalogue', () => {
-  it('keeps a unique chronological sequence and one next study', () => {
+  it('keeps a unique chronological sequence and one active study', () => {
     expect(new Set(caseStudies.map(({ slug }) => slug)).size).toBe(
       caseStudies.length,
     )
@@ -13,13 +13,15 @@ describe('case-study catalogue', () => {
       '04',
       '05',
     ])
-    expect(caseStudies.filter(({ status }) => status === 'next')).toHaveLength(
-      1,
-    )
+    expect(
+      caseStudies.filter(({ status }) => status === 'in-progress'),
+    ).toHaveLength(1)
   })
 
   it('retrieves studies by slug', () => {
-    expect(getCaseStudy('financial-operations-platform')?.status).toBe('next')
+    expect(getCaseStudy('financial-operations-platform')?.status).toBe(
+      'in-progress',
+    )
     expect(getCaseStudy('not-real')).toBeUndefined()
   })
 })

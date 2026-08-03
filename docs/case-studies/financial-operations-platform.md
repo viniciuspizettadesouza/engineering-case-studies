@@ -1,6 +1,18 @@
 # Financial Operations Platform — MVP Brief
 
-Status: next to implement.
+Status: in progress; the first executable vertical slice is delivered.
+
+## Delivered slice
+
+- two routed application pages with accessible validation;
+- browser-local draft persistence between the two steps;
+- submission into `awaiting_verification`;
+- confirmation with a fictional reference;
+- separate agent queue and application detail routes;
+- complete read-only display of every submitted field;
+- deterministic domain and repository tests plus a desktop/mobile E2E journey.
+
+Agent notes, verification decisions, queue filters and simulated service failures remain part of the next increment.
 
 ## Fictional premise
 

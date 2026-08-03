@@ -18,7 +18,11 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
           <p className="font-mono text-xs uppercase tracking-[0.16em] text-teal-700 dark:text-teal-300">
             {study.domain}
           </p>
-          {study.status === 'next' ? <Tag>Building next</Tag> : null}
+          {study.status !== 'planned' ? (
+            <Tag>
+              {study.status === 'in-progress' ? 'In progress' : 'Building next'}
+            </Tag>
+          ) : null}
         </div>
         <h3 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-3xl dark:text-white">
           <Link

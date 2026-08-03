@@ -1,4 +1,4 @@
-export type CaseStudyStatus = 'planned' | 'next'
+export type CaseStudyStatus = 'planned' | 'next' | 'in-progress'
 
 export interface CaseStudy {
   readonly slug: string
@@ -31,7 +31,7 @@ export const caseStudies: readonly CaseStudy[] = [
       'Submit for verification',
       'Review in the agent dashboard',
     ],
-    status: 'next',
+    status: 'in-progress',
   },
   {
     slug: 'commerce-experience',

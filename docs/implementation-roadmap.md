@@ -49,6 +49,8 @@ Exit criteria:
 
 ## Phase 3 — Financial application MVP
 
+Status: in progress; the submission and read-only agent-review slice is implemented.
+
 - provide a public two-page application form using fictional applicant data;
 - validate each page and allow the applicant to move backwards without losing entered data;
 - place a completed application in `awaiting_verification`;
@@ -58,6 +60,13 @@ Exit criteria:
 - keep approval scoring, real identity checks, authentication and external APIs out of scope.
 
 This is the next implementation phase and produces the first complete case study.
+
+Remaining before the MVP is complete:
+
+- add agent verification notes and guarded status transitions;
+- add queue filters and deterministic loading/failure scenarios;
+- preserve page-two values when navigating backwards;
+- complete the manual accessibility review and document its results.
 
 ## Phase 4 — Vehicle reservation MVP
 

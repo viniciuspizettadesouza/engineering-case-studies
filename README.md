@@ -19,7 +19,7 @@ Version `0.1.0` is the repository foundation:
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation.
 
-The next executable study is **Financial Operations Platform**: a fictional two-page credit application followed by a separate agent-verification dashboard. The other MVPs cover vehicle reservation, accessible public-transport ticketing, multi-tenant bulk product registration and AI-assisted retail data visualisation.
+The first executable slice of **Financial Operations Platform** is now available: a fictional two-page credit application followed by a separate read-only agent-verification dashboard. Agent decisions and failure scenarios remain in progress. The other planned MVPs cover vehicle reservation, accessible public-transport ticketing, multi-tenant bulk product registration and AI-assisted retail data visualisation.
 
 ## Technology
 
