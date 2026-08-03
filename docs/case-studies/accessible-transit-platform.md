@@ -1,92 +1,64 @@
-# Accessible Transit Platform — Initial Brief
+# Accessible Transit Platform — MVP Brief
 
-Status: planned; selected as the first executable case study.
+Status: planned.
 
 ## Fictional premise
 
-Two invented regional transport operators need to offer subscription plans through a shared frontend foundation. Their visual identities and available plans differ, but customers should receive the same accessible interaction quality.
+Two invented regional transport operators sell digital tickets through one shared frontend foundation. Their names, routes, fares, timetables, visual tokens and business rules are original fixtures created for this repository.
 
-The study is not a reconstruction of a real ticketing platform. Operator names, rules, visual tokens, content, users and data will be created specifically for this repository.
-
-## Why this study comes first
-
-It creates strong evidence across several connected skills without needing a backend:
-
-- React and strict TypeScript;
-- accessible forms and keyboard interaction;
-- design tokens and themeable components;
-- configuration-driven multi-tenancy;
-- responsive product flows;
-- domain modelling and service boundaries;
-- meaningful automated browser tests.
+Public ticket-purchase experiences are a reference only for the broad journey-selection pattern. This study does not reuse a real operator's data, page structure, copy or visual identity.
 
 ## Primary user goal
 
-A passenger can select a subscription plan, enter fictional personal information, review the request and receive a simulated confirmation.
+A passenger can plan a fictional journey, choose an eligible fare, enter the minimum required passenger details and receive a simulated ticket confirmation.
 
 ```text
-Choose operator and plan
+Choose tenant and journey
+        ↓
+Compare eligible fares
         ↓
 Enter passenger details
         ↓
-Review the complete request
+Review the order
         ↓
-Submit through a local adapter
-        ↓
-Confirmation or recoverable error
+Simulated purchase and ticket
 ```
 
-## Intended scope
+## MVP scope
 
 - two fictional operator configurations;
-- a small plan catalogue per operator;
-- one multi-step subscription form;
-- client-side validation with a useful error summary;
+- a small set of invented stops, journeys and fares;
+- origin, destination and travel-time selection;
+- fare comparison with accessible explanations;
+- passenger details with client-side validation;
 - review and edit before submission;
-- deterministic success and failure scenarios;
-- optional draft persistence controlled by the user;
-- desktop and mobile layouts;
-- keyboard and screen-reader-oriented behaviour;
-- unit, integration and E2E tests;
-- architecture and accessibility notes.
+- deterministic success, failure and retry scenarios;
+- a fictional ticket reference after confirmation;
+- responsive layouts and tenant theme switching;
+- unit, integration and critical E2E tests.
+
+## Acceptance criteria
+
+- the complete journey works with keyboard input;
+- invalid fields have persistent labels, useful messages and an error summary;
+- changing tenants also changes fixtures and tokens without leaking the other tenant's state;
+- the review shows the selected journey, fare and passenger information;
+- no real payment is attempted and confirmation is clearly labelled as simulated;
+- loading, no-results, expired-journey and submission-failure states can be demonstrated deterministically.
 
 ## Out of scope
 
-- real ticket purchase or payment;
-- identity verification;
-- login and customer accounts;
-- a real transport API;
-- real addresses or passenger data;
-- production-grade fraud, eligibility or pricing rules;
-- email or SMS delivery;
-- analytics collection;
-- a CMS.
+- real routes, stops, timetables or fares;
+- live journey planning or disruption APIs;
+- real ticket purchase, payment or fulfilment;
+- accounts, discount-card verification or identity checks;
+- production analytics, email or SMS;
+- claims of affiliation with a real operator or platform vendor.
 
-## Accessibility expectations
+## Accessibility focus
 
-- logical heading and landmark hierarchy;
-- persistent visible labels;
-- programmatic descriptions and error relationships;
-- error summary that links back to invalid fields;
-- focus management between steps and after submission;
-- no information conveyed by colour alone;
-- minimum target sizes and visible focus indication;
-- full keyboard completion;
-- reduced-motion support;
-- status announcements that do not interrupt unnecessarily;
-- manual checks with at least one desktop screen reader before completion.
+The MVP targets relevant WCAG 2.2 AA criteria through semantic landmarks, persistent labels, visible focus, keyboard completion, linked error summaries, status announcements, sufficient target sizes and reduced-motion support. Automated checks supplement rather than replace a manual keyboard and screen-reader review.
 
-WCAG conformance should be described carefully: the project can target relevant WCAG 2.2 AA criteria, but automated tests alone must not be presented as certification.
+## Later increments
 
-## Open decisions for the next phase
-
-Vinicius should guide:
-
-1. whether the product should feel like a public consumer journey or an authenticated customer portal;
-2. which passenger details are worth modelling without making the demo intrusive;
-3. whether tenant switching is a visible demo control or route configuration;
-4. whether localisation belongs in the first workflow or a later iteration;
-5. how much design-system documentation should be visible inside the portfolio;
-6. which trade-off he most wants to discuss in interviews.
-
-These decisions should be resolved before implementing the domain, not inferred from any previous employer product.
+Candidate additions after all five MVPs exist include localisation, saved passengers, ticket wallets, additional fare types and a typed backend adapter.

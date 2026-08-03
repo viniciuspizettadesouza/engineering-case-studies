@@ -20,7 +20,7 @@ They should leave with evidence of:
 - design-system and multi-tenant experience;
 - clear written technical decisions;
 - responsible use of AI;
-- growth from hands-on support to platform leadership.
+- product thinking across regulated, consumer and enterprise workflows.
 
 ## Product principles
 
@@ -30,7 +30,7 @@ Each completed study needs one small but meaningful workflow. Static mock-ups al
 
 ### Depth over volume
 
-Studies are delivered sequentially. One finished, documented and tested journey is more valuable than six partially implemented applications.
+Studies are delivered sequentially. One finished, documented and tested journey is more valuable than five partially implemented applications.
 
 ### Fictional by construction
 
@@ -48,16 +48,19 @@ Semantic structure, visible focus, keyboard operation, useful errors, reduced mo
 
 Planned, in-progress and complete work must be visually distinguishable. The portfolio must never present a placeholder as a delivered case study or simulated metrics as production outcomes.
 
-## Career narrative
+## Product collection
 
-1. **Operations support:** diagnosis, prioritisation, communication and reliability.
-2. **Client delivery:** requirements gathering, responsive websites, usability and SEO.
-3. **Financial systems:** APIs, role-aware workflows, communication, internationalisation and auditability.
-4. **Commerce:** checkout, content, analytics boundaries and performance.
-5. **Public transport:** accessibility, white-label interfaces, forms and design systems.
-6. **Enterprise platforms:** modularity, multi-tenancy, developer experience and responsible AI.
+1. **Financial operations:** a two-page credit application followed by a separate agent-verification dashboard.
+2. **Vehicle commerce:** vehicle discovery followed by a reservation form and request confirmation.
+3. **Public transport:** an accessible, white-label ticket-purchase journey for fictional operators.
+4. **Enterprise catalogue:** bulk product registration for two fictional retail tenants using shadcn-based UI components.
+5. **Retail insights:** daily AI-assisted sales insights and supporting visualisations for managers of fictional stores.
 
-These chapters are not employer profiles. They are a structure for explaining accumulated engineering capability.
+The five products are independent fictional studies, not employer profiles or replicas of existing products. The two retail studies may share an invented domain context, but remain separate products with different user goals and technical evidence.
+
+## MVP strategy
+
+The first product milestone is to define and deliver one narrow end-to-end workflow for each study. Each MVP must prove its central interaction and engineering boundary before optional features are added. Real payments, production identity systems, external decision engines and real company data are excluded.
 
 ## Success criteria
 

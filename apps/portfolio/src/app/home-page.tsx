@@ -39,9 +39,9 @@ export function HomePage() {
               </span>
             </h1>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
-              A chronological collection of fictional products exploring the
-              engineering problems that shaped my career—from support operations
-              to accessible, modular platforms.
+              A focused collection of fictional products exploring financial
+              workflows, commerce, accessible transport, multi-tenant platforms
+              and responsible retail analytics.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Tag>React + TypeScript</Tag>
@@ -97,13 +97,13 @@ export function HomePage() {
                 id="studies-heading"
                 className="mt-4 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl dark:text-white"
               >
-                Six chapters. One trajectory.
+                Five products. Five focused MVPs.
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-slate-600 md:justify-self-end dark:text-slate-300">
-              The platform begins as a documented catalogue. Studies will be
-              implemented one at a time, starting with the accessible transit
-              subscription journey.
+              Each product starts with one complete end-to-end workflow. The
+              MVPs stay intentionally small so they can be delivered, evaluated
+              and expanded over time.
             </p>
           </div>
           <div>

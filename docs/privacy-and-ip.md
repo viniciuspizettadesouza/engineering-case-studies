@@ -29,6 +29,8 @@ This repository demonstrates current engineering judgement using original, ficti
 
 Every case-study organisation must have an invented name and neutral visual system. Names, logos, colours, layouts and copy should not create the impression that a previous employer endorsed or supplied the work.
 
+Publicly visible products may inform broad interaction patterns such as selecting a vehicle before a reservation form or selecting a journey before buying a ticket. Only the pattern may be used: company copy, visual identity, catalogue data, routes, prices, validation rules and page structure must be independently created.
+
 ## Data policy
 
 Fixtures must be obviously fictional and contain no real personal data. Avoid realistic combinations of names, addresses, account numbers and contact details when they are not required. Secrets and private environment variables are prohibited in the static application.

@@ -13,7 +13,7 @@ describe('App', () => {
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { level: 2, name: /six chapters/i }),
+      screen.getByRole('heading', { level: 2, name: /five products/i }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: 'Accessible Transit Platform' }),

@@ -12,7 +12,6 @@ describe('case-study catalogue', () => {
       '03',
       '04',
       '05',
-      '06',
     ])
     expect(caseStudies.filter(({ status }) => status === 'next')).toHaveLength(
       1,
@@ -20,7 +19,7 @@ describe('case-study catalogue', () => {
   })
 
   it('retrieves studies by slug', () => {
-    expect(getCaseStudy('accessible-transit-platform')?.status).toBe('next')
+    expect(getCaseStudy('financial-operations-platform')?.status).toBe('next')
     expect(getCaseStudy('not-real')).toBeUndefined()
   })
 })

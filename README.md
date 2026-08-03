@@ -12,14 +12,14 @@ This repository is both a portfolio and a working engineering notebook. Each com
 Version `0.1.0` is the repository foundation:
 
 - an accessible landing page;
-- a chronological catalogue of six planned studies;
+- a focused catalogue of five planned MVP studies;
 - data-driven placeholder pages that clearly identify unfinished work;
 - a minimal shared design system;
 - unit and browser smoke tests;
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation.
 
-The first planned executable study is **Accessible Transit Platform**. It will demonstrate an accessible, themeable subscription flow for fictional transport operators.
+The next executable study is **Financial Operations Platform**: a fictional two-page credit application followed by a separate agent-verification dashboard. The other MVPs cover vehicle reservation, accessible public-transport ticketing, multi-tenant bulk product registration and AI-assisted retail data visualisation.
 
 ## Technology
 
@@ -89,7 +89,11 @@ Pushes to `main` run validation and then deploy `apps/portfolio/dist` through th
 - [Implementation roadmap](docs/implementation-roadmap.md)
 - [Architecture overview](docs/architecture/overview.md)
 - [Privacy and intellectual property](docs/privacy-and-ip.md)
-- [First study brief](docs/case-studies/accessible-transit-platform.md)
+- [Financial application MVP](docs/case-studies/financial-operations-platform.md)
+- [Vehicle reservation MVP](docs/case-studies/commerce-experience.md)
+- [Public transport ticketing MVP](docs/case-studies/accessible-transit-platform.md)
+- [Bulk catalogue MVP](docs/case-studies/modular-enterprise-workspace.md)
+- [Retail insights MVP](docs/case-studies/retail-insights-workspace.md)
 - [Architecture decisions](docs/decisions/)
 
 ## Working agreement

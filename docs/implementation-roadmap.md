@@ -28,66 +28,93 @@ Exit criteria:
 - install, format check, lint, typecheck, unit tests and build pass;
 - browser smoke tests pass on desktop and mobile Chromium profiles;
 - production assets use the repository base path;
-- all studies are labelled as planned;
+- every study has an accurate planned, next, in-progress or complete label;
 - the application works at narrow and wide viewports.
 
-## Phase 2 — Transit domain foundation
+## Phase 2 — Define the five MVPs
 
-- define fictional operators, plans and passenger information;
-- document domain language and deliberately invented rules;
-- introduce a typed service boundary with deterministic local adapters;
-- define tenant configuration and design tokens;
-- test tenant isolation and theme switching;
-- write an ADR for the multi-tenant model.
+Status: complete in this planning update.
 
-No multi-step subscription journey is delivered in this phase.
+- keep every organisation, identity, product, route, price and business rule fictional;
+- give each study one complete primary journey and explicit non-goals;
+- define deterministic fixtures and local service boundaries;
+- identify accessibility, error-state and test expectations;
+- avoid optional features until all five MVPs have a usable vertical slice.
 
-## Phase 3 — Accessible subscription journey
+Exit criteria:
 
-- choose an operator and plan;
-- collect and validate fictional passenger information;
-- review the request;
-- simulate submission success, recoverable failure and retry;
-- optionally preserve draft state in local storage;
-- cover keyboard interaction and meaningful errors;
-- add unit, integration and Playwright coverage;
-- perform a manual accessibility review;
-- document trade-offs and what would change in production.
+- each MVP has a brief with actors, workflow, data boundary and acceptance criteria;
+- the catalogue accurately describes only the five selected products;
+- no real company content, branding, customer data or internal rules appear in code or documentation.
 
-This phase produces the first complete case study and release `v0.2.0`.
+## Phase 3 — Financial application MVP
 
-## Phase 4 — Commerce experience
+- provide a public two-page application form using fictional applicant data;
+- validate each page and allow the applicant to move backwards without losing entered data;
+- place a completed application in `awaiting_verification`;
+- provide a separate simulated agent dashboard listing submitted applications;
+- let an agent inspect every field supplied by the applicant;
+- record read-only status history and verification notes locally;
+- keep approval scoring, real identity checks, authentication and external APIs out of scope.
 
-- build a small fictional catalogue;
-- configure an item and manage a basket;
-- simulate checkout behind a typed payment boundary;
-- define analytics events without sending data externally;
-- set and enforce a performance budget;
-- add localisation only after the base workflow is stable.
+This is the next implementation phase and produces the first complete case study.
 
-## Phase 5 — Financial operations platform
+## Phase 4 — Vehicle reservation MVP
 
-- model a fictional application request;
-- provide customer and operations views;
-- simulate role-based capabilities without real authentication;
-- record audit events in memory;
-- simulate communication and localisation;
-- document security boundaries and backend requirements.
+- present a small, fictional vehicle catalogue with a limited set of useful filters;
+- show vehicle details and a clear reservation action;
+- collect dates, location and fictional buyer contact details in a reservation form;
+- provide a review step before simulated submission;
+- show deterministic availability conflicts and recoverable errors;
+- define analytics event contracts without transmitting events;
+- set a performance budget for the catalogue and detail views;
+- keep real inventory, payments, finance and dealer integrations out of scope.
 
-## Phase 6 — Modular enterprise workspace
+## Phase 5 — Public transport ticketing MVP
 
-- configure fictional tenants and modules;
-- introduce feature flags and permissions;
-- simulate an AI-assisted recommendation;
-- require explicit human approval before an action;
-- record provenance and an audit event;
-- compare modular monolith and microfrontend trade-offs.
+- configure two invented transport tenants with distinct tokens and fare catalogues;
+- let a passenger select a fictional origin, destination and travel time;
+- present eligible invented fares and accessible explanations;
+- collect only the passenger information needed for the demo;
+- provide review, simulated purchase and ticket confirmation;
+- support keyboard completion, useful error summaries and screen-reader status updates;
+- keep real routes, timetables, fares, payments and ticket fulfilment out of scope.
 
-## Phase 7 — Remaining early-career studies
+## Phase 6 — Multi-tenant bulk catalogue MVP
 
-Decide whether Operations Support Lab and Client Website Studio add new evidence after the four principal studies are complete. They remain valid narrative chapters, but they should not be implemented merely to fill the catalogue.
+- configure two invented retail tenants with separate product rules and visual tokens;
+- build the workspace with selectively adopted shadcn components;
+- accept CSV upload or pasted rows using a documented fictional template;
+- preview, validate and correct rows before submission;
+- prevent data from one tenant appearing in the other tenant's workspace;
+- simulate publishing accepted products and export rejected rows;
+- keep real retailer catalogues, production authentication, AI enrichment and external APIs out of scope.
 
-## Phase 8 — Portfolio integration
+## Phase 7 — Retail insights MVP
+
+- provide a portfolio-level view across several invented stores and a focused single-store view;
+- show fictional daily sales, category and time-series summaries;
+- display a small feed of deterministic AI-assisted insights generated for the selected reporting date;
+- link every insight to a supporting chart and the fictional data slice used to produce it;
+- expose generation time, freshness, limitations and a simulated confidence indicator;
+- provide accessible table alternatives and text summaries for essential chart information;
+- support loading, no-data, stale-insight and analysis-failure states;
+- keep the conversational chatbot, live model calls and real retailer data out of scope.
+
+## Phase 8 — Cross-product hardening
+
+- make loading, empty, validation, failure and success states consistent;
+- complete unit, integration and critical Playwright coverage for every MVP;
+- perform manual keyboard and accessibility reviews;
+- document architectural decisions and limitations per study;
+- verify fixture provenance and the fictional-content boundary;
+- publish all five MVPs with honest status labels.
+
+## Phase 9 — Incremental product expansion
+
+After all five vertical slices exist, prioritise enhancements from evidence gathered during implementation. Candidate additions include localisation, persistence behind a real backend, richer role permissions, optional payments and a chatbot that can request new visualisations from the retail-insights data boundary. Each addition requires its own boundary and must not import real company rules or data.
+
+## Phase 10 — Portfolio integration
 
 - link the published collection from the existing personal portfolio;
 - add concise summaries and source links;

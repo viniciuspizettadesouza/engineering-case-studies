@@ -7,7 +7,7 @@ test('the collection and a planned study can be explored', async ({ page }) => {
     'Engineering lessons',
   )
   await expect(
-    page.getByRole('heading', { name: /six chapters/i }),
+    page.getByRole('heading', { name: /five products/i }),
   ).toBeVisible()
 
   await page.getByRole('link', { name: 'Accessible Transit Platform' }).click()

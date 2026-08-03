@@ -2,7 +2,7 @@
 
 ## Context
 
-The repository will eventually contain several interactive case studies, but it currently has one deployable frontend. The architecture optimises for inexpensive static hosting, clear boundaries and incremental growth.
+The repository contains five planned interactive case studies and one deployable frontend. The architecture optimises for inexpensive static hosting, clear boundaries and incremental growth.
 
 ```text
 GitHub Pages
@@ -72,6 +72,10 @@ Initial studies use:
 - deterministic in-browser service adapters;
 - simulated latency and failures when they teach useful behaviour;
 - local storage only for user-controlled draft persistence.
+
+The financial agent dashboard and the enterprise tenant workspace are role and tenancy simulations inside the browser. They demonstrate interface and domain boundaries, not production security. Any future multi-user version would require server-enforced authorisation and tenant isolation.
+
+The retail insights MVP uses precomputed, explainable insight fixtures behind a typed analysis boundary. It does not train or call a production AI model. This keeps results deterministic while still exposing provenance, freshness and confidence limitations in the interface.
 
 They do not use a fake REST server simply to imitate network traffic. A real backend is justified only when a study needs to demonstrate a server-only property such as multi-user persistence, webhook validation, secret handling or authentication.
 
