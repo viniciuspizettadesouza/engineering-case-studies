@@ -9,7 +9,7 @@ describe('App', () => {
     expect(
       screen.getByRole('heading', {
         level: 1,
-        name: /engineering lessons made executable/i,
+        name: /engineering practice made executable/i,
       }),
     ).toBeInTheDocument()
     expect(
@@ -19,6 +19,9 @@ describe('App', () => {
       screen.getByRole('link', { name: 'Accessible Transit Platform' }),
     ).toBeInTheDocument()
     expect(screen.getByText(/no employer source code/i)).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Open the handbook' }),
+    ).toHaveAttribute('href', '#/handbook')
     expect(
       screen.getByRole('link', { name: 'Inspect the source' }),
     ).toHaveAttribute(

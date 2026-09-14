@@ -1,16 +1,20 @@
-# Engineering Case Studies
+# Engineering Practice Lab
 
-Interactive, fictional engineering case studies inspired by the kinds of problems I have encountered throughout my career.
+Executable, fictional engineering case studies paired with a curated engineering
+handbook covering frontend foundations, systems, delivery, interview strategy,
+technical exercises and leadership.
 
-This repository is both a portfolio and a working engineering notebook. Each completed study will pair a small executable product workflow with the reasoning behind it: constraints, architecture, trade-offs, accessibility, testing and what I would do differently today.
+This repository is both a portfolio and a working engineering notebook. Each
+case study pairs a product workflow with its engineering reasoning. The handbook
+turns accumulated study notes into a searchable, maintained reference.
 
 > [!IMPORTANT]
 > This project does not reproduce employer products. All organisations, users, data, metrics, workflows and business rules are fictional. It contains no employer source code, private architecture, internal documentation, branding or customer information.
 
 ## Current state
 
-The repository currently contains the foundation and five complete executable
-case studies:
+The repository contains five complete executable case studies and a published
+engineering handbook:
 
 - an accessible landing page;
 - a focused catalogue of five MVP studies with honest delivery statuses;
@@ -20,6 +24,8 @@ case studies:
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation;
 - a completed cross-product accessibility, test and fixture-provenance review.
+- thirteen curated handbook topics loaded directly from canonical Markdown;
+- accessible topic navigation, table-of-contents controls and local search.
 
 All five MVPs are complete. Together they cover a fictional credit application
 and agent review, vehicle reservation, multi-tenant ticketing, tenant-isolated
@@ -44,6 +50,7 @@ The application is static-first. It has no production backend, database, authent
 .
 ├── apps/
 │   └── portfolio/          # Published React application
+│       └── src/content/handbook/ # Canonical handbook Markdown
 ├── packages/
 │   └── design-system/      # Small, genuinely shared UI primitives
 ├── docs/
@@ -91,6 +98,9 @@ Published collection: <https://viniciuspizettadesouza.github.io/engineering-case
 
 ## Documentation
 
+- [Engineering handbook](apps/portfolio/src/content/handbook/)
+- [Handbook migration report](docs/handbook-migration.md)
+
 - [Project brief](docs/project-brief.md)
 - [Implementation roadmap](docs/implementation-roadmap.md)
 - [Architecture overview](docs/architecture/overview.md)
@@ -103,6 +113,13 @@ Published collection: <https://viniciuspizettadesouza.github.io/engineering-case
 - [Cross-product hardening review](docs/cross-product-hardening.md)
 - [Portfolio integration and release handoff](docs/portfolio-integration.md)
 - [Architecture decisions](docs/decisions/)
+
+## Project identity
+
+**Engineering Practice Lab** is a provisional public title. The repository slug,
+package scopes, browser-storage keys and GitHub Pages base path intentionally
+remain `engineering-case-studies` until the naming decision is finalized. See
+[ADR 0008](docs/decisions/0008-provisional-project-identity.md).
 
 ## Working agreement
 

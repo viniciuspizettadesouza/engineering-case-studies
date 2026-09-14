@@ -59,10 +59,169 @@ body {
   transform: translateY(0);
 }
 
+.handbook-prose {
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.handbook-prose > :first-child {
+  margin-top: 0;
+}
+
+.handbook-prose h1,
+.handbook-prose h2,
+.handbook-prose h3 {
+  scroll-margin-top: 2rem;
+  color: #0f172a;
+  font-weight: 650;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+.handbook-prose h1 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2.25rem, 6vw, 4rem);
+}
+
+.handbook-prose h2 {
+  margin: 3rem 0 1rem;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 2rem;
+  font-size: 1.75rem;
+}
+
+.handbook-prose h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.handbook-prose p,
+.handbook-prose ul,
+.handbook-prose ol,
+.handbook-prose table,
+.handbook-prose blockquote,
+.handbook-prose pre {
+  margin: 1rem 0;
+}
+
+.handbook-prose ul,
+.handbook-prose ol {
+  padding-left: 1.5rem;
+}
+
+.handbook-prose ul {
+  list-style: disc;
+}
+
+.handbook-prose ol {
+  list-style: decimal;
+}
+
+.handbook-prose li + li {
+  margin-top: 0.4rem;
+}
+
+.handbook-prose a {
+  border-radius: 0.125rem;
+  color: #0f766e;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.handbook-prose a:focus-visible {
+  outline: 2px solid #0d9488;
+  outline-offset: 4px;
+}
+
+.handbook-prose :not(pre) > code {
+  border-radius: 0.3rem;
+  background: #e2e8f0;
+  padding: 0.15rem 0.35rem;
+  color: #0f172a;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+}
+
+.handbook-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: 0.75rem;
+  background: #0f172a;
+  padding: 1rem;
+  color: #e2e8f0;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.handbook-prose blockquote {
+  border-left: 4px solid #0d9488;
+  padding-left: 1rem;
+  color: #475569;
+}
+
+.handbook-table-scroll {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.handbook-prose table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.handbook-prose th,
+.handbook-prose td {
+  border: 1px solid #cbd5e1;
+  padding: 0.65rem 0.8rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.handbook-prose th {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
 @media (prefers-color-scheme: dark) {
   :root,
   body {
     background: #020617;
+  }
+
+  .handbook-prose {
+    color: #cbd5e1;
+  }
+
+  .handbook-prose h1,
+  .handbook-prose h2,
+  .handbook-prose h3 {
+    color: #f8fafc;
+  }
+
+  .handbook-prose h2 {
+    border-color: #1e293b;
+  }
+
+  .handbook-prose a {
+    color: #5eead4;
+  }
+
+  .handbook-prose :not(pre) > code,
+  .handbook-prose th {
+    background: #1e293b;
+    color: #f8fafc;
+  }
+
+  .handbook-prose blockquote {
+    color: #94a3b8;
+  }
+
+  .handbook-prose th,
+  .handbook-prose td {
+    border-color: #475569;
   }
 }
 

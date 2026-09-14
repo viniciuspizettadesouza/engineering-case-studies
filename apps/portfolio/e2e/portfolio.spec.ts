@@ -1,4 +1,45 @@
 import { expect, test } from '@playwright/test'
+import AxeBuilder from '@axe-core/playwright'
+
+test('the handbook can be searched and navigated', async ({ page }) => {
+  await page.goto('/engineering-case-studies/#/handbook')
+
+  await expect(
+    page.getByRole('heading', { name: /practical notes for building/i }),
+  ).toBeVisible()
+
+  await page
+    .getByRole('searchbox', { name: 'Search the handbook' })
+    .fill('event loop')
+  await expect(page.getByText(/topics? found\./)).toBeVisible()
+  await page.getByRole('link', { name: 'JavaScript Foundations' }).click()
+
+  await expect(page).toHaveURL(/#\/handbook\/javascript$/)
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'JavaScript Foundations' }),
+  ).toBeVisible()
+
+  await page.getByRole('button', { name: 'Asynchronous execution' }).click()
+  await expect(
+    page.getByRole('heading', { name: 'Asynchronous execution' }),
+  ).toBeInViewport()
+})
+
+test('representative handbook pages have no detectable accessibility violations', async ({
+  page,
+}) => {
+  await page.goto('/engineering-case-studies/#/handbook')
+  await expect(
+    page.getByRole('heading', { name: /practical notes for building/i }),
+  ).toBeVisible()
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
+
+  await page.goto('/engineering-case-studies/#/handbook/graphql-and-messaging')
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'GraphQL and Messaging' }),
+  ).toBeVisible()
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
+})
 
 test('the collection and a completed study can be explored', async ({
   page,
@@ -6,7 +47,7 @@ test('the collection and a completed study can be explored', async ({
   await page.goto('/engineering-case-studies/')
 
   await expect(page.getByRole('heading', { level: 1 })).toContainText(
-    'Engineering lessons',
+    'Engineering practice',
   )
   await expect(
     page.getByRole('heading', { name: /five products/i }),

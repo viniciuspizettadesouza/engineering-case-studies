@@ -1,4 +1,4 @@
-# JavaScript and React Technical Questions
+# Frontend Technical Exercises
 
 This file contains a collection of technical questions focused on JavaScript, React, and logical reasoning. It includes commented examples, expected outputs, and practical interview tests.
 
@@ -8,9 +8,9 @@ This file contains a collection of technical questions focused on JavaScript, Re
 
 ```js
 function test() {
-  const user = {name:'John Doe'};
-  user.name = 'Not John Doe';
-  console.log(user.name); // "Not John Doe"
+  const user = { name: 'John Doe' }
+  user.name = 'Not John Doe'
+  console.log(user.name) // "Not John Doe"
 }
 ```
 
@@ -26,10 +26,10 @@ Not John Doe
 
 ```js
 function test() {
-  if(true) {
-    let myName = 'Vini';
+  if (true) {
+    let myName = 'Vini'
   }
-  console.log(myName); // ReferenceError because myName is block-scoped inside if.
+  console.log(myName) // ReferenceError because myName is block-scoped inside if.
 }
 ```
 
@@ -41,14 +41,14 @@ ReferenceError: myName is not defined
 
 ---
 
-## 3. Hoisting with `var` e `const`
+## 3. Hoisting with `var` and `const`
 
 ```js
 function test() {
-  console.log(id); // undefined -> var is hoisted but uninitialized
-  console.log(i2); // ReferenceError because i2 is not hoisted like var
-  var id = 1;
-  const i2 = 2;
+  console.log(id) // undefined -> var is hoisted but uninitialized
+  console.log(i2) // ReferenceError: i2 is in its temporal dead zone
+  var id = 1
+  const i2 = 2
 }
 ```
 
@@ -65,15 +65,15 @@ ReferenceError: Cannot access 'i2' before initialization
 
 ```js
 function test() {
-  sayHello(); // "Hello"
-  sayBy();    // TypeError: sayBy is not a function
+  sayHello() // "Hello"
+  sayBy() // ReferenceError: sayBy has not been initialized
 
   const sayBy = () => {
-    console.log("Bye");
+    console.log('Bye')
   }
 
   function sayHello() {
-    console.log("Hello");
+    console.log('Hello')
   }
 }
 ```
@@ -82,7 +82,7 @@ function test() {
 
 ```txt
 Hello
-TypeError: sayBy is not a function
+ReferenceError: Cannot access 'sayBy' before initialization
 ```
 
 ---
@@ -92,11 +92,11 @@ TypeError: sayBy is not a function
 ```js
 function test() {
   const HumanConstructor = (age, name) => {
-    return { age, name };
-  };
+    return { age, name }
+  }
 
-  const JohnDoe = new HumanConstructor(30, 'John Doe'); // TypeError
-  console.log(JohnDoe);
+  const JohnDoe = new HumanConstructor(30, 'John Doe') // TypeError
+  console.log(JohnDoe)
 }
 ```
 
@@ -116,20 +116,20 @@ function test() {
     id: 1,
     getId: () => console.log(this.id),
     getMyId() {
-      console.log(this.id);
+      console.log(this.id)
     },
-    getThatId: function() {
-      console.log(this.id);
+    getThatId: function () {
+      console.log(this.id)
     },
-    giveMeId: function() {
-      return () => console.log(this.id);
-    }
-  };
+    giveMeId: function () {
+      return () => console.log(this.id)
+    },
+  }
 
-  User.getId();       // undefined
-  User.getMyId();     // 1
-  User.getThatId();   // 1
-  User.giveMeId()();  // 1
+  User.getId() // undefined
+  User.getMyId() // 1
+  User.getThatId() // 1
+  User.giveMeId()() // 1
 }
 ```
 
@@ -148,10 +148,10 @@ undefined
 
 ```js
 const HelloComponent = ({ greeting }) => {
-  return <div>{greeting}</div>;
-};
+  return <div>{greeting}</div>
+}
 
-console.log(HelloComponent()); // call without props
+console.log(HelloComponent()) // call without props
 ```
 
 **Expected output:**
@@ -184,25 +184,25 @@ ReferenceError: useContext is not defined
 
 ```js
 function asyncTest() {
-  console.log("Steady");
+  console.log('Steady')
 
   setTimeout(() => {
-    console.log("Timeout");
-  }, 0);
+    console.log('Timeout')
+  }, 0)
 
   Promise.resolve()
     .then(() => {
-      console.log("Promise 1");
-      setTimeout(() => console.log("Almost done"));
+      console.log('Promise 1')
+      setTimeout(() => console.log('Almost done'))
     })
     .then(() => {
-      console.log("Promise 2");
+      console.log('Promise 2')
       Promise.resolve(true).then(() => {
-        console.log("Finally");
-      });
-    });
+        console.log('Finally')
+      })
+    })
 
-  console.log("Go");
+  console.log('Go')
 }
 ```
 
@@ -218,7 +218,9 @@ Timeout
 Almost done
 ```
 
-🟡 Note: The order between `Timeout` and `Almost done` **may vary** depending on the environment, as both are within `setTimeout`.
+Promise reactions run as microtasks before timer tasks. The first timer is
+registered before the promise callbacks run, so it is queued before the timer
+created inside `Promise 1`.
 
 ---
 
@@ -227,25 +229,25 @@ Almost done
 ```js
 class Logger {
   log(message) {
-    console.log(message);
+    console.log(message)
   }
 
   saveLog() {
-    console.log("Saving log...");
+    console.log('Saving log...')
   }
 }
 
 const loggerObject = {
   log(message) {
-    console.log(message);
+    console.log(message)
   },
   saveLog() {
-    console.log("Saving log...");
-  }
-};
+    console.log('Saving log...')
+  },
+}
 
 function logMessageWithLogger(logger) {
-  logger.log("Test log"); // Should not throw an error
+  logger.log('Test log') // Should not throw an error
 }
 ```
 
@@ -269,16 +271,16 @@ Create a React component called TabsByCity that displays a list of cities as tab
 **Initial code (incomplete):**
 
 ```jsx
-import { useState } from "react";
+import { useState } from 'react'
 
 const TabsByCity = () => {
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState('')
   const citiesData = [
-  { cityName: 'Rio de Janeiro', userName: 'Pelé' },
-  { cityName: 'Orlando', userName: 'Elon Musk' },
-  { cityName: 'Orlando', userName: 'Walt Disney' },
-  { cityName: 'Washington', userName: 'Barack Obama' },
-];
+    { cityName: 'Rio de Janeiro', userName: 'Pelé' },
+    { cityName: 'Orlando', userName: 'Elon Musk' },
+    { cityName: 'Orlando', userName: 'Walt Disney' },
+    { cityName: 'Washington', userName: 'Barack Obama' },
+  ]
 
   return (
     <>
@@ -289,35 +291,35 @@ const TabsByCity = () => {
         {/* TODO: Show userName entries that match the selected city */}
       </div>
     </>
-  );
-};
+  )
+}
 
-export default TabsByCity;
+export default TabsByCity
 ```
 
 **Expected output:**
 
 ```jsx
-import { useState } from 'react';
+import { useState } from 'react'
 
 function App() {
-  const [city, setCity] = useState('');
+  const [city, setCity] = useState('')
   const citiesData = [
     { cityName: 'Rio De Janeiro', userName: 'Diego Morrales' },
     { cityName: 'Orlando', userName: 'Elon MAsk' },
     { cityName: 'Orlando', userName: 'Bill Gates' },
     { cityName: 'Washington', userName: 'John Jhones' },
-  ];
+  ]
 
-  const uniqueCities = [...new Set(citiesData.map(c => c.cityName))];
+  const uniqueCities = [...new Set(citiesData.map((c) => c.cityName))]
 
-  const handlerCity = (param) => () => setCity(param);
+  const handlerCity = (param) => () => setCity(param)
 
-  const names = citiesData.filter(c => c.cityName === city);
+  const names = citiesData.filter((c) => c.cityName === city)
 
   return (
     <>
-      {uniqueCities.map(cityName => (
+      {uniqueCities.map((cityName) => (
         <button key={cityName} onClick={handlerCity(cityName)}>
           {cityName}
         </button>
@@ -327,10 +329,10 @@ function App() {
         <p key={idx}>{n.userName}</p>
       ))}
     </>
-  );
+  )
 }
 
-export default App;
+export default App
 ```
 
 ---
@@ -341,67 +343,77 @@ Create a React component with a button that increases a counter on click. Each c
 
 **Requirements:**
 
-- Toggle square color on each click  
+- Toggle square color on each click
 - Add another square when the count reaches 10
 
 **Initial code (incomplete):**
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const App = () => {
-  const [count, setCount] = useState(0);
-  const [color, setColor] = useState("red");
-  const [squareCount, setSquareCount] = useState([1]);
+  const [count, setCount] = useState(0)
+  const [color, setColor] = useState('red')
+  const [squareCount, setSquareCount] = useState([1])
 
   const handleClick = () => {
     // TODO: Increase count
     // TODO: Toggle color
     // TODO: Add square when count is 10
-  };
+  }
 
   return (
     <div>
-      <button className="btn" onClick={handleClick}>⚛️ {count}</button>
+      <button className="btn" onClick={handleClick}>
+        ⚛️ {count}
+      </button>
       {squareCount.map((_, idx) => (
-        <div key={idx} style={{ backgroundColor: color, height: "50px", width: "50px" }} />
+        <div
+          key={idx}
+          style={{ backgroundColor: color, height: '50px', width: '50px' }}
+        />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 ```
 
 **Expected output:**
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 const App = () => {
-  const [count, setCount] = useState(0);
-  const [color, setColor] = useState("red");
-  const [squareCount, setSquareCount] = useState([1]);
+  const [count, setCount] = useState(0)
+  const [color, setColor] = useState('red')
+  const [squareCount, setSquareCount] = useState([1])
 
   const handleClick = () => {
-    setCount(c => c + 1);
-    setColor(count % 2 ? "blue" : "red");
+    setCount((c) => c + 1)
+    setColor(count % 2 ? 'blue' : 'red')
     if (count === 10) {
-      setSquareCount(c => [...c, c.length * 2]);
+      setSquareCount((c) => [...c, c.length * 2])
     }
-  };
+  }
 
   return (
     <div>
-      <button className="btn" onClick={handleClick}>⚛️ {count}</button>
+      <button className="btn" onClick={handleClick}>
+        ⚛️ {count}
+      </button>
       {squareCount.map((_, idx) => (
-        <div key={idx} style={{ backgroundColor: color, height: "50px", width: "50px" }} />
+        <div
+          key={idx}
+          style={{ backgroundColor: color, height: '50px', width: '50px' }}
+        />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 ```
 
 ---
@@ -419,21 +431,21 @@ Create a simple carousel component using React that cycles through a list of ite
 **Initial code (incomplete):**
 
 ```jsx
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
 const Carousel = () => {
-  const items = ["Item 1", "Item 2", "Item 3"];
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const items = ['Item 1', 'Item 2', 'Item 3']
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const handleNext = () => {
     // TODO: go to next item, wrap around
-  };
+  }
 
   const handlePrev = () => {
     // TODO: go to previous item, wrap around
-  };
+  }
 
   return (
     <div className="flex flex-col items-center space-y-4">
@@ -445,30 +457,32 @@ const Carousel = () => {
         <Button onClick={handleNext}>Next →</Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Carousel;
+export default Carousel
 ```
 
 **Expected output:**
 
 ```jsx
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { useState } from 'react'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
 
 const Carousel = () => {
-  const items = ["Item 1", "Item 2", "Item 3"];
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const items = ['Item 1', 'Item 2', 'Item 3']
+  const [currentIndex, setCurrentIndex] = useState(0)
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length);
-  };
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % items.length)
+  }
 
   const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + items.length) % items.length);
-  };
+    setCurrentIndex(
+      (prevIndex) => (prevIndex - 1 + items.length) % items.length,
+    )
+  }
 
   return (
     <div className="flex flex-col items-center space-y-4">
@@ -480,10 +494,10 @@ const Carousel = () => {
         <Button onClick={handleNext}>Next →</Button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Carousel;
+export default Carousel
 ```
 
 ---
@@ -494,16 +508,16 @@ You're given a component tree where a `Parent` passes data to a `Grandchild` thr
 
 ```jsx
 function Grandchild(props) {
-  return <div>Data: {props.data}</div>;
+  return <div>Data: {props.data}</div>
 }
 
 function Child(props) {
-  return <Grandchild data={props.data} />;
+  return <Grandchild data={props.data} />
 }
 
 function Parent() {
-  const data = "Hello from Parent";
-  return <Child data={data} />;
+  const data = 'Hello from Parent'
+  return <Child data={data} />
 }
 ```
 
@@ -524,26 +538,26 @@ The issue here is that if the component tree becomes deeply nested or the struct
 React Context allows you to share values across the component tree without having to pass props manually at every level. Here's how you could apply it:
 
 ```jsx
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext } from 'react'
 
-const DataContext = createContext();
+const DataContext = createContext()
 
 function Grandchild() {
-  const data = useContext(DataContext);
-  return <div>Data: {data}</div>;
+  const data = useContext(DataContext)
+  return <div>Data: {data}</div>
 }
 
 function Child() {
-  return <Grandchild />;
+  return <Grandchild />
 }
 
 function Parent() {
-  const data = "Hello from Parent";
+  const data = 'Hello from Parent'
   return (
     <DataContext.Provider value={data}>
       <Child />
     </DataContext.Provider>
-  );
+  )
 }
 ```
 
@@ -557,16 +571,16 @@ While Context simplifies prop-passing, especially in large trees, it comes with 
 
 ```jsx
 function Grandchild(props) {
-  return <div>Data: {props.data}</div>;
+  return <div>Data: {props.data}</div>
 }
 
 function Child(props) {
-  return <Grandchild data={props.data} />;
+  return <Grandchild data={props.data} />
 }
 
 function Parent() {
-  const data = "Hello from Parent";
-  return <Child data={data} />;
+  const data = 'Hello from Parent'
+  return <Child data={data} />
 }
 ```
 
@@ -577,34 +591,38 @@ function Parent() {
 You're optimizing a component to avoid unnecessary re-renders.
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 
 function Child({ count, onIncrement }) {
-  console.log('Child component rendered');
+  console.log('Child component rendered')
   return (
     <div>
       <p>Count: {count}</p>
       <button onClick={onIncrement}>Increment</button>
     </div>
-  );
+  )
 }
 
-export default React.memo(Child);
+export default React.memo(Child)
 
 function Parent() {
-  const [count, setCount] = useState(0);
-  const [text, setText] = useState('');
+  const [count, setCount] = useState(0)
+  const [text, setText] = useState('')
 
   const handleIncrement = () => {
-    setCount(prevCount => prevCount + 1);
-  };
+    setCount((prevCount) => prevCount + 1)
+  }
 
   return (
     <div>
-      <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Type something..." />
+      <input
+        value={text}
+        onChange={(e) => setText(e.target.value)}
+        placeholder="Type something..."
+      />
       <Child count={count} onIncrement={handleIncrement} />
     </div>
-  );
+  )
 }
 ```
 
@@ -624,7 +642,7 @@ function Parent() {
    - **Performance Overhead:** Wrapping many components in `memo` or `useCallback` can backfire by increasing complexity and computation.
    - **Over-optimization:** Not all components benefit from memoization.
    - **Readability:** Adds complexity to the code.
-   Avoid them in simple or frequently changing components.
+     Avoid them in simple or frequently changing components.
 
 ---
 
@@ -676,7 +694,7 @@ function Parent() {
 3. Drawbacks:
    - **Nested JSX:** Can cause deeply nested code.
    - **Readability:** Can be hard to follow when chaining multiple render props.
-   Alternatives: Hooks or children-as-function patterns may be cleaner in some modern codebases.
+     Alternatives: Hooks or children-as-function patterns may be cleaner in some modern codebases.
 
 ---
 
@@ -685,28 +703,28 @@ function Parent() {
 A component fetches data from an API using useEffect.
 
 ```jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react'
 
 function Posts() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     async function fetchPosts() {
-      const response = await fetch('https://example.com/api/posts');
-      const data = await response.json();
-      setPosts(data);
+      const response = await fetch('https://example.com/api/posts')
+      const data = await response.json()
+      setPosts(data)
     }
 
-    fetchPosts();
-  }, []);
+    fetchPosts()
+  }, [])
 
   return (
     <div>
-      {posts.map(post => (
+      {posts.map((post) => (
         <div key={post.id}>{post.title}</div>
       ))}
     </div>
-  );
+  )
 }
 ```
 
@@ -717,23 +735,33 @@ function Posts() {
 
 ### ✅ Answers (Q17)
 
-1. If the component unmounts before `setPosts` is called, you'll get a memory leak warning or even an error because the state update happens after unmounting.
+1. The request can waste resources after the result is no longer useful, and an
+   older response can overwrite newer state. Current React versions ignore a
+   state update after unmounting, but cancellation is still important for
+   correctness and resource use.
 
-2. Use an abort controller or a `didCancel` flag:
+2. Pass an `AbortSignal` to `fetch` and abort it during cleanup:
 
 ```jsx
 useEffect(() => {
-  let didCancel = false;
+  const controller = new AbortController()
+
   async function fetchPosts() {
-    const response = await fetch('https://example.com/api/posts');
-    const data = await response.json();
-    if (!didCancel) setPosts(data);
+    try {
+      const response = await fetch('https://example.com/api/posts', {
+        signal: controller.signal,
+      })
+      if (!response.ok) throw new Error(`Request failed: ${response.status}`)
+      setPosts(await response.json())
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return
+      // Store or report the error at an appropriate UI boundary.
+    }
   }
-  fetchPosts();
-  return () => {
-    didCancel = true;
-  };
-}, []);
+
+  fetchPosts()
+  return () => controller.abort()
+}, [])
 ```
 
 ---
@@ -743,28 +771,28 @@ useEffect(() => {
 A reusable and type-safe custom hook using TypeScript generics.
 
 ```tsx
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 
 function useFetchData<T>(url: string) {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [data, setData] = useState<T | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    setLoading(true);
+    setLoading(true)
     fetch(url)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then((result: T) => {
-        setData(result);
-        setLoading(false);
+        setData(result)
+        setLoading(false)
       })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [url]);
+      .catch((err) => {
+        setError(err.message)
+        setLoading(false)
+      })
+  }, [url])
 
-  return { data, loading, error };
+  return { data, loading, error }
 }
 ```
 
@@ -786,26 +814,26 @@ function useFetchData<T>(url: string) {
 You need to fetch cakes and filter by ingredient.
 
 ```tsx
-import { useEffect } from 'react';
+import { useEffect } from 'react'
 
 export function useFetchCakes(ingredient) {
-  let cakes = [];
-  let responseCode = 200;
+  let cakes = []
+  let responseCode = 200
 
   useEffect(() => {
     fetch('https://example.com/api/cakes')
       .then((res) => {
-        responseCode = res.status;
-        return res.json();
+        responseCode = res.status
+        return res.json()
       })
       .then((data) => {
         cakes = data.filter((cake) => {
-          return cake.ingredients.includes(ingredient);
-        });
-      });
-  }, [ingredient]);
+          return cake.ingredients.includes(ingredient)
+        })
+      })
+  }, [ingredient])
 
-  return { cakes, responseCode };
+  return { cakes, responseCode }
 }
 ```
 

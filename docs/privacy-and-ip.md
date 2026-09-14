@@ -25,6 +25,19 @@ This repository demonstrates current engineering judgement using original, ficti
 - Vinicius's public résumé-level descriptions of his roles;
 - architectural reasoning derived independently for the fictional problem.
 
+## Imported learning material
+
+Imported notes must be rewritten before they enter this repository's reachable
+history. Remove interview-source attribution, organization-specific challenge
+names and links, internal identifiers, credentials, and private personal
+attribution. General references to public technologies, standards, books, and
+official documentation may remain when they are necessary to explain a concept.
+
+Curated handbook content should be independently worded, technically reviewed,
+and linked to primary public documentation for claims that change over time.
+Sanitizing only the latest file is insufficient: every imported revision must
+pass the same review.
+
 ## Naming and visual identity
 
 Every case-study organisation must have an invented name and neutral visual system. Names, logos, colours, layouts and copy should not create the impression that a previous employer endorsed or supplied the work.

@@ -2,7 +2,9 @@
 
 ## Context
 
-The repository contains five planned interactive case studies and one deployable frontend. The architecture optimises for inexpensive static hosting, clear boundaries and incremental growth.
+The repository contains five interactive case studies, a Markdown-backed
+engineering handbook, and one deployable frontend. The architecture optimises
+for inexpensive static hosting, clear boundaries and incremental growth.
 
 ```text
 GitHub Pages
@@ -54,6 +56,20 @@ Domain code must not import React. Components should not read local storage, cal
 ## Routing and hosting
 
 Production assets use `/engineering-case-studies/` as their Vite base path. `HashRouter` places application routes after `#`, so GitHub Pages always receives a request for the root static document.
+
+## Handbook content flow
+
+Canonical chapters live in `apps/portfolio/src/content/handbook`. Vite imports
+the Markdown as raw build-time content; a typed registry supplies ordering,
+categories, summaries and search keywords. The client derives headings while
+skipping fenced code blocks, builds a local search index, and renders Markdown
+without enabling raw HTML. No handbook request, query, or analytics event leaves
+the browser.
+
+The public handbook routes are `/handbook` and `/handbook/:slug`. Because the
+application uses `HashRouter`, in-page heading navigation scrolls through button
+controls instead of creating a second URL fragment that would conflict with the
+route hash.
 
 Example:
 

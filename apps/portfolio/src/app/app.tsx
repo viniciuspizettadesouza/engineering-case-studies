@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react'
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { CaseStudyPage } from './case-study-page'
 import { HomePage } from './home-page'
@@ -21,6 +22,18 @@ import { TicketReviewPage } from '../case-studies/accessible-transit/routes/tick
 import { CatalogueWorkspacePage } from '../case-studies/modular-enterprise/routes/catalogue-workspace-page'
 import { InsightsPage } from '../case-studies/retail-insights/routes/insights-page'
 
+const HandbookIndexPage = lazy(() =>
+  import('./handbook-index-page').then((module) => ({
+    default: module.HandbookIndexPage,
+  })),
+)
+
+const HandbookTopicPage = lazy(() =>
+  import('./handbook-topic-page').then((module) => ({
+    default: module.HandbookTopicPage,
+  })),
+)
+
 export function App() {
   const skipToMainContent = () => {
     document.getElementById('main-content')?.focus()
@@ -32,97 +45,107 @@ export function App() {
         Skip to main content
       </button>
       <SiteHeader />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/case-studies/financial-operations-platform/apply/personal"
-          element={<PersonalDetailsPage />}
-        />
-        <Route
-          path="/case-studies/financial-operations-platform/apply/financial"
-          element={<FinancialDetailsPage />}
-        />
-        <Route
-          path="/case-studies/financial-operations-platform/confirmation/:id"
-          element={<ConfirmationPage />}
-        />
-        <Route
-          path="/case-studies/financial-operations-platform/operations"
-          element={<OperationsDashboardPage />}
-        />
-        <Route
-          path="/case-studies/financial-operations-platform/operations/:id"
-          element={<ApplicationDetailPage />}
-        />
-        <Route
-          path="/case-studies/commerce-experience/vehicles"
-          element={<CataloguePage />}
-        />
-        <Route
-          path="/case-studies/commerce-experience/vehicles/:vehicleId"
-          element={<VehicleDetailPage />}
-        />
-        <Route
-          path="/case-studies/commerce-experience/vehicles/:vehicleId/reserve"
-          element={<ReservationPage />}
-        />
-        <Route
-          path="/case-studies/commerce-experience/vehicles/:vehicleId/review"
-          element={<ReservationReviewPage />}
-        />
-        <Route
-          path="/case-studies/commerce-experience/confirmation/:reservationId"
-          element={<ReservationConfirmationPage />}
-        />
-        <Route
-          path="/case-studies/accessible-transit-platform/tickets"
-          element={
-            <Navigate
-              replace
-              to="/case-studies/accessible-transit-platform/tickets/mossline/plan"
-            />
-          }
-        />
-        <Route
-          path="/case-studies/accessible-transit-platform/tickets/:tenantId/plan"
-          element={<JourneyPlanPage />}
-        />
-        <Route
-          path="/case-studies/accessible-transit-platform/tickets/:tenantId/fares"
-          element={<FarePage />}
-        />
-        <Route
-          path="/case-studies/accessible-transit-platform/tickets/:tenantId/passenger"
-          element={<PassengerPage />}
-        />
-        <Route
-          path="/case-studies/accessible-transit-platform/tickets/:tenantId/review"
-          element={<TicketReviewPage />}
-        />
-        <Route
-          path="/case-studies/accessible-transit-platform/tickets/:tenantId/ticket/:ticketId"
-          element={<TicketConfirmationPage />}
-        />
-        <Route
-          path="/case-studies/modular-enterprise-workspace/catalogue"
-          element={
-            <Navigate
-              replace
-              to="/case-studies/modular-enterprise-workspace/catalogue/northstar"
-            />
-          }
-        />
-        <Route
-          path="/case-studies/modular-enterprise-workspace/catalogue/:tenantId"
-          element={<CatalogueWorkspacePage />}
-        />
-        <Route
-          path="/case-studies/retail-insights-workspace/insights"
-          element={<InsightsPage />}
-        />
-        <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
-        <Route path="*" element={<CaseStudyPage />} />
-      </Routes>
+      <Suspense
+        fallback={
+          <main className="px-5 py-20" id="main-content" tabIndex={-1}>
+            <p aria-live="polite">Loading handbook…</p>
+          </main>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/handbook" element={<HandbookIndexPage />} />
+          <Route path="/handbook/:slug" element={<HandbookTopicPage />} />
+          <Route
+            path="/case-studies/financial-operations-platform/apply/personal"
+            element={<PersonalDetailsPage />}
+          />
+          <Route
+            path="/case-studies/financial-operations-platform/apply/financial"
+            element={<FinancialDetailsPage />}
+          />
+          <Route
+            path="/case-studies/financial-operations-platform/confirmation/:id"
+            element={<ConfirmationPage />}
+          />
+          <Route
+            path="/case-studies/financial-operations-platform/operations"
+            element={<OperationsDashboardPage />}
+          />
+          <Route
+            path="/case-studies/financial-operations-platform/operations/:id"
+            element={<ApplicationDetailPage />}
+          />
+          <Route
+            path="/case-studies/commerce-experience/vehicles"
+            element={<CataloguePage />}
+          />
+          <Route
+            path="/case-studies/commerce-experience/vehicles/:vehicleId"
+            element={<VehicleDetailPage />}
+          />
+          <Route
+            path="/case-studies/commerce-experience/vehicles/:vehicleId/reserve"
+            element={<ReservationPage />}
+          />
+          <Route
+            path="/case-studies/commerce-experience/vehicles/:vehicleId/review"
+            element={<ReservationReviewPage />}
+          />
+          <Route
+            path="/case-studies/commerce-experience/confirmation/:reservationId"
+            element={<ReservationConfirmationPage />}
+          />
+          <Route
+            path="/case-studies/accessible-transit-platform/tickets"
+            element={
+              <Navigate
+                replace
+                to="/case-studies/accessible-transit-platform/tickets/mossline/plan"
+              />
+            }
+          />
+          <Route
+            path="/case-studies/accessible-transit-platform/tickets/:tenantId/plan"
+            element={<JourneyPlanPage />}
+          />
+          <Route
+            path="/case-studies/accessible-transit-platform/tickets/:tenantId/fares"
+            element={<FarePage />}
+          />
+          <Route
+            path="/case-studies/accessible-transit-platform/tickets/:tenantId/passenger"
+            element={<PassengerPage />}
+          />
+          <Route
+            path="/case-studies/accessible-transit-platform/tickets/:tenantId/review"
+            element={<TicketReviewPage />}
+          />
+          <Route
+            path="/case-studies/accessible-transit-platform/tickets/:tenantId/ticket/:ticketId"
+            element={<TicketConfirmationPage />}
+          />
+          <Route
+            path="/case-studies/modular-enterprise-workspace/catalogue"
+            element={
+              <Navigate
+                replace
+                to="/case-studies/modular-enterprise-workspace/catalogue/northstar"
+              />
+            }
+          />
+          <Route
+            path="/case-studies/modular-enterprise-workspace/catalogue/:tenantId"
+            element={<CatalogueWorkspacePage />}
+          />
+          <Route
+            path="/case-studies/retail-insights-workspace/insights"
+            element={<InsightsPage />}
+          />
+          <Route path="/case-studies/:slug" element={<CaseStudyPage />} />
+          <Route path="*" element={<CaseStudyPage />} />
+        </Routes>
+      </Suspense>
       <SiteFooter />
     </HashRouter>
   )

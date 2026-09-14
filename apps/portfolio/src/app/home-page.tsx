@@ -33,17 +33,17 @@ export function HomePage() {
         />
         <Container>
           <div className="max-w-5xl">
-            <Eyebrow>Career systems, rebuilt in the open</Eyebrow>
+            <Eyebrow>Engineering Practice Lab</Eyebrow>
             <h1 className="mt-7 text-balance text-5xl font-semibold leading-[0.98] tracking-[-0.045em] text-slate-950 sm:text-7xl lg:text-[6.5rem] dark:text-white">
-              Engineering lessons made{' '}
+              Engineering practice made{' '}
               <span className="text-teal-700 dark:text-teal-300">
                 executable.
               </span>
             </h1>
             <p className="mt-8 max-w-3xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
-              A focused collection of fictional products exploring financial
-              workflows, commerce, accessible transport, multi-tenant platforms
-              and responsible retail analytics.
+              Executable case studies and a curated engineering handbook,
+              connecting product delivery with the foundations and decisions
+              behind it.
             </p>
             <div className="mt-10 flex flex-wrap gap-3">
               <Tag>React + TypeScript</Tag>
@@ -58,6 +58,12 @@ export function HomePage() {
               >
                 Explore the studies
               </Link>
+              <Link
+                className="inline-flex min-h-11 items-center rounded-lg border border-teal-700 px-5 py-2.5 font-semibold text-teal-800 outline-offset-4 focus-visible:outline-2 focus-visible:outline-teal-600 dark:border-teal-300 dark:text-teal-200"
+                to="/handbook"
+              >
+                Open the handbook
+              </Link>
               <a
                 className="inline-flex min-h-11 items-center rounded-lg border border-slate-400 px-5 py-2.5 font-semibold text-slate-800 outline-offset-4 focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-slate-100"
                 href={repositoryUrl}
@@ -70,9 +76,53 @@ export function HomePage() {
       </section>
 
       <section
-        aria-labelledby="purpose-heading"
+        aria-labelledby="collection-heading"
         className="border-y border-slate-200 bg-white/60 py-16 sm:py-20 dark:border-slate-800 dark:bg-slate-900/40"
       >
+        <Container>
+          <Eyebrow>Two connected collections</Eyebrow>
+          <h2
+            className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl dark:text-white"
+            id="collection-heading"
+          >
+            Working products and reusable knowledge.
+          </h2>
+          <div className="mt-8 grid gap-5 md:grid-cols-2">
+            <div className="rounded-2xl border border-slate-200 bg-white p-7 dark:border-slate-800 dark:bg-slate-900">
+              <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
+                Case Studies
+              </h3>
+              <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
+                Five fictional, end-to-end product workflows with architecture,
+                accessibility, and test evidence.
+              </p>
+              <Link
+                className="mt-5 inline-flex rounded-sm font-semibold text-teal-700 outline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-teal-300"
+                to="/#case-studies"
+              >
+                Explore case studies →
+              </Link>
+            </div>
+            <div className="rounded-2xl border border-slate-200 bg-white p-7 dark:border-slate-800 dark:bg-slate-900">
+              <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
+                Engineering Handbook
+              </h3>
+              <p className="mt-3 leading-7 text-slate-600 dark:text-slate-300">
+                Searchable notes on frontend foundations, systems, delivery,
+                technical exercises, and leadership.
+              </p>
+              <Link
+                className="mt-5 inline-flex rounded-sm font-semibold text-teal-700 outline-offset-4 hover:underline focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-teal-300"
+                to="/handbook"
+              >
+                Browse the handbook →
+              </Link>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section aria-labelledby="purpose-heading" className="py-16 sm:py-20">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
             <div>

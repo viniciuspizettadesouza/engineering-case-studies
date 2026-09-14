@@ -22,6 +22,14 @@ export function SiteHeader() {
                 Studies
               </Link>
             </li>
+            <li>
+              <Link
+                className="rounded-sm outline-offset-4 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-teal-600 dark:hover:text-white"
+                to="/handbook"
+              >
+                Handbook
+              </Link>
+            </li>
             <li className="hidden sm:list-item">
               <a
                 className="rounded-sm outline-offset-4 hover:text-slate-950 focus-visible:outline-2 focus-visible:outline-teal-600 dark:hover:text-white"
