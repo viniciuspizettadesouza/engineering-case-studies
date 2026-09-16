@@ -1,8 +1,7 @@
 # Engineering Practice Lab
 
 Executable, fictional engineering case studies paired with a curated engineering
-handbook covering frontend foundations, systems, delivery, interview strategy,
-technical exercises and leadership.
+handbook and an adaptive, local-first study system.
 
 This repository is both a portfolio and a working engineering notebook. Each
 case study pairs a product workflow with its engineering reasoning. The handbook
@@ -14,7 +13,7 @@ turns accumulated study notes into a searchable, maintained reference.
 ## Current state
 
 The repository contains five complete executable case studies and a published
-engineering handbook:
+engineering handbook and Study Mode:
 
 - an accessible landing page;
 - a focused catalogue of five MVP studies with honest delivery statuses;
@@ -26,6 +25,8 @@ engineering handbook:
 - a completed cross-product accessibility, test and fixture-provenance review.
 - thirteen curated handbook topics loaded directly from canonical Markdown;
 - accessible topic navigation, table-of-contents controls and local search.
+- active-recall cards scheduled by FSRS and interleaved across categories;
+- a knowledge map, review history, settings, and JSON progress backup.
 
 All five MVPs are complete. Together they cover a fictional credit application
 and agent review, vehicle reservation, multi-tenant ticketing, tenant-isolated
@@ -36,6 +37,7 @@ bulk product registration, and explainable simulated retail insights.
 - React 19 and TypeScript
 - Vite and Tailwind CSS
 - React Router with hash-based routing
+- ts-fsrs spaced-repetition scheduling
 - pnpm workspaces and Turborepo
 - Vitest and Testing Library
 - Playwright
@@ -50,7 +52,8 @@ The application is static-first. It has no production backend, database, authent
 .
 ├── apps/
 │   └── portfolio/          # Published React application
-│       └── src/content/handbook/ # Canonical handbook Markdown
+│       ├── src/content/handbook/ # Canonical handbook Markdown
+│       └── src/study/      # Study domain, scheduler, storage and UI
 ├── packages/
 │   └── design-system/      # Small, genuinely shared UI primitives
 ├── docs/
@@ -100,6 +103,8 @@ Published collection: <https://viniciuspizettadesouza.github.io/engineering-case
 
 - [Engineering handbook](apps/portfolio/src/content/handbook/)
 - [Handbook migration report](docs/handbook-migration.md)
+- [Study System implementation plan and progress](docs/study-system-implementation-plan.md)
+- [Study System architecture and usage](docs/study-system.md)
 
 - [Project brief](docs/project-brief.md)
 - [Implementation roadmap](docs/implementation-roadmap.md)

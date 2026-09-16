@@ -34,6 +34,10 @@ const HandbookTopicPage = lazy(() =>
   })),
 )
 
+const StudyArea = lazy(() =>
+  import('../study').then((module) => ({ default: module.StudyArea })),
+)
+
 export function App() {
   const skipToMainContent = () => {
     document.getElementById('main-content')?.focus()
@@ -48,7 +52,7 @@ export function App() {
       <Suspense
         fallback={
           <main className="px-5 py-20" id="main-content" tabIndex={-1}>
-            <p aria-live="polite">Loading handbook…</p>
+            <p aria-live="polite">Loading page…</p>
           </main>
         }
       >
@@ -56,6 +60,7 @@ export function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/handbook" element={<HandbookIndexPage />} />
           <Route path="/handbook/:slug" element={<HandbookTopicPage />} />
+          <Route path="/study/*" element={<StudyArea />} />
           <Route
             path="/case-studies/financial-operations-platform/apply/personal"
             element={<PersonalDetailsPage />}

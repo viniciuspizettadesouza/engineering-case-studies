@@ -77,6 +77,47 @@ test('the core navigation is keyboard accessible', async ({ page }) => {
   ).toBeFocused()
 })
 
+test('study review is keyboard accessible, persists, and updates the knowledge map', async ({
+  page,
+}) => {
+  await page.goto('/engineering-case-studies/#/study')
+  await page.evaluate(() => localStorage.clear())
+  await page.reload()
+
+  await expect(
+    page.getByRole('heading', { name: 'What should I review today?' }),
+  ).toBeVisible()
+  await page.getByRole('link', { name: /Start review/ }).click()
+  await expect(page.getByText('Asked in a real interview')).toBeVisible()
+  await expect(page.getByRole('button', { name: 'Show answer' })).toBeVisible()
+  await expect(page.getByRole('button', { name: /^Good/ })).toHaveCount(0)
+
+  await page.keyboard.press('Enter')
+  const good = page.getByRole('button', { name: /^Good, next review/ })
+  await expect(good).toBeVisible()
+  await page.keyboard.press('3')
+  await expect(page.getByText('Card 2 of 5')).toBeVisible()
+
+  await page.reload()
+  await expect(page.getByText(/Card 1 of 4|Card 1 of 5/)).toBeVisible()
+  await page.getByRole('link', { name: 'Knowledge map' }).click()
+  await expect(
+    page.getByRole('heading', { name: /Visible memory/ }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('cell', { name: '1', exact: true }).first(),
+  ).toBeVisible()
+
+  await page.getByRole('link', { name: 'History' }).click()
+  await expect(page.getByText(/good · Next review/i)).toBeVisible()
+
+  await page.getByRole('link', { name: 'Settings' }).click()
+  await expect(
+    page.getByRole('button', { name: 'Export progress' }),
+  ).toBeVisible()
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
+})
+
 test('financial form errors receive focus and link to their fields', async ({
   page,
 }) => {
