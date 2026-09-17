@@ -40,7 +40,7 @@ describe('handbook pages', () => {
         name: 'GraphQL and Messaging',
       }),
     ).toBeInTheDocument()
-    expect(screen.getByRole('table')).toBeInTheDocument()
+    expect(screen.getAllByRole('table')).toHaveLength(2)
     expect(
       screen.getByRole('navigation', { name: 'On this page' }),
     ).toBeInTheDocument()

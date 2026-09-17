@@ -25,6 +25,8 @@ First Contentful Paint and Total Blocking Time remain useful diagnostic metrics.
 
 Compression such as Brotli or gzip reduces transfer size, but not parse or execution cost. HTTP/2 and newer protocols improve multiplexing and connection behavior; they do not make oversized payloads free.
 
+Browsers typically limit parallel HTTP/1.1 connections per origin, so many dependent requests can queue and each connection processes responses in order. HTTP/2 multiplexes streams over one connection and removes HTTP/1.1 application-layer head-of-line blocking, although packet loss can still delay streams sharing the same TCP connection. HTTP/3 changes the transport to reduce that cross-stream effect. Protocol upgrades help request concurrency, but should follow measurement and do not replace aggregation when the client/server boundary is wrong.
+
 ## Rendering and discovery
 
 SEO depends on useful content, stable links, metadata, crawlability, and performance. Provide unique page titles and descriptions, semantic heading structure, canonical URLs where relevant, and meaningful link text. Ensure server-rendered or statically emitted content is available when crawlers or link previews cannot execute the application fully.

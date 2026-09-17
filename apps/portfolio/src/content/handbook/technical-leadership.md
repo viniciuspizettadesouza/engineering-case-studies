@@ -21,6 +21,8 @@ Become a trusted local reference by teaching, reviewing, and making reasoning re
 
 Use engineering metrics such as lead time, deployment frequency, change-failure rate, and recovery time to understand systems. Never use a single metric to rank individual contributors. External writing, talks, and open-source work can sharpen communication, but internal team outcomes come first.
 
+Technical breadth for a lead includes dependency health, architecture and scalability reviews, observability, performance engineering, and code-quality governance. The goal is not to personally approve every choice; it is to establish useful questions, ownership, evidence, and escalation paths. AI context design—selecting relevant constraints, examples, retrieval sources, and verification steps—is another engineering skill when assistants participate in research, planning, ADRs, implementation, or review.
+
 ## A 30–60–90 day approach
 
 ### Days 0–30: discover

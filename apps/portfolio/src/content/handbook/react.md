@@ -43,6 +43,12 @@ Measure before optimizing. Common tools include:
 
 Memoization has comparison and maintenance costs. It cannot repair incorrect state ownership or an effect that updates continuously. Current React tooling may optimize some computations automatically, but application architecture and measurement still matter.
 
+`memo` normally compares each prop with its previous value using `Object.is`. This is a shallow boundary: a newly created object, array, or function has a new identity even if its contents look the same, while mutating an existing object can hide a meaningful change. Prefer immutable updates and stabilize identities only when measurement shows that the comparison avoids useful work.
+
+Reconciliation compares the current and next element trees and preserves or replaces component state according to type, position, and key. A stable key expresses identity; changing it intentionally resets that subtree. Functional state updates such as `setCount((current) => current + 1)` are important when the next value depends on the queued previous value.
+
+Concurrent rendering lets React prepare and prioritize work without promising that every render attempt will commit. Components must keep render pure. Server Components move selected rendering and data access to a server-capable environment and reduce client JavaScript for that subtree, but require framework and serialization boundaries; they are an architecture choice, not a universal performance switch.
+
 ## Component exercise themes
 
 Useful practice includes grouping users into unique city tabs, building circular carousels, conditionally creating elements from a counter, avoiding prop drilling, implementing countdown render props, handling cancellable requests, and typing reusable fetch hooks. Each exercise should include keyboard behavior, semantic HTML, loading and error states, and deterministic tests—not only the happy-path code.
