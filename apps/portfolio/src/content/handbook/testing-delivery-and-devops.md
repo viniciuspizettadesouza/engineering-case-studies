@@ -32,6 +32,18 @@ Context engineering means selecting the information that helps the model perform
 
 Automated loops, scheduled tasks, hooks, and generated project wikis can reduce repetitive work, but their names and behavior are tool-specific. Review their permissions, stopping conditions, sources, and update policy before relying on them. Ask assistants for direct, rigorous feedback while keeping review language constructive and psychologically safe for the humans who will act on it.
 
+## Application security
+
+Authentication establishes an identity; authorization decides whether that identity may perform a specific action on a specific resource. Enforce authorization on the server at every boundary, default to denial, and test horizontal access between peer resources as well as privileged operations. Hiding a button is user experience, not access control.
+
+For browser sessions, use securely generated identifiers in cookies with `Secure`, `HttpOnly`, and an appropriate `SameSite` policy. Rotate session identifiers after authentication or privilege changes, expire them, and provide server-side revocation where the risk requires it. Cookie-authenticated state-changing requests need CSRF protection; CORS alone does not provide it.
+
+Prevent injection by keeping data separate from code: use parameterized database queries, safe framework APIs, contextual output encoding, and narrowly scoped sanitization when accepting user-authored markup. Treat Content Security Policy as defense in depth for XSS, not a substitute for safe rendering. Validate input at trust boundaries and validate output from external services before using it in a more privileged context.
+
+Keep secrets out of source code, client bundles, logs, fixtures, and build artifacts. Store them in an appropriate secret manager, grant least privilege, rotate them, and make accidental disclosure recoverable. Review dependencies and lockfiles, verify build provenance where practical, and patch based on exploitability and exposure rather than raw alert count alone.
+
+Security failures must be observable without leaking sensitive data. Use generic external errors, detailed protected diagnostics, audit events for consequential actions, rate limits against abuse, and tested recovery procedures. Threat modeling asks what is valuable, who can act, which trust boundaries exist, how the system can fail, and which controls reduce the highest risks.
+
 ## Architecture decision records
 
 Write an ADR when a consequential decision will benefit future maintainers. Keep it proportional and include:
@@ -54,11 +66,25 @@ To collect coverage for one test while diagnosing locally, pass the runner's fil
 
 Build optimization includes code splitting, tree shaking, asset compression, dependency auditing, and deterministic workspace orchestration. Monorepos can share tooling and atomic changes, but require clear ownership and affected-project execution.
 
+## Observability and reliability
+
+Logs record events, metrics aggregate behavior over time, and traces connect work across a request path. Correlate them with stable service, environment, trace, and request identifiers. Do not place secrets or unnecessary personal data in telemetry, and control high-cardinality attributes such as raw user IDs or unbounded URLs before they create cost and performance problems.
+
+Start from user-visible behavior. A service-level indicator measures a behavior such as successful-request ratio or latency; a service-level objective defines the acceptable target over a window; an error budget represents the tolerated miss. These are decision tools for balancing reliability and change, not promises that every request will succeed. An external contractual commitment is an SLA and should not be used interchangeably with an internal SLO.
+
+Alerts should identify actionable user impact with enough context to start diagnosis. Pages require urgency and a named responder; lower-urgency conditions belong in tickets or reports. Every critical alert needs an owner, a runbook, a validation path, and periodic review for noise or missing coverage.
+
+Reliability mechanisms include timeouts, bounded retries with jitter, idempotency, backpressure, load shedding, circuit breakers, bulkheads, graceful degradation, and recovery from partial failure. Each mechanism has a failure mode of its own, so test it under realistic dependency latency and capacity rather than assuming a library default is safe.
+
+During an incident, establish coordination, communication, and an explicit mitigation objective before pursuing perfect diagnosis. Preserve a timeline and decisions. After significant incidents, write a blameless postmortem that distinguishes trigger, contributing conditions, impact, detection, response, and durable follow-up ownership. A root cause label alone rarely explains a complex system failure.
+
 ## Deployment and operations
 
 Automated deployment should use least-privilege credentials, protected environments where appropriate, immutable artifacts, and a rollback path. GitOps represents desired state in version control; it does not eliminate the need for operational ownership.
 
 Collect logs, metrics, and traces that answer user-impact questions without capturing private data. Track delivery signals such as lead time and recovery time carefully: metrics guide learning, but become harmful when used as individual performance targets.
+
+Further reading: [OWASP Top 10](https://top10.owasp.org/2025/), [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/), [OpenTelemetry signals](https://opentelemetry.io/docs/concepts/signals/), [Google SRE service-level objectives](https://sre.google/sre-book/service-level-objectives/), and [Google SRE postmortem practices](https://sre.google/workbook/postmortem-culture/).
 
 ## Work priority
 

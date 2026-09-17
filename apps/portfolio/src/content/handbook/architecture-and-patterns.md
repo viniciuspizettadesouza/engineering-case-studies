@@ -56,6 +56,24 @@ Headless systems separate a content or commerce capability from presentation. Av
 
 If one screen needs dozens of client requests, inspect the boundary rather than accepting the fan-out. An aggregation endpoint, backend for frontend, GraphQL query, or explicit batch operation may fit, depending on ownership, caching, failure isolation, and whether the data must be consistent together. Instrument clients and SDKs too: an observability integration that generates an N+1 request pattern can become the performance problem it was meant to diagnose.
 
+### HTTP semantics and contracts
+
+Choose methods by semantics rather than endpoint naming. `GET` and `HEAD` are safe and idempotent; `PUT` and `DELETE` are idempotent but can change state; `POST` and `PATCH` are not inherently idempotent. A successful retry is safe only when the operation's semantics or an application idempotency key make it safe.
+
+Use status codes consistently: `2xx` for success, `3xx` for redirection or cache validation, `4xx` when the request cannot be fulfilled as sent, and `5xx` for server-side failure. Common API distinctions include `400` malformed input, `401` missing or invalid authentication, `403` authenticated but forbidden, `404` absent resource, `409` state conflict, `422` semantically invalid content, `429` rate limiting, and `503` temporary unavailability. Return a stable machine-readable error code, a safe human message, field-level details when useful, and a correlation identifier; do not leak stack traces or secrets.
+
+Representations need an explicit media type. Use content negotiation only when the product supports multiple representations deliberately. For caching, define freshness with `Cache-Control`, validate stale representations with `ETag`/`If-None-Match` or modification dates, and mark personalized responses `private` when they may be cached by the browser but not shared caches. `no-cache` requires validation before reuse; it does not mean “do not store.”
+
+CORS is a browser-enforced rule for which origins may read cross-origin responses; it is not authentication or authorization. Credentialed requests require an explicit allowed origin rather than `*`, and origin-varying responses should include `Vary: Origin`.
+
+### Pagination, retries, and evolution
+
+Offset pagination is simple and supports jumping to a position, but large offsets can become expensive and concurrent writes can shift results. Cursor or keyset pagination uses a stable, indexed ordering and scales better, but the cursor must encode all fields needed to continue deterministically. Always define tie-breaking, direction, page-size limits, and what consistency clients can expect.
+
+Set client and server timeouts from a real latency budget. Retry only transient failures, use bounded exponential backoff with jitter, honor `Retry-After`, and avoid multiplying retries across service layers. Rate limits should communicate scope and recovery behavior; load shedding should protect critical work rather than letting every request fail slowly.
+
+Prefer backward-compatible API evolution: add optional fields, tolerate unknown response fields, and use deprecation periods with usage evidence. Version only when a breaking semantic change cannot be introduced compatibly. Contract tests can protect consumers, but they do not replace production observability or a migration plan.
+
 ## Data stores and backend reliability
 
 Choose a database from access patterns, consistency, transactions, query flexibility, scale, operational skills, and offline requirements—not from a generic ranking.
@@ -76,4 +94,22 @@ Use an idempotency key for retryable commands whose effect must happen at most o
 
 UUID v4 is random. UUID v7 includes an approximately time-ordered prefix plus randomness, which improves chronological locality for many database indexes; it does not by itself define business ordering, authorization, or idempotency.
 
-Further reading: [web architecture fundamentals](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview), [Martin Fowler's architecture guide](https://martinfowler.com/architecture/), [Firestore offline data](https://firebase.google.com/docs/firestore/manage-data/enable-offline), [MongoDB Device Sync end of life](https://www.mongodb.com/company/blog/innovation/future-proof-your-apps-with-mongodb-wekan), [DynamoDB pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html), [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html), and [Supabase Realtime](https://supabase.com/docs/guides/realtime).
+### Modeling and indexes
+
+Normalize data when duplicated facts would create update anomalies; denormalize deliberately when a measured read path justifies extra write and consistency work. Model ownership, nullability, uniqueness, referential integrity, retention, and deletion behavior explicitly. Document databases still need schema evolution and validation even when the database does not require one fixed shape.
+
+Indexes exchange storage and write cost for faster reads. Build them around real filters, joins, and sort orders; column order matters in composite indexes. Inspect query plans and production-shaped data before adding an index, and remove redundant indexes cautiously. Avoid unbounded scans and application-side filtering when the database can apply a selective predicate.
+
+### Transactions and concurrency
+
+A transaction groups changes into one commit or rollback boundary. Isolation determines which concurrent effects a transaction can observe; stronger isolation can reduce anomalies while increasing retries, blocking, or coordination. Define how the application handles optimistic version conflicts, deadlocks, lock timeouts, and serialization failures. Never hold a database transaction open while waiting for a user or a slow external network call.
+
+Cross-service workflows rarely share one database transaction. Use idempotent steps, durable state, outbox/inbox patterns, compensating actions, and reconciliation where appropriate. “Eventually consistent” still needs a bounded user experience, observable lag, and a repair path.
+
+### Migrations, replication, and recovery
+
+Make schema changes compatible with old and new application versions during rolling deployment. An expand-and-contract migration adds the compatible shape first, moves reads and writes, backfills with checkpoints, verifies the result, and removes the old shape only after rollback is no longer required.
+
+Replication improves availability and read capacity but can reproduce accidental deletion or corruption, so it is not a backup. Define recovery point and recovery time objectives, automate backups, protect them separately, and test restoration. A backup that has never been restored is only an assumption.
+
+Further reading: [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods), [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching), [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS), [web architecture fundamentals](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview), [Martin Fowler's architecture guide](https://martinfowler.com/architecture/), [Firestore offline data](https://firebase.google.com/docs/firestore/manage-data/enable-offline), [MongoDB Device Sync end of life](https://www.mongodb.com/company/blog/innovation/future-proof-your-apps-with-mongodb-wekan), [DynamoDB pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html), [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html), and [Supabase Realtime](https://supabase.com/docs/guides/realtime).

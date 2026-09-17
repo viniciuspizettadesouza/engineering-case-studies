@@ -3,6 +3,49 @@
 Review a command before running it, especially when it changes Git history,
 permissions, dependencies, or many files.
 
+## Daily command reference
+
+Use this as a quick index; the sections below explain the risky or less obvious commands.
+
+```bash
+# Inspect work before changing it
+git status --short
+git diff
+git diff --staged
+git log --oneline --graph --decorate -n 20
+
+# Refresh and update a feature branch
+git fetch origin
+git switch my-feature
+git rebase origin/main
+
+# Resolve or abandon a rebase
+git add path/to/resolved-file
+git rebase --continue
+git rebase --abort
+
+# Update an agreed published rewrite safely
+git push --force-with-lease
+
+# Install and validate this repository
+pnpm install --frozen-lockfile
+pnpm dev
+pnpm format:check
+pnpm lint
+pnpm typecheck
+pnpm test
+pnpm test:e2e
+pnpm build
+
+# Shell helpers
+history
+
+# Windows: open the current directory in File Explorer
+explorer .
+```
+
+Never paste tokens, passwords, or credential-file contents into a command, shell history, issue, or repository. Prefer the operating system credential manager, a supported Git credential helper, or the authenticated CLI for the service.
+
 ## Git identity and configuration
 
 ```bash
