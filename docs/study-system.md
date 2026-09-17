@@ -10,9 +10,13 @@ FSRS owns **when** a learned card is due. The application owns **which eligible 
 
 Priority and memory are intentionally separate. Interview evidence says why content matters; FSRS state says how it is currently retained. The knowledge map therefore shows New, Learning, Review, or Relearning plus due dates, reviews, lapses, and stability—never an invented mastery percentage.
 
+The dashboard reports review distribution by handbook category. Session estimates use the median of the latest response durations after at least five timed reviews; before that threshold, the UI uses the documented 1.5-minute-per-card fallback. The median limits the effect of unusually long inactive-tab sessions.
+
 ## Local persistence and privacy
 
-Version 1 uses `localStorage` behind `StudyProgressRepository`, under `engineering-practice-lab.study.v1`. Stored data contains settings, scheduler state, and review history; it contains no account or unnecessary personal data. Malformed stored data falls back safely without overwriting the malformed value. Unknown historical card IDs remain readable in history.
+Version 2 uses `localStorage` behind `StudyProgressRepository`, under `engineering-practice-lab.study.v2`. Existing version 1 progress is validated, migrated, and copied forward automatically while the legacy value is preserved as a recovery source. Stored data contains settings, scheduler state, and review history; it contains no account or unnecessary personal data. Malformed stored data falls back safely without overwriting the malformed value. Unknown historical card IDs remain readable in history.
+
+Available study days control when new cards may enter the queue; due cards remain visible every day. Optional category emphasis only orders equally important new cards and never changes FSRS dates or moves new material ahead of due reviews.
 
 Export creates human-readable JSON with a schema version and export timestamp. Import validates the complete payload before asking for confirmation and replacing progress. Reset also requires confirmation. Clearing browser storage can still remove data, so regular exports are appropriate when progress matters.
 
@@ -29,4 +33,4 @@ A central clock boundary supports deterministic scheduling tests. Source links u
 
 ## Limitations and future work
 
-The initial catalog prioritizes the nineteen migrated technical exercises and selected interview-derived concepts. It does not import `software-architecture-playbook`, optimize personal FSRS parameters, synchronize devices, support multiple learners, or generate canonical cards with AI. Those extensions should follow only after real use validates the current learning loop.
+The initial catalog prioritizes the nineteen migrated technical exercises and selected interview-derived concepts. It does not import `software-architecture-playbook`, optimize personal FSRS parameters, synchronize devices, support multiple learners, or generate canonical cards with AI. Those extensions should follow only after real use validates the current learning loop. Record that evidence and the proceed/hold decision in the [practical stability log](study-system-stability-log.md).

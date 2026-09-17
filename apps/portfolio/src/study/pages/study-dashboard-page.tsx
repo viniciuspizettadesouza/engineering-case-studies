@@ -1,5 +1,6 @@
 import { Container, Eyebrow } from '@engineering-case-studies/design-system'
 import { Link } from 'react-router-dom'
+import { handbookCategories } from '../../content/handbook'
 import { studyCards } from '../cards/study-cards'
 import { Metric } from '../components/study-ui'
 import {
@@ -7,13 +8,27 @@ import {
   formatRelativeDate,
 } from '../components/study-ui-helpers'
 import { studyRatings, systemClock } from '../domain/study'
+import {
+  estimateStudySessionMinutes,
+  limitStudySession,
+} from '../queue/build-study-queue'
 import { useStudy } from '../use-study'
 
 export function StudyDashboardPage() {
   const { queue, storage, ready } = useStudy()
-  const reviewCount = queue.filter((card) => !card.isNew).length
-  const newCount = queue.filter((card) => card.isNew).length
-  const estimate = Math.max(1, Math.ceil(queue.length * 1.5))
+  const session = limitStudySession(queue, storage.settings)
+  const reviewCount = session.filter((card) => !card.isNew).length
+  const newCount = session.filter((card) => card.isNew).length
+  const remaining = queue.slice(session.length)
+  const remainingDue = remaining.filter((card) => !card.isNew).length
+  const estimate = estimateStudySessionMinutes(session.length, storage.reviews)
+  const categoryReviewCounts = handbookCategories.map((category) => ({
+    category,
+    count: storage.reviews.filter((review) => {
+      const card = studyCards.find((item) => item.id === review.cardId)
+      return card?.category === category
+    }).length,
+  }))
   const recent = [...storage.reviews].reverse().slice(0, 3)
   const now = systemClock.now()
   const upcoming = Object.values(storage.cards)
@@ -36,7 +51,8 @@ export function StudyDashboardPage() {
           <div className="mt-8">
             {ready && queue.length ? (
               <Link className={buttonPrimary} to="/study/review">
-                Start review · {queue.length} cards
+                Start review · {session.length}{' '}
+                {session.length === 1 ? 'card' : 'cards'}
               </Link>
             ) : (
               <p
@@ -48,14 +64,25 @@ export function StudyDashboardPage() {
                   : 'Loading local progress…'}
               </p>
             )}
+            {ready && remaining.length ? (
+              <p className="mt-4 text-sm text-slate-600 dark:text-slate-300">
+                {remaining.length} additional eligible{' '}
+                {remaining.length === 1 ? 'card remains' : 'cards remain'} after
+                this session
+                {remainingDue
+                  ? `, including ${remainingDue} due ${remainingDue === 1 ? 'card' : 'cards'}`
+                  : ''}
+                .
+              </p>
+            ) : null}
           </div>
         </Container>
       </section>
       <section className="py-12 sm:py-16">
         <Container>
           <dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Metric label="Due" value={reviewCount} />
-            <Metric label="New" value={newCount} />
+            <Metric label="Due in session" value={reviewCount} />
+            <Metric label="New in session" value={newCount} />
             <Metric label="Reviews completed" value={storage.reviews.length} />
             <Metric label="Estimated session" value={`~${estimate} min`} />
           </dl>
@@ -65,10 +92,10 @@ export function StudyDashboardPage() {
                 className="text-2xl font-semibold text-slate-950 dark:text-white"
                 id="due-heading"
               >
-                Due today
+                This session
               </h2>
               <ul className="mt-5 space-y-3">
-                {queue.slice(0, 5).map((item) => (
+                {session.slice(0, 5).map((item) => (
                   <li
                     className="rounded-xl border border-slate-200 p-4 dark:border-slate-800"
                     key={item.definition.id}
@@ -83,7 +110,7 @@ export function StudyDashboardPage() {
                     </span>
                   </li>
                 ))}
-                {!queue.length ? (
+                {!session.length ? (
                   <li className="text-slate-600 dark:text-slate-300">
                     No cards due.
                   </li>
@@ -178,6 +205,35 @@ export function StudyDashboardPage() {
               </ul>
             </section>
           </div>
+          <section
+            aria-labelledby="category-distribution-heading"
+            className="mt-12"
+          >
+            <h2
+              className="text-2xl font-semibold text-slate-950 dark:text-white"
+              id="category-distribution-heading"
+            >
+              Reviews by category
+            </h2>
+            <p className="mt-3 text-slate-600 dark:text-slate-300">
+              Recall attempts grouped by the canonical handbook category.
+            </p>
+            <dl className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {categoryReviewCounts.map(({ category, count }) => (
+                <div
+                  className="rounded-xl border border-slate-200 p-4 dark:border-slate-800"
+                  key={category}
+                >
+                  <dt className="text-sm text-slate-600 dark:text-slate-400">
+                    {category}
+                  </dt>
+                  <dd className="mt-1 text-xl font-semibold text-slate-950 dark:text-white">
+                    {count}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </section>
         </Container>
       </section>
     </>

@@ -97,6 +97,15 @@ test('study review is keyboard accessible, persists, and updates the knowledge m
   await expect(good).toBeVisible()
   await page.keyboard.press('3')
   await expect(page.getByText('Card 2 of 5')).toBeVisible()
+  const keyboardResponseTime = await page.evaluate(() => {
+    const serialized = localStorage.getItem('engineering-practice-lab.study.v2')
+    if (!serialized) return undefined
+    const progress = JSON.parse(serialized) as {
+      reviews?: { responseTimeMs?: number }[]
+    }
+    return progress.reviews?.[0]?.responseTimeMs
+  })
+  expect(keyboardResponseTime).toEqual(expect.any(Number))
 
   await page.reload()
   await expect(page.getByText(/Card 1 of 4|Card 1 of 5/)).toBeVisible()
@@ -112,10 +121,77 @@ test('study review is keyboard accessible, persists, and updates the knowledge m
   await expect(page.getByText(/good · Next review/i)).toBeVisible()
 
   await page.getByRole('link', { name: 'Settings' }).click()
-  await expect(
-    page.getByRole('button', { name: 'Export progress' }),
-  ).toBeVisible()
+  const exportButton = page.getByRole('button', { name: 'Export progress' })
+  await expect(exportButton).toBeVisible()
   expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
+
+  const downloadPromise = page.waitForEvent('download')
+  await exportButton.click()
+  const download = await downloadPromise
+  expect(download.suggestedFilename()).toMatch(
+    /^engineering-practice-lab-study-\d{4}-\d{2}-\d{2}\.json$/,
+  )
+
+  const importInput = page.locator('input[type="file"]')
+  const version1Backup = JSON.stringify({
+    version: 1,
+    cards: {},
+    reviews: [],
+    settings: {
+      dailyNewCardLimit: 3,
+      desiredRetention: 0.9,
+      interleavingEnabled: true,
+      sessionTargetMinutes: 15,
+    },
+  })
+  page.once('dialog', (dialog) => void dialog.accept())
+  await importInput.setInputFiles({
+    name: 'study-v1.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(version1Backup),
+  })
+  await expect(page.getByText('Study progress imported.')).toBeVisible()
+  const migratedVersion = await page.evaluate(() => {
+    const value = localStorage.getItem('engineering-practice-lab.study.v2')
+    return value
+      ? (JSON.parse(value) as { version: number }).version
+      : undefined
+  })
+  expect(migratedVersion).toBe(2)
+
+  const version2Backup = await page.evaluate(() => {
+    const value = localStorage.getItem('engineering-practice-lab.study.v2')
+    if (!value) throw new Error('Migrated study progress was not found.')
+    const parsed = JSON.parse(value) as {
+      settings: { dailyNewCardLimit: number }
+    }
+    parsed.settings.dailyNewCardLimit = 9
+    return JSON.stringify(parsed)
+  })
+  page.once('dialog', (dialog) => void dialog.accept())
+  await importInput.setInputFiles({
+    name: 'study-v2.json',
+    mimeType: 'application/json',
+    buffer: Buffer.from(version2Backup),
+  })
+  const importedLimit = await page.evaluate(() => {
+    const value = localStorage.getItem('engineering-practice-lab.study.v2')
+    return value
+      ? (JSON.parse(value) as { settings: { dailyNewCardLimit: number } })
+          .settings.dailyNewCardLimit
+      : undefined
+  })
+  expect(importedLimit).toBe(9)
+
+  page.once('dialog', (dialog) => void dialog.accept())
+  await page.getByRole('button', { name: 'Reset progress' }).click()
+  await expect(page.getByText('Local study progress reset.')).toBeVisible()
+  expect(
+    await page.evaluate(() => ({
+      current: localStorage.getItem('engineering-practice-lab.study.v2'),
+      legacy: localStorage.getItem('engineering-practice-lab.study.v1'),
+    })),
+  ).toEqual({ current: null, legacy: null })
 })
 
 test('financial form errors receive focus and link to their fields', async ({

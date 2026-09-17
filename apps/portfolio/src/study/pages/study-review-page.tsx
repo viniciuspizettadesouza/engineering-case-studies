@@ -3,7 +3,7 @@ import {
   Eyebrow,
   Tag,
 } from '@engineering-case-studies/design-system'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   buttonPrimary,
@@ -11,6 +11,7 @@ import {
   formatRelativeDate,
 } from '../components/study-ui-helpers'
 import { systemClock, type StudyRating } from '../domain/study'
+import { limitStudySession } from '../queue/build-study-queue'
 import { FsrsStudyScheduler } from '../scheduler/fsrs-scheduler'
 import { useStudy } from '../use-study'
 
@@ -24,16 +25,15 @@ const ratingLabels: readonly [StudyRating, string][] = [
 export function StudyReviewPage() {
   const { queue, review, storage, ready } = useStudy()
   const [sessionIds] = useState(() => {
-    const sessionLimit = Math.max(
-      1,
-      Math.floor((storage.settings.sessionTargetMinutes ?? 20) / 1.5),
+    return limitStudySession(queue, storage.settings).map(
+      (card) => card.definition.id,
     )
-    return queue.slice(0, sessionLimit).map((card) => card.definition.id)
   })
   const [position, setPosition] = useState(0)
   const [revealed, setRevealed] = useState(false)
   const [saving, setSaving] = useState(false)
   const [now, setNow] = useState(() => systemClock.now())
+  const questionStartedAt = useRef(now.getTime())
   const item = queue.find((card) => card.definition.id === sessionIds[position])
   const scheduler = useMemo(
     () => new FsrsStudyScheduler(storage.settings.desiredRetention),
@@ -46,11 +46,18 @@ export function StudyReviewPage() {
   async function rate(rating: StudyRating) {
     if (!item || saving) return
     setSaving(true)
-    await review(item.definition.id, rating)
+    const respondedAt = systemClock.now()
+    const responseTimeMs = Math.max(
+      0,
+      respondedAt.getTime() - questionStartedAt.current,
+    )
+    await review(item.definition.id, rating, responseTimeMs)
+    const nextQuestionAt = systemClock.now()
+    questionStartedAt.current = nextQuestionAt.getTime()
     setPosition((value) => value + 1)
     setRevealed(false)
     setSaving(false)
-    setNow(systemClock.now())
+    setNow(nextQuestionAt)
   }
 
   useEffect(() => {
@@ -64,11 +71,18 @@ export function StudyReviewPage() {
         const rating = ratingLabels[Number(event.key) - 1]?.[0]
         if (rating && item && !saving) {
           setSaving(true)
-          void review(item.definition.id, rating).then(() => {
+          const respondedAt = systemClock.now()
+          const responseTimeMs = Math.max(
+            0,
+            respondedAt.getTime() - questionStartedAt.current,
+          )
+          void review(item.definition.id, rating, responseTimeMs).then(() => {
+            const nextQuestionAt = systemClock.now()
+            questionStartedAt.current = nextQuestionAt.getTime()
             setPosition((value) => value + 1)
             setRevealed(false)
             setSaving(false)
-            setNow(systemClock.now())
+            setNow(nextQuestionAt)
           })
         }
       }

@@ -1,52 +1,116 @@
 # Implementation progress
 
-_Last updated: 2026-09-16_
+_Last updated: 2026-09-17_
 
 Legend: **[x]** complete · **[~]** partially complete · **[ ]** pending
+
+## How this plan is used
+
+This document is the implementation source of truth for the Study System.
+
+- The detailed product, learning, architecture, content, accessibility, testing, and non-goal sections below define the intended behavior.
+- The checklist in this progress section maps that intended behavior to the current repository state.
+- A phase is marked complete only when its implementation and acceptance criteria are both satisfied.
+- Partial work stays marked `[~]`, with the remaining behavior stated explicitly.
+- New Study System scope should be added to this document before or with its implementation.
+- The execution order in section 65 remains authoritative. Phase 11 must not begin before the current learning loop has been used and stabilized.
 
 ## Current phase status
 
 - [x] **Phase 0 — Baseline and architecture decision**
-  - Existing validation baseline was recorded during implementation.
-  - ADR 0009 documents the local-first Study System decision.
+  - [x] Inspect the existing routes and handbook architecture.
+  - [x] Record and run the validation baseline.
+  - [x] Add ADR 0009 for the local-first Study System decision.
+  - [x] Preserve the static GitHub Pages architecture.
 - [x] **Phase 1 — Study domain foundation**
-  - Domain models, stable IDs, settings, clock boundary, validation, and handbook-reference checks exist.
-- [~] **Phase 2 — Interview-derived study catalog**
-  - All nineteen technical exercises and a curated cross-handbook starter set exist.
-  - Remaining work: expand coverage only where additional cards meet the content-quality rules.
+  - [x] Add card, progress, history, settings, source, evidence, rating, and memory-state models.
+  - [x] Add stable card IDs and duplicate-ID validation.
+  - [x] Add handbook topic and heading reference validation.
+  - [x] Centralize the production clock and use fixed clocks in scheduler tests.
+- [x] **Phase 2 — Interview-derived study catalog**
+  - [x] Represent all nineteen technical exercises.
+  - [x] Add a curated starter card for every handbook topic.
+  - [x] Validate IDs, content, source metadata, categories, topics, and headings.
 - [x] **Phase 3 — FSRS scheduler integration**
-  - ts-fsrs is wrapped by an internal scheduler service with deterministic tests, preview, review, serialization, and restoration.
-- [~] **Phase 4 — Local persistence**
-  - Versioned localStorage, safe malformed-data recovery, strict import validation, export/import/reset, and unknown historical-card handling exist.
-  - Remaining work: add a concrete migration when a second schema version is introduced; only schema version 1 currently exists.
+  - [x] Integrate `ts-fsrs` behind an internal scheduler interface.
+  - [x] Create new schedules and preview all four ratings without mutation.
+  - [x] Apply reviews and serialize/restore scheduler state.
+  - [x] Cover scheduling with deterministic tests.
+- [x] **Phase 4 — Local persistence**
+  - [x] Add the `StudyProgressRepository` persistence boundary.
+  - [x] Persist version 2 progress in namespaced `localStorage`.
+  - [x] Recover safely from missing or malformed local data without overwriting it.
+  - [x] Support validated JSON export, import, reset, and unknown historical cards.
+  - [x] Validate optional persisted fields, including last rating and last-review timestamps.
+  - [x] Migrate version 1 settings and storage to version 2 with regression tests.
 - [x] **Phase 5 — Daily queue and interleaving**
-  - Due discovery, daily new-card budgeting, interview priority, deterministic ordering, and category interleaving exist without changing FSRS due dates.
+  - [x] Discover due cards and exclude future reviews.
+  - [x] Limit new cards and preserve the consumed daily allowance after review.
+  - [x] Apply deterministic priority, interview evidence, lapse, and overdue ordering.
+  - [x] Interleave categories without changing FSRS due dates.
+  - [x] Preserve the invariant that all due cards precede ordinary new cards while interleaving.
+  - [x] Calculate the daily new-card boundary using the learner's local calendar day rather than UTC.
+  - [x] Add regression tests for due-versus-new interleaving and local-day boundaries.
 - [x] **Phase 6 — Dashboard and active-recall review flow**
-  - Dashboard, reveal-before-rating, FSRS interval previews, keyboard ratings, persistence, session completion, and handbook links exist.
+  - [x] Add `/study` and `/study/review` routes.
+  - [x] Add the today summary and review entry point.
+  - [x] Require answer reveal before rating.
+  - [x] Show FSRS interval previews for Again, Hard, Good, and Easy.
+  - [x] Support keyboard review, persistence, completion summary, and handbook links.
 - [x] **Phase 7 — Knowledge Map and history**
-  - Memory states, due/overdue text, reviews, lapses, stability, last/next scheduling data, and chronological history exist.
-- [~] **Phase 8 — Study Plan and workload**
-  - Session minutes, new-card budget, retention, and interleaving settings persist; session minutes affect session size.
-  - Remaining work: configurable study days and optional category emphasis.
-- [~] **Phase 9 — Analytics, backup, and hardening**
-  - Review totals, rating distribution, lapses, upcoming reviews, backup UI, keyboard/mobile flows, axe checks, and regression coverage exist.
-  - Remaining work: category-distribution analytics and historical-duration-based estimates after enough timing history exists.
+  - [x] Add `/study/knowledge-map` and `/study/history` routes.
+  - [x] Show New, Learning, Review, and Relearning as text as well as color.
+  - [x] Show due state, reviews, lapses, stability, and scheduling information.
+  - [x] Preserve chronological history and removed-card entries.
+- [x] **Phase 8 — Study Plan and workload**
+  - [x] Persist session minutes, new-card budget, retention, and interleaving settings.
+  - [x] Use session minutes to cap the number of cards in a review session.
+  - [x] Make dashboard count and duration describe the actual capped session while keeping the remaining eligible backlog visible.
+  - [x] Add configurable study-day availability without hiding due cards.
+  - [x] Add optional category emphasis without changing FSRS due dates or due-card priority.
+- [x] **Phase 9 — Analytics, backup, and hardening**
+  - [x] Show review totals, rating distribution, lapses, and upcoming reviews.
+  - [x] Provide export, import, and reset UI with destructive-action confirmation.
+  - [x] Cover the main keyboard, persistence, mobile, and accessibility paths with Playwright and axe.
+  - [x] Keep formatting, lint, type checking, unit tests, build, and Playwright green.
+  - [x] Capture response duration during review for mouse and keyboard ratings.
+  - [x] Replace the fallback duration estimate with a median historical estimate after five timed reviews.
+  - [x] Add category-distribution analytics.
+  - [x] Add component coverage for dashboard states, history, knowledge-map labels, and settings.
+  - [x] Exercise export, version 1 migration/import, version 2 import, and reset end to end.
 - [x] **Phase 10 — Documentation**
-  - README, docs/study-system.md, and ADR 0009 describe the product, learning model, architecture, privacy, and limitations.
+  - [x] Document the learning model, scheduling, queue, persistence, backup, privacy, and limitations.
+  - [x] Update the README for Case Studies, Handbook, and Study.
+  - [x] Record the local-first architecture decision in ADR 0009.
 - [ ] **Phase 11 — software-architecture-playbook integration**
-  - Intentionally not started until the Study System has been used and shown to be stable.
+  - [~] Confirm practical stability through real Study System use.
+    - [x] Define objective exit criteria and an evidence log.
+    - [ ] Complete three real sessions across at least two local calendar days.
+    - [ ] Validate the historical duration estimate with real timings.
+    - [ ] Restore a real version 2 backup and compare progress and settings.
+    - [ ] Resolve blocker and high-severity trial findings, then record a proceed/hold decision.
+  - [ ] Inventory relevant `software-architecture-playbook` material.
+  - [ ] Import only useful concepts into the canonical handbook.
 - [ ] **Phase 12 — Deduplication, provenance, and catalog expansion**
+  - [ ] Deduplicate imported concepts against the existing handbook and cards.
+  - [ ] Preserve the strongest provenance and interview evidence.
+  - [ ] Expand the card catalog only after canonical handbook integration.
+  - [ ] Use real-session gaps to guide useful handbook and card coverage.
+  - [ ] Review every added card against sections 56–60 before accepting it.
 - [ ] **Phase 13 — Evaluate playbook retirement/archive**
+  - [ ] Verify imported content, branches, unique material, and Git history.
+  - [ ] Preserve an easy-to-find historical reference or tag if appropriate.
+  - [ ] Make repository archival or retirement a separate explicit decision.
 - [ ] **Future work — cloud sync, multiple learners, parameter optimization, project-derived knowledge, interview simulation, and reviewed AI-generated cards**
 
 ## Validation checkpoint
 
-Completed on 2026-09-16:
+Revalidated on 2026-09-17:
 
 - [x] Formatting
 - [x] Lint
 - [x] Type checking
-- [x] 60 unit/component tests
+- [x] 78 unit/component tests
 - [x] Static production build
 - [x] 24 Playwright tests across desktop and mobile
 - [x] Keyboard review flow
@@ -55,11 +119,10 @@ Completed on 2026-09-16:
 
 ## Suggested continuation for tomorrow
 
-1. Add category-distribution analytics and decide how much dashboard detail is useful.
-2. Start collecting review response duration again, then use it for estimates only after enough history exists.
-3. Add study-day availability and optional category emphasis without changing FSRS due dates.
-4. Use the current catalog for a real review session and record content-quality issues before expanding it.
-5. Keep Phase 11 blocked until the learning loop has demonstrated practical stability.
+1. Follow the [practical stability log](study-system-stability-log.md) while using the current catalog for real review sessions.
+2. Accumulate response-duration history and compare the median estimate with actual session durations.
+3. Export and restore a real backup in an isolated browser profile, then compare the recorded baseline.
+4. Resolve any blocker or high-severity finding and record a proceed/hold decision before starting Phase 11.
 
 ---
 

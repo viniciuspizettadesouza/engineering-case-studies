@@ -105,6 +105,7 @@ Published collection: <https://viniciuspizettadesouza.github.io/engineering-case
 - [Handbook migration report](docs/handbook-migration.md)
 - [Study System implementation plan and progress](docs/study-system-implementation-plan.md)
 - [Study System architecture and usage](docs/study-system.md)
+- [Study System practical stability log](docs/study-system-stability-log.md)
 
 - [Project brief](docs/project-brief.md)
 - [Implementation roadmap](docs/implementation-roadmap.md)

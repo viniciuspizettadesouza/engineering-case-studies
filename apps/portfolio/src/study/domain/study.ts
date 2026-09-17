@@ -1,4 +1,7 @@
-import type { HandbookCategory } from '../../content/handbook'
+import {
+  handbookCategories,
+  type HandbookCategory,
+} from '../../content/handbook'
 
 export const studyRatings = ['again', 'hard', 'good', 'easy'] as const
 export type StudyRating = (typeof studyRatings)[number]
@@ -9,6 +12,8 @@ export type StudyCardType =
   'concept' | 'code' | 'comparison' | 'scenario' | 'exercise'
 export type StudyPriority = 'high' | 'normal' | 'low'
 export type MemoryState = 'new' | 'learning' | 'review' | 'relearning'
+export const studyWeekdays = [0, 1, 2, 3, 4, 5, 6] as const
+export type StudyWeekday = (typeof studyWeekdays)[number]
 
 export interface StudyCardDefinition {
   readonly id: string
@@ -63,10 +68,12 @@ export interface StudySettings {
   readonly desiredRetention: number
   readonly interleavingEnabled: boolean
   readonly sessionTargetMinutes?: number
+  readonly availableStudyDays: readonly StudyWeekday[]
+  readonly emphasizedCategories: readonly HandbookCategory[]
 }
 
 export interface StudyStorage {
-  readonly version: 1
+  readonly version: 2
   readonly cards: Record<string, StudyCardProgress>
   readonly reviews: ReviewHistoryEntry[]
   readonly settings: StudySettings
@@ -77,10 +84,12 @@ export const defaultStudySettings: StudySettings = {
   desiredRetention: 0.9,
   interleavingEnabled: true,
   sessionTargetMinutes: 20,
+  availableStudyDays: studyWeekdays,
+  emphasizedCategories: [],
 }
 
 export function createEmptyStudyStorage(): StudyStorage {
-  return { version: 1, cards: {}, reviews: [], settings: defaultStudySettings }
+  return { version: 2, cards: {}, reviews: [], settings: defaultStudySettings }
 }
 
 export interface Clock {
@@ -92,6 +101,8 @@ export const systemClock: Clock = { now: () => new Date() }
 export function validateStudySettings(value: unknown): value is StudySettings {
   if (!value || typeof value !== 'object') return false
   const settings = value as Partial<StudySettings>
+  const availableStudyDays = settings.availableStudyDays
+  const emphasizedCategories = settings.emphasizedCategories
   return (
     Number.isInteger(settings.dailyNewCardLimit) &&
     (settings.dailyNewCardLimit ?? -1) >= 0 &&
@@ -103,6 +114,19 @@ export function validateStudySettings(value: unknown): value is StudySettings {
     (settings.sessionTargetMinutes === undefined ||
       (Number.isInteger(settings.sessionTargetMinutes) &&
         settings.sessionTargetMinutes >= 1 &&
-        settings.sessionTargetMinutes <= 240))
+        settings.sessionTargetMinutes <= 240)) &&
+    Array.isArray(availableStudyDays) &&
+    availableStudyDays.length > 0 &&
+    availableStudyDays.length <= studyWeekdays.length &&
+    availableStudyDays.every((day) =>
+      studyWeekdays.includes(day as StudyWeekday),
+    ) &&
+    new Set(availableStudyDays).size === availableStudyDays.length &&
+    Array.isArray(emphasizedCategories) &&
+    emphasizedCategories.length <= handbookCategories.length &&
+    emphasizedCategories.every((category) =>
+      handbookCategories.includes(category as HandbookCategory),
+    ) &&
+    new Set(emphasizedCategories).size === emphasizedCategories.length
   )
 }

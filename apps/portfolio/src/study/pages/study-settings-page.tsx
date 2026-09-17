@@ -1,9 +1,27 @@
 import { Container, Eyebrow } from '@engineering-case-studies/design-system'
 import { useRef, useState, type FormEvent } from 'react'
+import {
+  handbookCategories,
+  type HandbookCategory,
+} from '../../content/handbook'
 import { buttonPrimary, buttonSecondary } from '../components/study-ui-helpers'
-import { validateStudySettings, type StudySettings } from '../domain/study'
+import {
+  validateStudySettings,
+  type StudySettings,
+  type StudyWeekday,
+} from '../domain/study'
 import { parseStudyStorage } from '../storage/browser-study-progress-repository'
 import { useStudy } from '../use-study'
+
+const weekdayOptions = [
+  [1, 'Monday'],
+  [2, 'Tuesday'],
+  [3, 'Wednesday'],
+  [4, 'Thursday'],
+  [5, 'Friday'],
+  [6, 'Saturday'],
+  [0, 'Sunday'],
+] as const satisfies readonly (readonly [StudyWeekday, string])[]
 
 export function StudySettingsPage() {
   const {
@@ -24,6 +42,12 @@ export function StudySettingsPage() {
       desiredRetention: Number(data.get('desiredRetention')) / 100,
       interleavingEnabled: data.get('interleavingEnabled') === 'on',
       sessionTargetMinutes: Number(data.get('sessionTargetMinutes')),
+      availableStudyDays: data
+        .getAll('availableStudyDays')
+        .map((day) => Number(day) as StudyWeekday),
+      emphasizedCategories: data.getAll(
+        'emphasizedCategories',
+      ) as HandbookCategory[],
     }
     if (!validateStudySettings(settings)) {
       setMessage('Check each setting and try again.')
@@ -97,7 +121,7 @@ export function StudySettingsPage() {
           onSubmit={(event) => void save(event)}
         >
           <label className="block font-semibold text-slate-900 dark:text-white">
-            New cards per session
+            New cards per day
             <input
               className="mt-2 block min-h-11 w-full rounded-lg border border-slate-400 bg-transparent px-3"
               defaultValue={storage.settings.dailyNewCardLimit}
@@ -129,6 +153,60 @@ export function StudySettingsPage() {
               type="number"
             />
           </label>
+          <fieldset>
+            <legend className="font-semibold text-slate-900 dark:text-white">
+              Available study days
+            </legend>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+              Due cards remain available every day. These days control when new
+              cards can enter the queue.
+            </p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {weekdayOptions.map(([value, label]) => (
+                <label
+                  className="flex items-center gap-3 text-slate-800 dark:text-slate-200"
+                  key={value}
+                >
+                  <input
+                    defaultChecked={storage.settings.availableStudyDays.includes(
+                      value,
+                    )}
+                    name="availableStudyDays"
+                    type="checkbox"
+                    value={value}
+                  />
+                  {label}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend className="font-semibold text-slate-900 dark:text-white">
+              Category emphasis
+            </legend>
+            <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
+              Optional emphasis only orders equally important new cards. It does
+              not change due dates or move new cards ahead of due reviews.
+            </p>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              {handbookCategories.map((category) => (
+                <label
+                  className="flex items-center gap-3 text-slate-800 dark:text-slate-200"
+                  key={category}
+                >
+                  <input
+                    defaultChecked={storage.settings.emphasizedCategories.includes(
+                      category,
+                    )}
+                    name="emphasizedCategories"
+                    type="checkbox"
+                    value={category}
+                  />
+                  {category}
+                </label>
+              ))}
+            </div>
+          </fieldset>
           <label className="flex items-center gap-3 font-semibold text-slate-900 dark:text-white">
             <input
               defaultChecked={storage.settings.interleavingEnabled}
