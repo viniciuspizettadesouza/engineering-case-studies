@@ -74,6 +74,12 @@ describe('study pages', () => {
     expect(
       screen.getByRole('link', { name: 'Asynchronous execution' }),
     ).toHaveAttribute('href', '#/handbook/javascript#asynchronous-execution')
+    expect(
+      screen.queryByRole('link', { name: 'HTTP semantics and contracts' }),
+    ).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('link', { name: 'Questions' }),
+    ).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Roadmap' })).toHaveAttribute(
       'aria-current',
       'page',

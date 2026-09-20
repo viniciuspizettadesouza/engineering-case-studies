@@ -14,7 +14,7 @@ The dashboard reports review distribution by handbook category. Session estimate
 
 ## Study roadmap
 
-The roadmap provides an open, five-stage path through every canonical handbook topic. It begins with frontend foundations, moves through frameworks and practice, systems and the web, and quality and delivery, then closes with career growth. Each topic card derives its category, summary, and section links directly from the handbook metadata, so the roadmap does not create a second content source.
+The roadmap provides an open, five-stage path through every canonical handbook topic. It begins with frontend foundations, moves through frameworks and practice, systems and the web, and quality and delivery, then closes with career growth. Each topic card derives its category, summary, and main level-two section links directly from the handbook metadata, so the roadmap does not create a second content source. Level-three subsections remain available in the handbook table of contents without becoming separate roadmap nodes.
 
 The roadmap is deliberately editorial in its first version. It has no completion controls, deadlines, locked stages, or alternative branches. Its sequence does not change FSRS scheduling or imply memory mastery; the adaptive review queue and knowledge map remain the sources for recall work and memory state.
 

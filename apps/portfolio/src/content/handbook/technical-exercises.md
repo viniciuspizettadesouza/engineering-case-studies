@@ -6,6 +6,8 @@ This file contains a collection of technical questions focused on JavaScript, Re
 
 ## 1. Objects with `const`
 
+### Prompt
+
 ```js
 function test() {
   const user = { name: 'John Doe' }
@@ -14,7 +16,7 @@ function test() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 Not John Doe
@@ -23,6 +25,8 @@ Not John Doe
 ---
 
 ## 2. Block scope with `let`
+
+### Prompt
 
 ```js
 function test() {
@@ -33,7 +37,7 @@ function test() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 ReferenceError: myName is not defined
@@ -42,6 +46,8 @@ ReferenceError: myName is not defined
 ---
 
 ## 3. Hoisting with `var` and `const`
+
+### Prompt
 
 ```js
 function test() {
@@ -52,7 +58,7 @@ function test() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 undefined
@@ -62,6 +68,8 @@ ReferenceError: Cannot access 'i2' before initialization
 ---
 
 ## 4. Hoisting of functions and expressions
+
+### Prompt
 
 ```js
 function test() {
@@ -78,7 +86,7 @@ function test() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 Hello
@@ -88,6 +96,8 @@ ReferenceError: Cannot access 'sayBy' before initialization
 ---
 
 ## 5. Arrow functions are not constructors
+
+### Prompt
 
 ```js
 function test() {
@@ -100,7 +110,7 @@ function test() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 TypeError: HumanConstructor is not a constructor
@@ -109,6 +119,8 @@ TypeError: HumanConstructor is not a constructor
 ---
 
 ## 6. `this` in Arrow Functions vs Functions
+
+### Prompt
 
 ```js
 function test() {
@@ -133,7 +145,7 @@ function test() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 undefined
@@ -146,6 +158,8 @@ undefined
 
 ## 7. `props` is undefined
 
+### Prompt
+
 ```js
 const HelloComponent = ({ greeting }) => {
   return <div>{greeting}</div>
@@ -154,7 +168,7 @@ const HelloComponent = ({ greeting }) => {
 console.log(HelloComponent()) // call without props
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 TypeError: Cannot read properties of undefined (reading 'greeting')
@@ -164,15 +178,17 @@ TypeError: Cannot read properties of undefined (reading 'greeting')
 
 ## 8. Hook not defined
 
+### Prompt
+
 ```js
 const UserProfile = () => {
-  const userContext = useContext(...); // ReferenceError
-  console.log("Profile render");
-  return <div> ... </div>;
-};
+  const userContext = useContext() // ReferenceError
+  console.log('Profile render', userContext)
+  return <div>...</div>
+}
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 ReferenceError: useContext is not defined
@@ -180,7 +196,9 @@ ReferenceError: useContext is not defined
 
 ---
 
-## 9. 🕰️ Asynchronous: Promise vs setTimeout
+## 9. Asynchronous: Promise vs setTimeout
+
+### Prompt
 
 ```js
 function asyncTest() {
@@ -206,7 +224,7 @@ function asyncTest() {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 Steady
@@ -218,13 +236,17 @@ Timeout
 Almost done
 ```
 
+### Explanation
+
 Promise reactions run as microtasks before timer tasks. The first timer is
 registered before the promise callbacks run, so it is queued before the timer
 created inside `Promise 1`.
 
 ---
 
-## 10. 🧪 Logger Example with Class and Object
+## 10. Logger Example with Class and Object
+
+### Prompt
 
 ```js
 class Logger {
@@ -251,7 +273,7 @@ function logMessageWithLogger(logger) {
 }
 ```
 
-**Expected output:**
+### Expected behavior
 
 ```txt
 Test log
@@ -259,16 +281,18 @@ Test log
 
 ---
 
-## 11. 🧑‍💻 Tabs by City
+## 11. Tabs by City
+
+### Prompt
 
 Create a React component called TabsByCity that displays a list of cities as tabs (buttons). When a user clicks on a city, it should show the names of users associated with that city.
 
-**Requirements:**
+### Requirements
 
 - List with duplicate cities and non-unique names
 - Clicking a tab (city) should show users from that city
 
-**Initial code (incomplete):**
+### Starter code
 
 ```jsx
 import { useState } from 'react'
@@ -297,7 +321,7 @@ const TabsByCity = () => {
 export default TabsByCity
 ```
 
-**Expected output:**
+### Suggested solution
 
 ```jsx
 import { useState } from 'react'
@@ -337,16 +361,18 @@ export default App
 
 ---
 
-## 12. 🧪 Color Toggle and Square Spawner on Count
+## 12. Color Toggle and Square Spawner on Count
+
+### Prompt
 
 Create a React component with a button that increases a counter on click. Each click toggles the square's background color between red and blue. When the counter reaches 10, a second square should appear.
 
-**Requirements:**
+### Requirements
 
 - Toggle square color on each click
 - Add another square when the count reaches 10
 
-**Initial code (incomplete):**
+### Starter code
 
 ```jsx
 import React, { useState } from 'react'
@@ -380,7 +406,7 @@ const App = () => {
 export default App
 ```
 
-**Expected output:**
+### Suggested solution
 
 ```jsx
 import React, { useState } from 'react'
@@ -418,17 +444,19 @@ export default App
 
 ---
 
-## 13. 🎠 Carousel Component
+## 13. Carousel Component
+
+### Prompt
 
 Create a simple carousel component using React that cycles through a list of items. Use "Next" and "Back" buttons to move between items.
 
-**Requirements:**
+### Requirements
 
 - Display a single item at a time inside a card
 - Implement circular navigation (loop back to start/end)
 - Add "Back" and "Next" buttons for navigation
 
-**Initial code (incomplete):**
+### Starter code
 
 ```jsx
 import { useState } from 'react'
@@ -463,7 +491,7 @@ const Carousel = () => {
 export default Carousel
 ```
 
-**Expected output:**
+### Suggested solution
 
 ```jsx
 import { useState } from 'react'
@@ -504,6 +532,8 @@ export default Carousel
 
 ## 14. Prop Drilling and Component Composition
 
+### Prompt
+
 You're given a component tree where a `Parent` passes data to a `Grandchild` through a `Child` component.
 
 ```jsx
@@ -521,13 +551,13 @@ function Parent() {
 }
 ```
 
-### ❓ Questions (Q14)
+### Questions
 
 1. What is the issue with "prop drilling" in this example, and why is it considered a problem?
 2. How would you use React Context to avoid prop drilling in this scenario?
 3. What are the potential downsides of using Context in cases like this?
 
-### ✅ Answers (Q14)
+### Suggested answers
 
 **1. What is the issue with "prop drilling" in this example, and why is it considered a problem?**  
 Prop drilling refers to the process of passing data from a top-level component down to deeply nested child components through intermediate components that do not use the data themselves.  
@@ -569,24 +599,11 @@ While Context simplifies prop-passing, especially in large trees, it comes with 
 - **Overuse:** It may be overkill for small or isolated cases, where simply passing a prop is easier and more readable.
 - **Testing:** Testing components that consume context often requires wrapping them with providers, which adds boilerplate.
 
-```jsx
-function Grandchild(props) {
-  return <div>Data: {props.data}</div>
-}
-
-function Child(props) {
-  return <Grandchild data={props.data} />
-}
-
-function Parent() {
-  const data = 'Hello from Parent'
-  return <Child data={data} />
-}
-```
-
 ---
 
 ## 15. Optimizing Re-Renders with React.memo and useCallback
+
+### Prompt
 
 You're optimizing a component to avoid unnecessary re-renders.
 
@@ -626,13 +643,13 @@ function Parent() {
 }
 ```
 
-### ❓ Questions (Q15)
+### Questions
 
 1. Explain how React.memo is used in this code to optimize re-renders. Why is this optimization necessary here?
 2. Is there a problem in the Child or Parent component?
 3. What are potential downsides of using React.memo and useCallback? When should you avoid these optimizations?
 
-### ✅ Answers (Q15)
+### Suggested answers
 
 1. `React.memo` prevents unnecessary re-renders when props haven't changed. It's used to optimize the `Child` component by skipping re-renders when `text` changes in the `Parent`.
 
@@ -648,25 +665,27 @@ function Parent() {
 
 ## 16. Countdown Timer with Render Props
 
+### Prompt
+
 A countdown timer component uses the render props pattern to define how the countdown is displayed.
 
-```jsx
+```tsx
 interface ICountdownProps {
-  initialCount: number;
-  render: (count: number) => JSX.Element;
+  initialCount: number
+  render: (count: number) => JSX.Element
 }
 
 function Countdown({ initialCount, render }: ICountdownProps) {
-  const [count, setCount] = React.useState(initialCount);
+  const [count, setCount] = React.useState(initialCount)
 
   React.useEffect(() => {
     if (count > 0) {
-      const timer = setTimeout(() => setCount(count - 1), 1000);
-      return () => clearTimeout(timer);
+      const timer = setTimeout(() => setCount(count - 1), 1000)
+      return () => clearTimeout(timer)
     }
-  }, [count]);
+  }, [count])
 
-  return render(count);
+  return render(count)
 }
 
 function Parent() {
@@ -675,17 +694,17 @@ function Parent() {
       initialCount={5}
       render={(count) => <div>{`Time left: ${count}`}</div>}
     />
-  );
+  )
 }
 ```
 
-### ❓ Questions (Q16)
+### Questions
 
 1. Why is the render props pattern necessary in this example?
 2. How does it improve reusability or flexibility compared to hardcoding the rendering logic inside the Countdown component?
 3. What are the potential drawbacks of using the render props pattern in React? Are there better alternatives in modern React?
 
-### ✅ Answers (Q16)
+### Suggested answers
 
 1. The render prop pattern allows custom rendering logic to be passed from the parent. Here, it enables different visual representations of the countdown from different parents.
 
@@ -699,6 +718,8 @@ function Parent() {
 ---
 
 ## 17. Asynchronous Request Handling in Hooks
+
+### Prompt
 
 A component fetches data from an API using useEffect.
 
@@ -728,12 +749,12 @@ function Posts() {
 }
 ```
 
-### ❓ Questions (Q17)
+### Questions
 
 1. What problems could arise if the component unmounts while the fetch request is still in progress?
 2. How can you modify this code to prevent potential problems?
 
-### ✅ Answers (Q17)
+### Suggested answers
 
 1. The request can waste resources after the result is no longer useful, and an
    older response can overwrite newer state. Current React versions ignore a
@@ -768,6 +789,8 @@ useEffect(() => {
 
 ## 18. Using TypeScript Generics in a Custom Hook
 
+### Prompt
+
 A reusable and type-safe custom hook using TypeScript generics.
 
 ```tsx
@@ -796,12 +819,12 @@ function useFetchData<T>(url: string) {
 }
 ```
 
-### ❓ Questions (Q18)
+### Questions
 
 1. What are the issues with using `any` as the type for data in this hook?
 2. How does using a generic `<T>` improve this hook?
 
-### ✅ Answers (Q18)
+### Suggested answers
 
 1. `any` disables type checking, reducing the benefits of TypeScript. You lose autocompletion, and errors might go unnoticed.
 
@@ -809,7 +832,9 @@ function useFetchData<T>(url: string) {
 
 ---
 
-### 19. Debugging a Custom Hook (useFetchCakes.ts)
+## 19. Debugging a Custom Hook (useFetchCakes.ts)
+
+### Prompt
 
 You need to fetch cakes and filter by ingredient.
 
@@ -837,13 +862,13 @@ export function useFetchCakes(ingredient) {
 }
 ```
 
-### ❓ Questions (Q19)
+### Questions
 
 1. Why would a front-end engineer use a custom hook?
 2. Identify critical bugs in this code that prevent it from working.
 3. Identify non-critical areas for improvement.
 
-### ✅ Answers (Q19)
+### Suggested answers
 
 1. Custom hooks encapsulate and reuse logic like fetching data or managing state, improving modularity and readability.
 

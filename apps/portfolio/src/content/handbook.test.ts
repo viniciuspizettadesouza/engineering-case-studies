@@ -61,4 +61,24 @@ describe('handbook content', () => {
     expect(getHandbookTopic('react')?.title).toBe('React')
     expect(getHandbookTopic('missing')).toBeUndefined()
   })
+
+  it('keeps technical exercises at one consistent structural level', () => {
+    const topic = getHandbookTopic('technical-exercises')
+    expect(topic).toBeDefined()
+
+    const exercises = topic!.headings.filter((heading) => heading.depth === 2)
+    expect(exercises).toHaveLength(19)
+    expect(
+      exercises.map((heading) => Number.parseInt(heading.title, 10)),
+    ).toEqual(Array.from({ length: 19 }, (_, index) => index + 1))
+    expect(exercises.map((heading) => heading.title).join(' ')).not.toMatch(
+      /[🕰🧪🧑🎠❓✅]/u,
+    )
+    expect(
+      topic!.headings.filter(
+        (heading) => heading.depth === 3 && heading.title === 'Prompt',
+      ),
+    ).toHaveLength(19)
+    expect(topic!.content).not.toMatch(/Questions \(Q\d+\)|Answers \(Q\d+\)/)
+  })
 })

@@ -71,21 +71,18 @@ export function StudyRoadmapPage() {
                           Sections
                         </h4>
                         <ul className="mt-3 space-y-2 text-sm">
-                          {topic.headings.map((heading) => (
-                            <li
-                              className={
-                                heading.depth === 3 ? 'ml-4' : undefined
-                              }
-                              key={heading.id}
-                            >
-                              <Link
-                                className="inline-flex min-h-8 items-center rounded-sm text-slate-600 outline-offset-2 hover:text-teal-700 hover:underline focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-slate-300 dark:hover:text-teal-300"
-                                to={`/handbook/${topic.slug}#${heading.id}`}
-                              >
-                                {heading.title}
-                              </Link>
-                            </li>
-                          ))}
+                          {topic.headings
+                            .filter((heading) => heading.depth === 2)
+                            .map((heading) => (
+                              <li key={heading.id}>
+                                <Link
+                                  className="inline-flex min-h-8 items-center rounded-sm text-slate-600 outline-offset-2 hover:text-teal-700 hover:underline focus-visible:outline-2 focus-visible:outline-teal-600 dark:text-slate-300 dark:hover:text-teal-300"
+                                  to={`/handbook/${topic.slug}#${heading.id}`}
+                                >
+                                  {heading.title}
+                                </Link>
+                              </li>
+                            ))}
                         </ul>
                       </li>
                     )
