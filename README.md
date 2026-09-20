@@ -26,7 +26,7 @@ engineering handbook and Study Mode:
 - thirteen curated handbook topics loaded directly from canonical Markdown;
 - accessible topic navigation, table-of-contents controls and local search.
 - active-recall cards scheduled by FSRS and interleaved across categories;
-- an integrated five-stage roadmap linking every handbook topic and section;
+- an integrated five-stage roadmap linking every handbook topic and main section;
 - a knowledge map, review history, settings, and JSON progress backup.
 
 All five MVPs are complete. Together they cover a fictional credit application

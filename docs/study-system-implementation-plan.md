@@ -2,7 +2,7 @@
 
 ## Implementation progress
 
-_Last updated: 2026-09-17_
+_Last updated: 2026-09-20_
 
 Legend: **[x]** complete · **[~]** partially complete · **[ ]** pending
 
@@ -60,6 +60,7 @@ This document is the implementation source of truth for the Study System.
   - [x] Show FSRS interval previews for Again, Hard, Good, and Easy.
   - [x] Support keyboard review, persistence, completion summary, and handbook links.
 - [x] **Phase 7 — Knowledge Map and history**
+  - [x] Add an open five-stage roadmap over every handbook topic and main section.
   - [x] Add `/study/knowledge-map` and `/study/history` routes.
   - [x] Show New, Learning, Review, and Relearning as text as well as color.
   - [x] Show due state, reviews, lapses, stability, and scheduling information.
@@ -81,7 +82,7 @@ This document is the implementation source of truth for the Study System.
   - [x] Add component coverage for dashboard states, history, knowledge-map labels, and settings.
   - [x] Exercise export, version 1 migration/import, version 2 import, and reset end to end.
 - [x] **Phase 10 — Documentation**
-  - [x] Document the learning model, scheduling, queue, persistence, backup, privacy, and limitations.
+  - [x] Document the learning model, roadmap, scheduling, queue, persistence, backup, privacy, and limitations.
   - [x] Update the README for Case Studies, Handbook, and Study.
   - [x] Record the local-first architecture decision in ADR 0009.
 - [ ] **Phase 11 — software-architecture-playbook integration**
@@ -107,14 +108,14 @@ This document is the implementation source of truth for the Study System.
 
 ### Validation checkpoint
 
-Revalidated on 2026-09-17:
+Revalidated on 2026-09-20:
 
 - [x] Formatting
 - [x] Lint
 - [x] Type checking
-- [x] 78 unit/component tests
+- [x] 88 unit/component tests
 - [x] Static production build
-- [x] 24 Playwright tests across desktop and mobile
+- [x] 26 Playwright tests across desktop and mobile
 - [x] Keyboard review flow
 - [x] Accessibility scan with axe
 - [x] GitHub Pages-compatible HashRouter/static architecture preserved
@@ -1174,6 +1175,7 @@ Suggested routes:
 ```text
 /study
 /study/review
+/study/roadmap
 /study/knowledge-map
 /study/history
 /study/settings
