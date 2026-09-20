@@ -26,6 +26,7 @@ engineering handbook and Study Mode:
 - thirteen curated handbook topics loaded directly from canonical Markdown;
 - accessible topic navigation, table-of-contents controls and local search.
 - active-recall cards scheduled by FSRS and interleaved across categories;
+- an integrated five-stage roadmap linking every handbook topic and section;
 - a knowledge map, review history, settings, and JSON progress backup.
 
 All five MVPs are complete. Together they cover a fictional credit application
@@ -53,7 +54,7 @@ The application is static-first. It has no production backend, database, authent
 ├── apps/
 │   └── portfolio/          # Published React application
 │       ├── src/content/handbook/ # Canonical handbook Markdown
-│       └── src/study/      # Study domain, scheduler, storage and UI
+│       └── src/study/      # Study roadmap, scheduler, storage and UI
 ├── packages/
 │   └── design-system/      # Small, genuinely shared UI primitives
 ├── docs/

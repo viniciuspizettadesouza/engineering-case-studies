@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { App } from './app'
 
 afterEach(() => {
@@ -49,6 +49,18 @@ describe('handbook pages', () => {
         name: /next: testing, delivery, and devops/i,
       }),
     ).toHaveAttribute('href', '#/handbook/testing-delivery-and-devops')
+  })
+
+  it('scrolls to a handbook section opened through a deep link', async () => {
+    const scrollIntoView = vi.fn()
+    Element.prototype.scrollIntoView = scrollIntoView
+    window.location.hash = '#/handbook/javascript#asynchronous-execution'
+    render(<App />)
+
+    expect(
+      await screen.findByRole('heading', { name: 'Asynchronous execution' }),
+    ).toBeInTheDocument()
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
   })
 
   it('shows a clear not-found state for an unknown topic', async () => {

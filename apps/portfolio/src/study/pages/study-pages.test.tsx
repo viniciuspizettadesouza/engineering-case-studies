@@ -58,6 +58,28 @@ afterEach(() => {
 })
 
 describe('study pages', () => {
+  it('shows the complete study roadmap and links its sections to the handbook', async () => {
+    window.location.hash = '#/study/roadmap'
+    render(<App />)
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'A guided path through the engineering handbook.',
+      }),
+    ).toBeInTheDocument()
+    expect(screen.getAllByText(/^Stage \d$/)).toHaveLength(5)
+    expect(
+      screen.getByRole('heading', { name: 'Career Growth' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'Asynchronous execution' }),
+    ).toHaveAttribute('href', '#/handbook/javascript#asynchronous-execution')
+    expect(screen.getByRole('link', { name: 'Roadmap' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    )
+  })
+
   it('keeps ratings hidden until the answer is revealed', async () => {
     window.location.hash = '#/study/review'
     render(<App />)

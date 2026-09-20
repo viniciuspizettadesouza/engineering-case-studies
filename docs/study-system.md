@@ -12,6 +12,12 @@ Priority and memory are intentionally separate. Interview evidence says why cont
 
 The dashboard reports review distribution by handbook category. Session estimates use the median of the latest response durations after at least five timed reviews; before that threshold, the UI uses the documented 1.5-minute-per-card fallback. The median limits the effect of unusually long inactive-tab sessions.
 
+## Study roadmap
+
+The roadmap provides an open, five-stage path through every canonical handbook topic. It begins with frontend foundations, moves through frameworks and practice, systems and the web, and quality and delivery, then closes with career growth. Each topic card derives its category, summary, and section links directly from the handbook metadata, so the roadmap does not create a second content source.
+
+The roadmap is deliberately editorial in its first version. It has no completion controls, deadlines, locked stages, or alternative branches. Its sequence does not change FSRS scheduling or imply memory mastery; the adaptive review queue and knowledge map remain the sources for recall work and memory state.
+
 ## Local persistence and privacy
 
 Version 2 uses `localStorage` behind `StudyProgressRepository`, under `engineering-practice-lab.study.v2`. Existing version 1 progress is validated, migrated, and copied forward automatically while the legacy value is preserved as a recovery source. Stored data contains settings, scheduler state, and review history; it contains no account or unnecessary personal data. Malformed stored data falls back safely without overwriting the malformed value. Unknown historical card IDs remain readable in history.
@@ -25,6 +31,7 @@ Export creates human-readable JSON with a schema version and export timestamp. I
 - `cards/` contains curated definitions and stable IDs.
 - `scheduler/` isolates all `ts-fsrs` APIs and serialization.
 - `queue/` selects due/new cards and interleaves ordering.
+- `roadmap/` defines and validates the incremental handbook sequence.
 - `storage/` validates, imports, exports, and persists versioned state.
 - `study-context.tsx` coordinates one browser-local learner.
 - `pages/` and `components/` implement the lazy-loaded routes.

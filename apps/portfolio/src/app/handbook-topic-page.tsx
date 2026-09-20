@@ -1,4 +1,5 @@
-import { Link, useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { Link, useLocation, useParams } from 'react-router-dom'
 import ReactMarkdown from 'react-markdown'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
@@ -7,7 +8,21 @@ import { getHandbookTopic, handbookTopics } from '../content/handbook'
 
 export function HandbookTopicPage() {
   const { slug } = useParams()
+  const location = useLocation()
   const topic = getHandbookTopic(slug)
+
+  useEffect(() => {
+    if (!topic || !location.hash) return
+
+    let headingId = location.hash.slice(1)
+    try {
+      headingId = decodeURIComponent(headingId)
+    } catch {
+      return
+    }
+
+    document.getElementById(headingId)?.scrollIntoView?.({ block: 'start' })
+  }, [location.hash, topic])
 
   if (!topic) {
     return (

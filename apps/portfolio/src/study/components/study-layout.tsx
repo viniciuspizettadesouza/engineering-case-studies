@@ -5,6 +5,7 @@ import { useStudy } from '../use-study'
 
 const links = [
   ['/study', 'Today'],
+  ['/study/roadmap', 'Roadmap'],
   ['/study/knowledge-map', 'Knowledge map'],
   ['/study/history', 'History'],
   ['/study/settings', 'Settings'],

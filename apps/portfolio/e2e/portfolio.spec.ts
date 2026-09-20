@@ -194,6 +194,34 @@ test('study review is keyboard accessible, persists, and updates the knowledge m
   ).toEqual({ current: null, legacy: null })
 })
 
+test('the study roadmap is accessible, responsive, and links to handbook sections', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 812 })
+  await page.goto('/engineering-case-studies/#/study/roadmap')
+
+  await expect(
+    page.getByRole('heading', {
+      name: 'A guided path through the engineering handbook.',
+    }),
+  ).toBeVisible()
+  await expect(page.getByText(/^Stage \d$/)).toHaveCount(5)
+  expect(
+    await page.evaluate(
+      'document.querySelector("main").scrollWidth <= document.querySelector("main").clientWidth',
+    ),
+  ).toBe(true)
+  expect((await new AxeBuilder({ page }).analyze()).violations).toEqual([])
+
+  await page.getByRole('link', { name: 'Asynchronous execution' }).click()
+  await expect(page).toHaveURL(
+    /#\/handbook\/javascript#asynchronous-execution$/,
+  )
+  await expect(
+    page.getByRole('heading', { name: 'Asynchronous execution' }),
+  ).toBeInViewport()
+})
+
 test('financial form errors receive focus and link to their fields', async ({
   page,
 }) => {
