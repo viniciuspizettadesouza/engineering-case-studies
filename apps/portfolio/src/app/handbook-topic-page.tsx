@@ -63,11 +63,12 @@ export function HandbookTopicPage() {
           <article className="handbook-prose min-w-0">
             <ReactMarkdown
               components={{
+                pre: ({ children }) => <pre tabIndex={0}>{children}</pre>,
                 table: ({ children }) => (
                   <div
                     aria-label="Scrollable data table"
                     className="handbook-table-scroll"
-                    role="region"
+                    role="group"
                     tabIndex={0}
                   >
                     <table>{children}</table>

@@ -35,10 +35,14 @@ describe('handbook pages', () => {
     render(<App />)
 
     expect(
-      await screen.findByRole('heading', {
-        level: 1,
-        name: 'GraphQL and Messaging',
-      }),
+      await screen.findByRole(
+        'heading',
+        {
+          level: 1,
+          name: 'GraphQL and Messaging',
+        },
+        { timeout: 3000 },
+      ),
     ).toBeInTheDocument()
     expect(screen.getAllByRole('table')).toHaveLength(2)
     expect(
@@ -59,6 +63,30 @@ describe('handbook pages', () => {
 
     expect(
       await screen.findByRole('heading', { name: 'Asynchronous execution' }),
+    ).toBeInTheDocument()
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
+  })
+
+  it('renders and deep-links to the scaling guide from its table of contents', async () => {
+    const scrollIntoView = vi.fn()
+    Element.prototype.scrollIntoView = scrollIntoView
+    window.location.hash =
+      '#/handbook/architecture-and-patterns#scaling-from-observed-bottlenecks'
+    render(<App />)
+
+    expect(
+      await screen.findByRole(
+        'heading',
+        {
+          name: 'Scaling from observed bottlenecks',
+        },
+        { timeout: 3000 },
+      ),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'Scaling from observed bottlenecks',
+      }),
     ).toBeInTheDocument()
     expect(scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
   })

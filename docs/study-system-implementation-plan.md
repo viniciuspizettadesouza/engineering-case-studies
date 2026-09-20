@@ -98,6 +98,8 @@ This document is the implementation source of truth for the Study System.
   - [ ] Deduplicate imported concepts against the existing handbook and cards.
   - [ ] Preserve the strongest provenance and interview evidence.
   - [ ] Expand the card catalog only after canonical handbook integration.
+  - [ ] After a stability proceed decision and architecture-content deduplication, add the planned literature-derived scaling cards: `architecture-failure-driven-scaling`, `architecture-stateless-horizontal-scaling`, `architecture-database-scaling-diagnosis`, `architecture-cache-consistency`, `architecture-background-job-contract`, and `architecture-sharding-tradeoffs`.
+  - [ ] Link those cards to canonical handbook headings and use `source: 'literature'`, `interviewEvidence: 'none'`, and normal priority.
   - [ ] Use real-session gaps to guide useful handbook and card coverage.
   - [ ] Review every added card against sections 56–60 before accepting it.
 - [ ] **Phase 13 — Evaluate playbook retirement/archive**

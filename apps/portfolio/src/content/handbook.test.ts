@@ -63,6 +63,66 @@ describe('handbook content', () => {
     expect(searchHandbook('term-that-does-not-exist')).toEqual([])
   })
 
+  it('indexes the failure-driven scaling guide and its stable headings', () => {
+    const topic = getHandbookTopic('architecture-and-patterns')
+    expect(topic).toBeDefined()
+    expect(topic!.headings).toEqual(
+      expect.arrayContaining([
+        {
+          depth: 2,
+          title: 'Scaling from observed bottlenecks',
+          id: 'scaling-from-observed-bottlenecks',
+        },
+        {
+          depth: 3,
+          title: 'Start simple and scale the application',
+          id: 'start-simple-and-scale-the-application',
+        },
+        {
+          depth: 3,
+          title: 'Make horizontally scaled servers stateless',
+          id: 'make-horizontally-scaled-servers-stateless',
+        },
+        {
+          depth: 3,
+          title: 'Scale database access',
+          id: 'scale-database-access',
+        },
+        {
+          depth: 3,
+          title: 'Cache repeated expensive reads',
+          id: 'cache-repeated-expensive-reads',
+        },
+        {
+          depth: 3,
+          title: 'Move deferrable work to a queue',
+          id: 'move-deferrable-work-to-a-queue',
+        },
+        {
+          depth: 3,
+          title: 'Shard only after simpler options are exhausted',
+          id: 'shard-only-after-simpler-options-are-exhausted',
+        },
+        {
+          depth: 3,
+          title: 'Production refinements beyond the video',
+          id: 'production-refinements-beyond-the-video',
+        },
+      ]),
+    )
+
+    for (const query of [
+      'connection pooling',
+      'replication lag',
+      'background jobs',
+      'sharding',
+    ]) {
+      expect(searchHandbook(query)[0]?.topic.slug).toBe(
+        'architecture-and-patterns',
+      )
+    }
+  })
+
   it('looks up a topic by slug', () => {
     expect(getHandbookTopic('react')?.title).toBe('React')
     expect(getHandbookTopic('missing')).toBeUndefined()

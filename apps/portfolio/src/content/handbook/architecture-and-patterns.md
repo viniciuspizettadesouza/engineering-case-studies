@@ -74,6 +74,69 @@ Set client and server timeouts from a real latency budget. Retry only transient 
 
 Prefer backward-compatible API evolution: add optional fields, tolerate unknown response fields, and use deprecation periods with usage evidence. Version only when a breaking semantic change cannot be introduced compatibly. Contract tests can protect consumers, but they do not replace production observability or a migration plan.
 
+## Scaling from observed bottlenecks
+
+Start with the simplest architecture that satisfies current requirements, measure it, and add one capability when a demonstrated failure mode justifies its cost. The progression below follows the teaching sequence in video `EaXHfuHRWwg`: one application and one database, followed by application scaling, shared state, database scaling, caching, background work, and finally sharding. It is a diagnostic sequence, not a checklist every system must complete.
+
+### Start simple and scale the application
+
+A single application instance and relational database are often enough. When the application instance becomes the measured constraint, vertical scaling is usually the simplest first response: give the same deployment more CPU or memory without introducing distributed coordination.
+
+When one machine is no longer sufficient or availability requirements demand multiple instances, run identical application instances behind a load balancer. The load balancer routes requests, but it also becomes critical infrastructure that needs a redundant failure plan. Horizontal scaling removes one application-machine ceiling but does not remove downstream limits.
+
+### Make horizontally scaled servers stateless
+
+Process-local session state breaks when consecutive requests reach different instances. Keep the application instances interchangeable by placing session or coordination state in a shared store, or by using another authentication design whose verification does not depend on one instance's memory.
+
+Redis is the video's shared-session example, not a universal requirement. The important property is that any healthy instance can validate the request. The shared state service adds latency, capacity limits, security requirements, and another dependency whose failure may prevent authenticated work.
+
+### Scale database access
+
+More application instances can exhaust a database's connection limit before query execution is the bottleneck. A connection pool reuses a bounded set of database connections; PgBouncer is one PostgreSQL example.
+
+If the database is busy after connection pressure is controlled, inspect query plans and indexes before adding infrastructure. For a genuinely read-heavy workload, read replicas can move eligible reads away from the primary while writes continue to use the primary.
+
+Asynchronous replication introduces lag. A read sent to a replica immediately after a write may return an older value, so consistency-sensitive paths may need primary routing or an explicit read-after-write strategy. Define that choice per use case.
+
+### Cache repeated expensive reads
+
+Cache-aside avoids repeating an expensive read: check the application cache, read the source of truth on a miss, store the derived result, and return it. This is application/data caching, distinct from the HTTP representation caching described earlier.
+
+A cached value can become stale. Define how it expires or is invalidated and how much staleness the product accepts. Consistency-sensitive decisions should use an authoritative value even when a cached projection is acceptable for display.
+
+### Move deferrable work to a queue
+
+Do not keep a request open for work that only needs to happen soon. After committing the synchronous result, enqueue a job and let a worker perform email delivery, media processing, analytics, or another slow external call. The user-facing contract must distinguish “accepted for processing” from “completed.”
+
+A queue complements the broker semantics discussed in GraphQL and Messaging: this section explains why work leaves the request path, while that topic compares delivery models. Queue-backed work still needs visible failure states so a job is not silently abandoned.
+
+### Shard only after simpler options are exhausted
+
+Sharding partitions data across databases when one database can no longer satisfy storage or throughput needs. The video's teaching example hashes a user ID when necessary and uses a modulo rule to route the same user to the same shard. This demonstrates deterministic routing.
+
+Choose a shard key from data distribution and dominant access patterns. Single-key operations can remain local, while global counts, searches, joins, and transactions may become cross-shard work. Sharding is difficult to reverse and migrate, so use it after query tuning, vertical scaling, pooling, replicas, caching, and workload changes are insufficient.
+
+| Observed failure                               | Typical response                                              | New trade-off to manage                           |
+| ---------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------- |
+| One application instance is saturated          | Scale vertically, then add instances and a load balancer      | Load-balancer availability and distributed state  |
+| Requests depend on one instance's memory       | Use shared or independently verifiable session state          | Extra latency and dependency availability         |
+| Database connections are exhausted             | Bound and reuse connections with a pool                       | Pool sizing, wait time, and backpressure          |
+| Read capacity is exhausted                     | Fix query/index issues, then route eligible reads to replicas | Replication lag and consistency-aware routing     |
+| Expensive reads repeat                         | Use application caching for derived results                   | Staleness, invalidation, and cache failure        |
+| Non-critical work delays a response            | Use a queue and workers                                       | Deferred completion and failed-job visibility     |
+| One database cannot hold or serve the workload | Partition by a deliberate shard key                           | Hotspots, rebalancing, and cross-shard operations |
+
+### Production refinements beyond the video
+
+The following operational practices extend the video's conceptual progression:
+
+- Size pools from database capacity and workload, choose PgBouncer's session or transaction semantics deliberately, and shed or queue load instead of allowing unbounded waits.
+- Monitor replica replay lag and route reads by their consistency requirement rather than sending every read to a replica.
+- Give cached values explicit TTL and invalidation policies, prevent cache stampedes for popular keys, and decide whether each path can fall back safely to the source of truth.
+- Bound job retries, apply backoff with jitter, make retryable effects idempotent, retain terminal failures for inspection, and alert on stalled workers or growing queues.
+- Choose shard keys that distribute both data and traffic, detect hot partitions, preserve locality for common queries, and plan rebalancing before adding capacity. Naïvely changing the divisor in modulo routing remaps many keys.
+- Separate or independently protect Redis workloads when sessions, cached data, and background jobs have different availability, eviction, security, or capacity requirements.
+
 ## Data stores and backend reliability
 
 Choose a database from access patterns, consistency, transactions, query flexibility, scale, operational skills, and offline requirements—not from a generic ranking.
@@ -112,4 +175,4 @@ Make schema changes compatible with old and new application versions during roll
 
 Replication improves availability and read capacity but can reproduce accidental deletion or corruption, so it is not a backup. Define recovery point and recovery time objectives, automate backups, protect them separately, and test restoration. A backup that has never been restored is only an assumption.
 
-Further reading: [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods), [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching), [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS), [web architecture fundamentals](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview), [Martin Fowler's architecture guide](https://martinfowler.com/architecture/), [Firestore offline data](https://firebase.google.com/docs/firestore/manage-data/enable-offline), [MongoDB Device Sync end of life](https://www.mongodb.com/company/blog/innovation/future-proof-your-apps-with-mongodb-wekan), [DynamoDB pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html), [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html), and [Supabase Realtime](https://supabase.com/docs/guides/realtime).
+Further reading: [video `EaXHfuHRWwg`: How Senior Engineers Actually Think About System Design & Architecture](https://www.youtube.com/watch?v=EaXHfuHRWwg), [PgBouncer](https://www.pgbouncer.org/usage), [PostgreSQL replication](https://www.postgresql.org/docs/17/warm-standby.html), [Redis cache-aside](https://redis.io/docs/latest/develop/use-cases/cache-aside/), [BullMQ retries](https://docs.bullmq.io/guide/retrying-failing-jobs), [BullMQ idempotent jobs](https://docs.bullmq.io/patterns/idempotent-jobs), [Notion's sharding account](https://www.notion.com/blog/sharding-postgres-at-notion), [HTTP methods](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods), [HTTP caching](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching), [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS), [web architecture fundamentals](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Client-Server_overview), [Martin Fowler's architecture guide](https://martinfowler.com/architecture/), [Firestore offline data](https://firebase.google.com/docs/firestore/manage-data/enable-offline), [MongoDB Device Sync end of life](https://www.mongodb.com/company/blog/innovation/future-proof-your-apps-with-mongodb-wekan), [DynamoDB pagination](https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.Pagination.html), [PostgreSQL queries](https://www.postgresql.org/docs/current/queries.html), and [Supabase Realtime](https://supabase.com/docs/guides/realtime).
