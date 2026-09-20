@@ -1,6 +1,8 @@
 # ADR 0004: Static Vehicle Catalogue and Browser-Local Reservation
 
-Status: accepted for the MVP.
+## Status
+
+Accepted for the MVP
 
 ## Context
 

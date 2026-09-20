@@ -1,6 +1,8 @@
 # ADR 0005: Configured Static Transit Ticketing
 
-Status: accepted for the MVP.
+## Status
+
+Accepted for the MVP
 
 ## Context
 

@@ -1,4 +1,4 @@
-# ADR 0009: Local-first adaptive study system
+# ADR 0009: Local-First Adaptive Study System
 
 ## Status
 
@@ -25,3 +25,17 @@ The `software-architecture-playbook` is deliberately excluded until this learnin
 - Device synchronization and multiple learners remain future concerns.
 - Clearing browser data can remove progress, so backup controls are first-class.
 - Future persistence and scheduler implementations can replace adapters without changing pages or cards.
+
+## Alternatives considered
+
+### Separate study application
+
+Rejected because it would duplicate handbook ownership, navigation, deployment, and content-reference logic.
+
+### Fixed review intervals
+
+Rejected because hard-coded intervals would not adapt to recall history or desired retention as effectively as the maintained FSRS implementation.
+
+### Account-backed synchronization
+
+Deferred because authentication, a production API, and multi-device conflict handling are outside the static, private-first scope.

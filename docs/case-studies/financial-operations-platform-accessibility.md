@@ -18,7 +18,7 @@ Evidence came from:
 
 No external screen-reader session or formal WCAG audit was available in this environment. A screen-reader spot check remains recommended before describing the study as conformant.
 
-## Results
+## Findings
 
 ### Passed
 
@@ -38,7 +38,7 @@ No external screen-reader session or formal WCAG audit was available in this env
 
 The initial mobile dashboard retained the desktop table. Its action column required horizontal scrolling and could be obscured during automated interaction. The final implementation renders application cards below the small-screen breakpoint while retaining the data table for wider layouts.
 
-## Follow-up recommendations
+## Remaining work and recommendations
 
 - conduct VoiceOver/Safari and NVDA/Firefox spot checks;
 - test browser zoom at 200% and Windows high-contrast mode;

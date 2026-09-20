@@ -63,7 +63,7 @@ One tenant may require a fictional compliance label while the other may require 
 - AI enrichment in the MVP;
 - installing the entire shadcn catalogue when only a few components are required.
 
-## Implementation notes
+## Implementation and architecture
 
 The executable workflow uses a small set of local, composable form, tab, table,
 notification and button patterns styled with the same token-driven approach as
@@ -88,14 +88,18 @@ product data is excluded.
 - tenant focus and colour tokens keep a visible non-colour focus indicator;
 - reduced-motion behaviour is inherited from the global application stylesheet.
 
-## Threat and privacy boundary
+## Validation evidence
+
+- [Accessibility review](modular-enterprise-workspace-accessibility.md)
+
+## Security, privacy, and threat boundary
 
 All examples are fictional and remain in the browser. Local storage demonstrates
 client-side state isolation, not production security. A real implementation
 would derive tenant identity on the server, enforce authorisation on every read
 and write, scan uploads, set size and rate limits, and audit publication actions.
 
-## Limitations
+## Known limitations
 
 - the CSV parser supports quoted cells and spreadsheet tabs, but not mappings or
   locale-specific numeric formats;
@@ -111,10 +115,6 @@ service, validate rows in bounded background jobs, provide resumable job status,
 and keep the client table virtualised. I would retain the configuration-driven
 rules, but version schemas and publication contracts so drafts remain explainable
 when tenant policy changes.
-
-## Supporting review
-
-- [Accessibility review](modular-enterprise-workspace-accessibility.md)
 
 ## Later increments
 

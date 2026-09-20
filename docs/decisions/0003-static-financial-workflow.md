@@ -1,6 +1,8 @@
 # ADR 0003: Static Financial Workflow with Browser-Local Persistence
 
-Status: accepted for the MVP.
+## Status
+
+Accepted for the MVP
 
 ## Context
 

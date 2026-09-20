@@ -52,11 +52,7 @@ Simulated confirmation
 - copied vehicle descriptions, photography or commercial data;
 - a claim that the demo is affiliated with a real marketplace.
 
-## Later increments
-
-Candidate additions after all five MVPs exist include comparison, saved searches, localisation, image-CDN experiments and a payment boundary with a test-only adapter.
-
-## Delivered architecture
+## Implementation and architecture
 
 The executable study lives under `apps/portfolio/src/case-studies/commerce-experience` and follows the repository's route, component, domain, fixture and service boundaries. Six fictional vehicles are readonly TypeScript fixtures. Filtering and reservation rules are framework-independent, while browser storage is accessed only through a local repository adapter.
 
@@ -81,17 +77,17 @@ The catalogue and detail experience has the following lab budgets:
 
 The original SVG illustrations are intentionally small and local. Production build output is checked during repository validation; Web Vitals targets should also be checked in a repeatable throttled browser lab before future imagery or dependencies are accepted.
 
-## Test evidence
+## Validation evidence
 
 Vitest covers combined catalogue filters, empty results, reservation validation, date overlap boundaries, price calculation, analytics contracts and browser-local draft/confirmation persistence. Playwright covers the critical catalogue-to-confirmation journey in desktop Chromium and the Pixel 7 project, including URL filters, an availability conflict, preserved contact data, a recoverable submission failure and the simulated confirmation.
 
-## Privacy and threat boundary
+## Security, privacy, and threat boundary
 
 This is a static demonstration, not a secure reservation system. It has no authentication, server enforcement, dealer connection, inventory lock, payment processor or trusted audit record. A visitor could inspect or alter fixtures and local storage, forge a confirmation reference, replay submission, or enter real contact information despite the warning. None of those browser-local records should be treated as authoritative.
 
 The form requests only name, email and phone because those fields make the contact step demonstrable. Users are explicitly asked to enter fictional values. A production implementation would require server-side validation, retention rules, consent and privacy review, abuse controls, idempotency, authoritative availability, secure payment boundaries and protection against concurrency conflicts.
 
-## Limitations
+## Known limitations
 
 - dates and availability are fixed fictional fixtures rather than a live calendar;
 - estimates use whole-day arithmetic and one daily price with no tax, deposit or extras;
@@ -103,3 +99,7 @@ The form requests only name, email and phone because those fields make the conta
 ## What I would do differently today
 
 For a production marketplace, I would start with an authoritative server-side availability and reservation-hold model rather than browser state. I would make submission idempotent, model time zones and collection cut-offs explicitly, keep contact data behind a short retention policy, and validate the analytics schema in a privacy-reviewed collection gateway. I would also measure real-user performance by route and image variant before introducing a CDN or richer media.
+
+## Later increments
+
+Candidate additions after all five MVPs exist include comparison, saved searches, localisation, image-CDN experiments and a payment boundary with a test-only adapter.

@@ -2,7 +2,7 @@
 
 Status: completed for the MVP; this is not a WCAG certification.
 
-## Scope and evidence
+## Scope and method
 
 The review covers tenant switching, paste and file import, malformed templates,
 validation summaries, inline table correction, rejected-row export, simulated
@@ -21,7 +21,7 @@ keyboard completion, responsive review and desktop/mobile Chromium tests.
 - Tenant tokens preserve a visible focus outline; tenant name and rules also
   communicate context without depending on colour.
 
-## Remaining manual work
+## Remaining work and recommendations
 
 Before production use, test the editable grid with multiple screen readers and
 high magnification, validate every tenant theme for contrast, and research a

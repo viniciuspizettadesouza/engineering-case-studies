@@ -10,7 +10,7 @@ The review covers operator switching, journey fields and service states, expired
 
 No external screen-reader session or formal WCAG audit was available in this environment. VoiceOver/Safari and NVDA/Firefox spot checks remain required before making a conformance claim.
 
-## Results
+## Findings
 
 - operator, origin, destination, time, passenger and demo controls use native labelled fields;
 - a tenant switch changes visible fixtures and tokens without carrying the other tenant's form state into view;
@@ -25,11 +25,11 @@ No external screen-reader session or formal WCAG audit was available in this env
 - reduced-motion behavior is inherited from the portfolio stylesheet;
 - the complete workflow passes at both configured Playwright viewports.
 
-## Manual review notes
+### Manual review notes
 
 The native select, radio, checkbox, link and button sequence follows DOM order and can be completed without pointer-specific interaction. Alerts are focusable only when focus is deliberately moved after validation or a simulated failure. Visual token changes are supplemental: the operator name and fixture content also identify the selected tenant.
 
-## Follow-up recommendations
+## Remaining work and recommendations
 
 - run VoiceOver/Safari and NVDA/Firefox purchase journeys;
 - recruit disabled participants to evaluate fare and expiry explanations;

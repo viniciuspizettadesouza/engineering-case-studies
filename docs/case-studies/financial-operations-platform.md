@@ -2,20 +2,6 @@
 
 Status: MVP complete.
 
-## Delivered MVP
-
-- two routed application pages with accessible validation;
-- browser-local draft persistence between the two steps;
-- submission into `awaiting_verification`;
-- confirmation with a fictional reference;
-- separate responsive agent queue and application detail routes;
-- complete display of every submitted field;
-- filters by status and submission date;
-- guarded `verified` and `needs_information` decisions with required notes;
-- append-only status history in the domain model;
-- deterministic loading, empty, failure and retry demonstrations;
-- deterministic domain and repository tests plus a desktop/mobile E2E journey.
-
 ## Fictional premise
 
 An invented finance provider needs a simple credit-application intake flow and a separate workspace where operations agents can verify submitted information. All identities, amounts, rules and records are deterministic fictional fixtures. The MVP demonstrates workflow design, not a real lending decision.
@@ -83,7 +69,28 @@ The application cannot enter an agent-reviewed state directly from the applicant
 - external bureau, banking, email or messaging integrations;
 - final lending decisions, contracts or money movement.
 
-## Security and privacy boundary
+## Implementation and architecture
+
+- two routed application pages with accessible validation;
+- browser-local draft persistence between the two steps;
+- submission into `awaiting_verification`;
+- confirmation with a fictional reference;
+- separate responsive agent queue and application detail routes;
+- complete display of every submitted field;
+- filters by status and submission date;
+- guarded `verified` and `needs_information` decisions with required notes;
+- append-only status history in the domain model;
+- deterministic loading, empty, failure and retry demonstrations;
+- deterministic domain and repository tests plus a desktop/mobile E2E journey.
+
+## Validation evidence
+
+- [Accessibility review](financial-operations-platform-accessibility.md)
+- [Architecture decision: static financial workflow](../decisions/0003-static-financial-workflow.md)
+- domain and repository unit tests under `apps/portfolio/src/case-studies/financial-operations`;
+- desktop and mobile critical journey in `apps/portfolio/e2e/portfolio.spec.ts`.
+
+## Security, privacy, and threat boundary
 
 The applicant and agent roles are separate routes, not security boundaries. Data is stored in browser local storage so both simulated roles can share it without a backend. Anyone using the same browser profile can inspect or change those records. The UI therefore asks users to enter fictional information only.
 
@@ -101,13 +108,6 @@ A production version would require server-enforced authentication, role authoris
 ## What I would do differently today
 
 For production, I would begin with an end-to-end threat model and data-retention policy before finalising the form schema. I would keep validation contracts shared between client and server, enforce transitions transactionally, use immutable audit storage, add idempotent submission and protect every query by role and tenant. I would also test content with users familiar with credit applications before adding more fields or automation.
-
-## Evidence
-
-- [Accessibility review](financial-operations-platform-accessibility.md)
-- [Architecture decision: static financial workflow](../decisions/0003-static-financial-workflow.md)
-- domain and repository unit tests under `apps/portfolio/src/case-studies/financial-operations`;
-- desktop and mobile critical journey in `apps/portfolio/e2e/portfolio.spec.ts`.
 
 ## Later increments
 

@@ -1,6 +1,8 @@
 # ADR 0008: Provisional Project Identity
 
-Status: accepted, naming follow-up required
+## Status
+
+Accepted; naming follow-up required
 
 ## Context
 
@@ -26,3 +28,13 @@ The broader collection has an accurate working identity without coupling this
 migration to a URL change. The visible title and repository slug temporarily
 differ. Final naming remains a tracked release decision rather than an implicit
 code cleanup.
+
+## Alternatives considered
+
+### Rename every technical identifier immediately
+
+Deferred because repository, deployment, package, link, test, and browser-storage migrations must be coordinated to avoid broken URLs or lost progress.
+
+### Keep the previous visible title
+
+Rejected because it no longer described the combined case-study, handbook, and study-system collection.

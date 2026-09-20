@@ -2,7 +2,7 @@
 
 Status: completed for the MVP; this is not a WCAG certification.
 
-## Scope and evidence
+## Scope and method
 
 The review covers portfolio/store and date filters, KPIs, category charts,
 insight selection, provenance, and loading, empty, stale and analysis-failure
@@ -22,7 +22,7 @@ desktop/mobile Chromium journey.
   alert without removing the underlying aggregate data.
 - Simulated generated content is visibly labelled potentially fallible.
 
-## Remaining manual work
+## Remaining work and recommendations
 
 Production work should include screen-reader chart exploration, zoom and reflow
 at larger datasets, localisation review, user research on uncertainty language,

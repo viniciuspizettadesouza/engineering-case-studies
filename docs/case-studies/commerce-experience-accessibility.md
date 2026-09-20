@@ -10,7 +10,7 @@ The review covers catalogue filters and service states, vehicle cards and detail
 
 No external screen-reader session or formal WCAG audit was available in this environment. VoiceOver/Safari and NVDA/Firefox spot checks remain recommended.
 
-## Results
+## Findings
 
 - every form field has a persistent visible label;
 - filters use native selects and update a shareable URL without taking focus;
@@ -25,7 +25,7 @@ No external screen-reader session or formal WCAG audit was available in this env
 - reduced-motion behavior is inherited from the portfolio stylesheet;
 - the critical journey completes in both configured Playwright viewports.
 
-## Follow-up recommendations
+## Remaining work and recommendations
 
 - complete screen-reader checks in VoiceOver/Safari and NVDA/Firefox;
 - inspect reflow at 200% and 400% zoom and in Windows high-contrast mode;

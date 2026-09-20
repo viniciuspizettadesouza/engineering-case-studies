@@ -22,6 +22,12 @@ describe('handbook content', () => {
       expect(topic.content).toContain(`# ${topic.title}`)
       expect(topic.headings.length).toBeGreaterThan(0)
       expect(handbookCategories).toContain(topic.category)
+      const introduction = topic.content
+        .split('\n')
+        .slice(1)
+        .find((line) => line.trim())
+      expect(introduction).toBeDefined()
+      expect(introduction!).not.toMatch(/^#/)
     }
   })
 

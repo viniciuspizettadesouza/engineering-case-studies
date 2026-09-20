@@ -1,10 +1,12 @@
-# Implementation progress
+# Adaptive Study System Implementation Plan
+
+## Implementation progress
 
 _Last updated: 2026-09-17_
 
 Legend: **[x]** complete · **[~]** partially complete · **[ ]** pending
 
-## How this plan is used
+### How this plan is used
 
 This document is the implementation source of truth for the Study System.
 
@@ -15,7 +17,7 @@ This document is the implementation source of truth for the Study System.
 - New Study System scope should be added to this document before or with its implementation.
 - The execution order in section 65 remains authoritative. Phase 11 must not begin before the current learning loop has been used and stabilized.
 
-## Current phase status
+### Current phase status
 
 - [x] **Phase 0 — Baseline and architecture decision**
   - [x] Inspect the existing routes and handbook architecture.
@@ -103,7 +105,7 @@ This document is the implementation source of truth for the Study System.
   - [ ] Make repository archival or retirement a separate explicit decision.
 - [ ] **Future work — cloud sync, multiple learners, parameter optimization, project-derived knowledge, interview simulation, and reviewed AI-generated cards**
 
-## Validation checkpoint
+### Validation checkpoint
 
 Revalidated on 2026-09-17:
 
@@ -117,7 +119,7 @@ Revalidated on 2026-09-17:
 - [x] Accessibility scan with axe
 - [x] GitHub Pages-compatible HashRouter/static architecture preserved
 
-## Suggested continuation for tomorrow
+### Suggested continuation for tomorrow
 
 1. Follow the [practical stability log](study-system-stability-log.md) while using the current catalog for real review sessions.
 2. Accumulate response-duration history and compare the median estimate with actual session durations.
@@ -125,8 +127,6 @@ Revalidated on 2026-09-17:
 4. Resolve any blocker or high-severity finding and record a proceed/hold decision before starting Phase 11.
 
 ---
-
-# Engineering Practice Lab — Adaptive Study System Implementation Plan
 
 ## 1. Objective
 
@@ -153,7 +153,7 @@ Only after the Study System works well with the current handbook should the repo
 
 ---
 
-# 2. Core Product Principle
+## 2. Core Product Principle
 
 The Engineering Practice Lab should eventually answer three questions:
 
@@ -199,7 +199,7 @@ Read once → mark completed → never return
 
 ---
 
-# 3. Background: What Should Be Preserved from projeto-br4b0
+## 3. Background: What Should Be Preserved from projeto-br4b0
 
 Do not copy `projeto-br4b0` wholesale.
 
@@ -209,7 +209,7 @@ Extract the useful learning concepts instead.
 
 The relevant ideas from `projeto-br4b0` are:
 
-### Study topics grouped by subject
+#### Study topics grouped by subject
 
 The old project represented individual subjects/topics rather than treating a whole discipline as one item.
 
@@ -237,7 +237,7 @@ Architecture
 
 ---
 
-### Sequential study rotation
+#### Sequential study rotation
 
 The old project calculated weekly study load and generated sequential study blocks across different subjects.
 
@@ -247,7 +247,7 @@ The new system should rotate knowledge through an adaptive review queue.
 
 ---
 
-### Visual review control
+#### Visual review control
 
 `projeto-br4b0` had a visual matrix representing:
 
@@ -277,7 +277,7 @@ The old Visual Control becomes the new Knowledge Map.
 
 ---
 
-### Progress tracking
+#### Progress tracking
 
 The old project had per-subject progress and performance screens.
 
@@ -309,7 +309,7 @@ scheduled interval
 
 ---
 
-### Weekly workload
+#### Weekly workload
 
 The old project distributed available study hours according to subject weight.
 
@@ -319,11 +319,11 @@ For the first implementation, review scheduling should be memory-driven rather t
 
 ---
 
-# 4. Learning Model
+## 4. Learning Model
 
 The system should combine four ideas.
 
-## 4.1 Spaced Repetition
+### 4.1 Spaced Repetition
 
 Reviews should occur at increasing intervals when knowledge is successfully recalled.
 
@@ -341,7 +341,7 @@ Use a real spaced repetition scheduler.
 
 ---
 
-## 4.2 Active Recall / Retrieval Practice
+### 4.2 Active Recall / Retrieval Practice
 
 A learner should attempt to answer before seeing the explanation.
 
@@ -369,7 +369,7 @@ These are separate experiences.
 
 ---
 
-## 4.3 Interleaving
+### 4.3 Interleaving
 
 Avoid showing many consecutive cards about exactly the same subject when alternatives are available.
 
@@ -391,7 +391,7 @@ It must not modify the spaced-repetition due dates produced by the scheduler.
 
 ---
 
-## 4.4 Adaptive scheduling
+### 4.4 Adaptive scheduling
 
 The interval should depend on recall performance.
 
@@ -419,7 +419,7 @@ Never hard-code them in the UI.
 
 ---
 
-# 5. Scheduler
+## 5. Scheduler
 
 Use the actively maintained TypeScript FSRS implementation:
 
@@ -463,7 +463,7 @@ scheduler/
 
 ---
 
-# 6. Retention Configuration
+## 6. Retention Configuration
 
 Start with the scheduler's established defaults unless there is a documented reason to change them.
 
@@ -483,13 +483,13 @@ Do not invent a minimum review-count threshold without evidence.
 
 ---
 
-# 7. Keep Priority Separate from Memory
+## 7. Keep Priority Separate from Memory
 
 This distinction is critical.
 
 There are two independent questions.
 
-## Priority
+### Priority
 
 How important is this knowledge?
 
@@ -501,7 +501,7 @@ Interview evidence: yes
 Priority: high
 ```
 
-## Memory
+### Memory
 
 How well is this currently retained?
 
@@ -521,7 +521,7 @@ Application metadata determines content priority.
 
 ---
 
-# 8. Interview Evidence
+## 8. Interview Evidence
 
 Current handbook material should have explicit provenance showing that it came from interview-oriented knowledge.
 
@@ -559,7 +559,7 @@ This is useful context, not a guarantee that another interviewer will ask it.
 
 ---
 
-# 9. Current Handbook Remains Canonical
+## 9. Current Handbook Remains Canonical
 
 The current canonical Markdown files must remain the primary knowledge source.
 
@@ -587,7 +587,7 @@ Cards should contain concise recall answers and link back to the relevant handbo
 
 ---
 
-# 10. Study Card Model
+## 10. Study Card Model
 
 Create a dedicated study-domain model.
 
@@ -630,7 +630,7 @@ Never use array indexes as persisted card IDs.
 
 ---
 
-# 11. Study Progress Model
+## 11. Study Progress Model
 
 Study definitions and learner progress must remain separate.
 
@@ -670,7 +670,7 @@ interface StudyStorage {
 
 ---
 
-# 12. Review History
+## 12. Review History
 
 Every answer should generate a history record.
 
@@ -699,7 +699,7 @@ Do not store unnecessary personal information.
 
 ---
 
-# 13. Local-First Architecture
+## 13. Local-First Architecture
 
 The current Engineering Practice Lab is deliberately static-first.
 
@@ -721,7 +721,7 @@ The Study System must work on GitHub Pages.
 
 ---
 
-# 14. Persistence Boundary
+## 14. Persistence Boundary
 
 Create an abstraction such as:
 
@@ -757,7 +757,7 @@ engineering-practice-lab.study.v1
 
 ---
 
-# 15. Export and Import
+## 15. Export and Import
 
 Because the MVP is local-first, backup must be a first-class feature.
 
@@ -791,7 +791,7 @@ Provide confirmation before destructive replacement.
 
 ---
 
-# 16. Content Extraction Strategy
+## 16. Content Extraction Strategy
 
 The current handbook parser already extracts `##` and `###` headings.
 
@@ -825,11 +825,11 @@ No runtime AI generation is required.
 
 ---
 
-# 17. Initial Card Population
+## 17. Initial Card Population
 
 Use two passes.
 
-## Pass A — Technical Exercises
+### Pass A — Technical Exercises
 
 Start with the existing nineteen Frontend Technical Exercises.
 
@@ -843,13 +843,13 @@ This provides the first functional Study Mode dataset.
 
 ---
 
-## Pass B — Existing Handbook Concepts
+### Pass B — Existing Handbook Concepts
 
 Add curated cards for the important interview-derived concepts already present across the handbook.
 
 Examples include:
 
-### JavaScript
+#### JavaScript
 
 ```text
 scope
@@ -877,7 +877,7 @@ immutability
 memoization
 ```
 
-### TypeScript
+#### TypeScript
 
 ```text
 type vs interface
@@ -896,7 +896,7 @@ enum trade-offs
 runtime validation
 ```
 
-### React
+#### React
 
 ```text
 state placement
@@ -917,7 +917,7 @@ useCallback
 virtualization
 ```
 
-### CSS/UI
+#### CSS/UI
 
 ```text
 display vs visibility vs opacity
@@ -931,7 +931,7 @@ design-system boundaries
 accessibility
 ```
 
-### Architecture
+#### Architecture
 
 ```text
 layered architecture
@@ -961,7 +961,7 @@ Builder
 REST vs SOAP vs GraphQL
 ```
 
-### Performance
+#### Performance
 
 ```text
 LCP
@@ -979,7 +979,7 @@ SSR
 SEO
 ```
 
-### Messaging / GraphQL
+#### Messaging / GraphQL
 
 ```text
 GraphQL
@@ -994,7 +994,7 @@ replay
 acknowledgements
 ```
 
-### Testing / Delivery / DevOps
+#### Testing / Delivery / DevOps
 
 ```text
 unit testing
@@ -1011,7 +1011,7 @@ deployment
 P1–P4 priority concepts
 ```
 
-### Tooling
+#### Tooling
 
 ```text
 Git identity
@@ -1024,7 +1024,7 @@ dependency updates
 pipeline diagnosis
 ```
 
-### Technical Leadership
+#### Technical Leadership
 
 ```text
 technical leadership
@@ -1041,7 +1041,7 @@ Do not create low-quality cards only to increase the card count.
 
 ---
 
-# 18. Study Queue
+## 18. Study Queue
 
 Create a deterministic queue builder.
 
@@ -1068,7 +1068,7 @@ Queue ordering must not modify due dates.
 
 ---
 
-# 19. Queue Priority
+## 19. Queue Priority
 
 Use a transparent rule.
 
@@ -1096,7 +1096,7 @@ The ordering must be testable.
 
 ---
 
-# 20. Interleaving Algorithm
+## 20. Interleaving Algorithm
 
 When multiple eligible cards are available:
 
@@ -1122,7 +1122,7 @@ Never delay an overdue card to another day solely for interleaving.
 
 ---
 
-# 21. New Cards
+## 21. New Cards
 
 The system should limit the number of unseen cards introduced per day/session.
 
@@ -1140,7 +1140,7 @@ Reviews should normally take precedence over introducing new material.
 
 ---
 
-# 22. Study Settings
+## 22. Study Settings
 
 Suggested initial settings:
 
@@ -1165,7 +1165,7 @@ Validate all stored settings.
 
 ---
 
-# 23. Routes
+## 23. Routes
 
 Extend the existing HashRouter.
 
@@ -1189,7 +1189,7 @@ Lazy-load the study area similarly to the handbook.
 
 ---
 
-# 24. Main Navigation
+## 24. Main Navigation
 
 Add:
 
@@ -1217,7 +1217,7 @@ Study        → retain engineering
 
 ---
 
-# 25. Study Dashboard
+## 25. Study Dashboard
 
 `/study`
 
@@ -1260,7 +1260,7 @@ Start review
 
 ---
 
-# 26. Review Experience
+## 26. Review Experience
 
 `/study/review`
 
@@ -1300,7 +1300,7 @@ Intervals must come from FSRS preview.
 
 ---
 
-# 27. Keyboard Support
+## 27. Keyboard Support
 
 Study Mode should support efficient keyboard review.
 
@@ -1321,7 +1321,7 @@ Ensure shortcuts do not interfere with focused form controls.
 
 ---
 
-# 28. Accessibility
+## 28. Accessibility
 
 The existing project takes accessibility seriously.
 
@@ -1345,7 +1345,7 @@ Add axe coverage to appropriate Playwright flows.
 
 ---
 
-# 29. Knowledge Map
+## 29. Knowledge Map
 
 Replace the BR4B0-style static review matrix with a meaningful knowledge map.
 
@@ -1400,7 +1400,7 @@ Do not invent an arbitrary 0–100 "mastery score" unless its meaning can be rig
 
 ---
 
-# 30. Memory Visualization
+## 30. Memory Visualization
 
 If a percentage is shown, label exactly what it represents.
 
@@ -1422,7 +1422,7 @@ over false precision.
 
 ---
 
-# 31. History
+## 31. History
 
 Route:
 
@@ -1454,7 +1454,7 @@ Add filters later if necessary.
 
 ---
 
-# 32. Study Plan
+## 32. Study Plan
 
 After the base review loop is stable, recreate the useful part of the old Weekly Load Calculator as a Study Plan.
 
@@ -1499,7 +1499,7 @@ The Study Plan determines how much the learner intends to process.
 
 ---
 
-# 33. Session Estimation
+## 33. Session Estimation
 
 Estimate session length using historical review duration when available.
 
@@ -1511,7 +1511,7 @@ Do not promise exact study duration.
 
 ---
 
-# 34. Progress Metrics
+## 34. Progress Metrics
 
 Useful metrics include:
 
@@ -1541,7 +1541,7 @@ A streak may be displayed, but it is not the learning goal.
 
 ---
 
-# 35. Source Navigation
+## 35. Source Navigation
 
 Every Study Card should provide a path back to the canonical handbook source.
 
@@ -1558,7 +1558,7 @@ The Study System must strengthen the Handbook, not replace it.
 
 ---
 
-# 36. File Organization
+## 36. File Organization
 
 Prefer a feature-oriented structure such as:
 
@@ -1615,7 +1615,7 @@ Do not introduce package boundaries unless there is a genuine reuse boundary.
 
 ---
 
-# 37. Phase 0 — Baseline and Architecture Decision
+## 37. Phase 0 — Baseline and Architecture Decision
 
 Before implementation:
 
@@ -1647,7 +1647,7 @@ no product behavior changed yet
 
 ---
 
-# 38. Phase 1 — Study Domain Foundation
+## 38. Phase 1 — Study Domain Foundation
 
 Implement:
 
@@ -1676,7 +1676,7 @@ broken handbook references fail tests
 
 ---
 
-# 39. Phase 2 — Interview-Derived Study Catalog
+## 39. Phase 2 — Interview-Derived Study Catalog
 
 Create the first study catalog.
 
@@ -1719,7 +1719,7 @@ all cards link to canonical handbook content
 
 ---
 
-# 40. Phase 3 — FSRS Scheduler Integration
+## 40. Phase 3 — FSRS Scheduler Integration
 
 Install and integrate:
 
@@ -1755,7 +1755,7 @@ library API does not leak throughout application
 
 ---
 
-# 41. Phase 4 — Local Persistence
+## 41. Phase 4 — Local Persistence
 
 Implement browser persistence behind the repository abstraction.
 
@@ -1796,7 +1796,7 @@ existing handbook remains functional
 
 ---
 
-# 42. Phase 5 — Daily Queue + Interleaving
+## 42. Phase 5 — Daily Queue + Interleaving
 
 Implement:
 
@@ -1841,7 +1841,7 @@ queue is deterministic
 
 ---
 
-# 43. Phase 6 — Study Dashboard and Review Flow
+## 43. Phase 6 — Study Dashboard and Review Flow
 
 Add routes:
 
@@ -1877,7 +1877,7 @@ source handbook link works
 
 ---
 
-# 44. Phase 7 — Knowledge Map and History
+## 44. Phase 7 — Knowledge Map and History
 
 Implement:
 
@@ -1904,7 +1904,7 @@ color is not the only signal
 
 ---
 
-# 45. Phase 8 — Study Plan and Workload
+## 45. Phase 8 — Study Plan and Workload
 
 Reintroduce the best idea from BR4B0's Weekly Load Calculator.
 
@@ -1932,7 +1932,7 @@ defaults remain usable without configuration
 
 ---
 
-# 46. Phase 9 — Analytics, Backup and Hardening
+## 46. Phase 9 — Analytics, Backup and Hardening
 
 Add:
 
@@ -1976,7 +1976,7 @@ GitHub Pages build remains static
 
 ---
 
-# 47. Phase 10 — Documentation
+## 47. Phase 10 — Documentation
 
 Create:
 
@@ -2015,7 +2015,7 @@ Do not claim educational outcomes that have not been measured.
 
 ---
 
-# 48. Phase 11 — software-architecture-playbook Integration
+## 48. Phase 11 — software-architecture-playbook Integration
 
 Only begin this phase after the Study System is complete and stable.
 
@@ -2055,7 +2055,7 @@ feature-based architecture
 
 ---
 
-# 49. Preserve Source Provenance During Playbook Import
+## 49. Preserve Source Provenance During Playbook Import
 
 New architecture material should have metadata such as:
 
@@ -2081,7 +2081,7 @@ Do not overwrite stronger provenance with weaker provenance.
 
 ---
 
-# 50. Deduplicate Before Adding
+## 50. Deduplicate Before Adding
 
 When importing the Playbook:
 
@@ -2108,7 +2108,7 @@ One concept may have multiple provenance records if needed.
 
 ---
 
-# 51. Playbook Git Migration
+## 51. Playbook Git Migration
 
 If the `software-architecture-playbook` repository is eventually retired, preserve its useful Git history similarly to the previous `frontend-interview-guide` migration.
 
@@ -2129,7 +2129,7 @@ That is a separate final migration decision.
 
 ---
 
-# 52. Later Project Knowledge
+## 52. Later Project Knowledge
 
 After the Playbook integration, Study Cards may gradually reference lessons extracted from independent repositories such as:
 
@@ -2166,11 +2166,11 @@ concept
 
 ---
 
-# 53. Future Architecture
+## 53. Future Architecture
 
 Do not implement these now, but preserve extension points for:
 
-### Cloud synchronization
+#### Cloud synchronization
 
 A future user account could synchronize review history across devices.
 
@@ -2178,7 +2178,7 @@ The domain and scheduler should not depend on browser storage.
 
 ---
 
-### Multiple learners
+#### Multiple learners
 
 Future persistence may support multiple users.
 
@@ -2186,7 +2186,7 @@ Do not introduce that complexity in the MVP.
 
 ---
 
-### Personalized FSRS parameters
+#### Personalized FSRS parameters
 
 Eventually review history could be used to optimize scheduler parameters.
 
@@ -2194,7 +2194,7 @@ Keep it out of the initial implementation.
 
 ---
 
-### AI-generated practice
+#### AI-generated practice
 
 AI could eventually create additional questions from handbook material.
 
@@ -2204,7 +2204,7 @@ Any generated card should require review before entering the permanent study cat
 
 ---
 
-### Interview Mode
+#### Interview Mode
 
 A future session type could simulate interviews:
 
@@ -2222,9 +2222,9 @@ Do not mix interview simulation with the memory scheduler.
 
 ---
 
-# 54. Testing Strategy
+## 54. Testing Strategy
 
-## Unit tests
+### Unit tests
 
 Cover:
 
@@ -2242,7 +2242,7 @@ date handling
 
 ---
 
-## Component tests
+### Component tests
 
 Cover:
 
@@ -2258,7 +2258,7 @@ settings
 
 ---
 
-## E2E
+### E2E
 
 At minimum:
 
@@ -2286,7 +2286,7 @@ accessibility
 
 ---
 
-# 55. Time and Date Rules
+## 55. Time and Date Rules
 
 Scheduling logic is date-sensitive.
 
@@ -2312,7 +2312,7 @@ Display dates in the user's local timezone.
 
 ---
 
-# 56. Content Quality Rules
+## 56. Content Quality Rules
 
 Every Study Card should test something worth remembering.
 
@@ -2356,7 +2356,7 @@ Prioritize understanding and explanation over trivia.
 
 ---
 
-# 57. Answer Quality
+## 57. Answer Quality
 
 Answers should be short enough for recall verification.
 
@@ -2378,7 +2378,7 @@ Do not duplicate entire handbook sections inside Study Cards.
 
 ---
 
-# 58. Code Questions
+## 58. Code Questions
 
 For code-related cards, support fenced code blocks.
 
@@ -2406,7 +2406,7 @@ Answer should explain reasoning, not only output.
 
 ---
 
-# 59. Comparison Cards
+## 59. Comparison Cards
 
 Use comparisons where interviews commonly test conceptual boundaries.
 
@@ -2425,7 +2425,7 @@ shallow vs deep copy
 
 ---
 
-# 60. Scenario Cards
+## 60. Scenario Cards
 
 Add scenario questions where appropriate.
 
@@ -2441,7 +2441,7 @@ These are often more valuable than definition cards.
 
 ---
 
-# 61. Success Criteria
+## 61. Success Criteria
 
 The first major release is successful when:
 
@@ -2464,7 +2464,7 @@ Everything still deploys as a static GitHub Pages site.
 
 ---
 
-# 62. Product Identity After Completion
+## 62. Product Identity After Completion
 
 The repository should conceptually become:
 
@@ -2497,7 +2497,7 @@ long-term retention
 
 ---
 
-# 63. Important Non-Goals
+## 63. Important Non-Goals
 
 Do not:
 
@@ -2520,7 +2520,7 @@ Do not:
 
 ---
 
-# 64. Implementation Discipline
+## 64. Implementation Discipline
 
 Implement one phase at a time.
 
@@ -2548,7 +2548,7 @@ Do not publish, delete repositories, rewrite Git history or perform destructive 
 
 ---
 
-# 65. Recommended Execution Order
+## 65. Recommended Execution Order
 
 Execute strictly in this order:
 

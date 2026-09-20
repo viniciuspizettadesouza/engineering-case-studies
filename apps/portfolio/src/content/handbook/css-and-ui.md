@@ -1,5 +1,7 @@
 # CSS, UI Architecture, and Accessibility
 
+Interface styling is a system of layout, visual hierarchy, interaction, and inclusive defaults. Prefer native semantics and resilient layout primitives before adding abstractions or visual effects.
+
 ## Visibility and layout
 
 - `display: none` removes an element from layout and the accessibility tree.

@@ -80,22 +80,26 @@ Insights describe patterns; they do not prescribe staffing, pricing or employmen
 - production data pipelines, streaming ingestion or role enforcement;
 - copied branding, layouts, thresholds or terminology from a real retailer.
 
-## Later increments
-
-After all five MVPs exist, a later version may add a constrained chatbot. It would query only the typed fictional analytics boundary, show the filters and aggregates used, generate visualisation specifications rather than executable code, and require the manager to verify results. Other candidates include saved views, scheduled reports and a server-backed batch pipeline.
-
-## Implementation and accessibility notes
+## Implementation and architecture
 
 The dashboard derives every KPI, category ranking and insight selection from one typed date-and-store slice. Charts repeat their essential values in a semantic table and text summary; colour and geometry are supplementary. Insight controls are native buttons with pressed state, generated content is labelled simulated and fallible, and stale, empty, loading and failure states use meaningful status or alert semantics. A failed analysis never hides the underlying aggregates.
 
-## Limitations and privacy boundary
+## Validation evidence
 
-All stores, aggregates, comparisons and observations are deterministic fiction. There is no customer-level data, live model, analytics transmission or production role enforcement. Confidence is a demonstration label, not a statistical probability. A production design would need governed metric definitions, pipeline observability, regional authorisation, accessible chart testing with assistive technology and documented model evaluation.
+- [Accessibility review](retail-insights-workspace-accessibility.md)
+
+## Security, privacy, and threat boundary
+
+All stores, aggregates, comparisons and observations are deterministic fiction. There is no customer-level data, live model, analytics transmission or production role enforcement. A production design would need governed metric definitions, pipeline observability, regional authorisation, accessible chart testing with assistive technology and documented model evaluation.
+
+## Known limitations
+
+Confidence is a demonstration label, not a statistical probability. The static workflow does not demonstrate production data freshness, pipeline operation, model evaluation, or server-enforced regional access.
 
 ## What I would do differently today
 
 I would version the aggregate and insight provenance contracts, calculate snapshots in an observable server-side pipeline, and expose freshness per source. Any future generative layer would be constrained to cited aggregates, evaluated for unsupported claims and kept away from automated staffing, pricing or employment decisions.
 
-## Supporting review
+## Later increments
 
-- [Accessibility review](retail-insights-workspace-accessibility.md)
+After all five MVPs exist, a later version may add a constrained chatbot. It would query only the typed fictional analytics boundary, show the filters and aggregates used, generate visualisation specifications rather than executable code, and require the manager to verify results. Other candidates include saved views, scheduled reports and a server-backed batch pipeline.

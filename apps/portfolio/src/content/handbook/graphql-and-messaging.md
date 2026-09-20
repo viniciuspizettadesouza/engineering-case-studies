@@ -1,5 +1,7 @@
 # GraphQL and Messaging
 
+Application communication should be chosen from delivery semantics, ownership, and operational constraints. GraphQL, browser real-time transports, event logs, and message brokers solve different problems and require different safeguards.
+
 ## Operating GraphQL safely
 
 GraphQL clients can request nested data, so production services need controls based on authenticated callers and real cost—not only request counts.

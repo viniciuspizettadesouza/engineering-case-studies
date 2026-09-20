@@ -1,7 +1,10 @@
 # ADR 0001: Use a Static-First Frontend Architecture
 
-- Status: accepted
-- Date: 2026-08-03
+## Status
+
+Accepted
+
+Date: 2026-08-03
 
 ## Context
 

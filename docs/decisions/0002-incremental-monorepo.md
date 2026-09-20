@@ -1,7 +1,10 @@
 # ADR 0002: Grow the Monorepo Incrementally
 
-- Status: accepted
-- Date: 2026-08-03
+## Status
+
+Accepted
+
+Date: 2026-08-03
 
 ## Context
 
