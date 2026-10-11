@@ -23,7 +23,7 @@ engineering handbook and Study Mode:
 - CI and GitHub Pages deployment configuration;
 - initial architecture, roadmap and privacy documentation;
 - a completed cross-product accessibility, test and fixture-provenance review.
-- thirteen curated handbook topics loaded directly from canonical Markdown;
+- fourteen curated handbook topics loaded directly from canonical Markdown;
 - accessible topic navigation, table-of-contents controls and local search.
 - active-recall cards scheduled by FSRS and interleaved across categories;
 - an integrated five-stage roadmap linking every handbook topic and main section;

@@ -50,9 +50,35 @@ describe('handbook pages', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', {
-        name: /next: testing, delivery, and devops/i,
+        name: /next: specification-driven development/i,
       }),
-    ).toHaveAttribute('href', '#/handbook/testing-delivery-and-devops')
+    ).toHaveAttribute('href', '#/handbook/specification-driven-development')
+  })
+
+  it('renders and deep-links into the specification-driven development guide', async () => {
+    const scrollIntoView = vi.fn()
+    Element.prototype.scrollIntoView = scrollIntoView
+    window.location.hash =
+      '#/handbook/specification-driven-development#reusable-prompt-sequence'
+    render(<App />)
+
+    expect(
+      await screen.findByRole(
+        'heading',
+        { name: 'Specification-Driven Development' },
+        { timeout: 3000 },
+      ),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Reusable prompt sequence' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'AI-assisted engineering workflow' }),
+    ).toHaveAttribute(
+      'href',
+      '#/handbook/testing-delivery-and-devops#ai-assisted-engineering-workflow',
+    )
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
   })
 
   it('scrolls to a handbook section opened through a deep link', async () => {

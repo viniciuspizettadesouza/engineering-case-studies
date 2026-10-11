@@ -6,6 +6,7 @@ import graphqlContent from './handbook/graphql-and-messaging.md?raw'
 import interviewContent from './handbook/interview-strategy.md?raw'
 import javascriptContent from './handbook/javascript.md?raw'
 import reactContent from './handbook/react.md?raw'
+import specificationContent from './handbook/specification-driven-development.md?raw'
 import leadershipContent from './handbook/technical-leadership.md?raw'
 import exercisesContent from './handbook/technical-exercises.md?raw'
 import deliveryContent from './handbook/testing-delivery-and-devops.md?raw'
@@ -220,6 +221,27 @@ const topicDefinitions: readonly TopicDefinition[] = [
     content: graphqlContent,
   },
   {
+    slug: 'specification-driven-development',
+    title: 'Specification-Driven Development',
+    summary:
+      'Turn product intent into traceable specifications, validated workflows, bounded features, and safer AI-assisted delivery.',
+    category: 'Delivery',
+    keywords: [
+      'product specification',
+      'feature specification',
+      'requirements',
+      'scope',
+      'scope creep',
+      'traceability',
+      'acceptance criteria',
+      'mockups',
+      'ai-assisted development',
+      'prompt library',
+    ],
+    order: 10,
+    content: specificationContent,
+  },
+  {
     slug: 'testing-delivery-and-devops',
     title: 'Testing, Delivery, and DevOps',
     summary:
@@ -241,7 +263,7 @@ const topicDefinitions: readonly TopicDefinition[] = [
       'slo',
       'incident response',
     ],
-    order: 10,
+    order: 11,
     content: deliveryContent,
   },
   {
@@ -259,7 +281,7 @@ const topicDefinitions: readonly TopicDefinition[] = [
       'daily commands',
       'command reference',
     ],
-    order: 11,
+    order: 12,
     content: toolingContent,
   },
   {
@@ -269,7 +291,7 @@ const topicDefinitions: readonly TopicDefinition[] = [
       'Nineteen JavaScript, React, asynchronous, and TypeScript exercises with discussion prompts.',
     category: 'Practice',
     keywords: ['exercises', 'javascript', 'react', 'typescript', 'debugging'],
-    order: 12,
+    order: 13,
     content: exercisesContent,
   },
   {
@@ -279,7 +301,7 @@ const topicDefinitions: readonly TopicDefinition[] = [
       'Engineering judgment, mentoring, product partnership, metrics, and a contextual 30–60–90 day approach.',
     category: 'Career',
     keywords: ['tech lead', 'leadership', 'mentoring', 'rfc', 'metrics'],
-    order: 13,
+    order: 14,
     content: leadershipContent,
   },
 ]

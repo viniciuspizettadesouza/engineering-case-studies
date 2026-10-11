@@ -9,7 +9,7 @@ import {
 
 describe('handbook content', () => {
   it('provides complete, ordered, unique topic metadata', () => {
-    expect(handbookTopics).toHaveLength(13)
+    expect(handbookTopics).toHaveLength(14)
     expect(new Set(handbookTopics.map((topic) => topic.slug)).size).toBe(
       handbookTopics.length,
     )
@@ -119,6 +119,55 @@ describe('handbook content', () => {
     ]) {
       expect(searchHandbook(query)[0]?.topic.slug).toBe(
         'architecture-and-patterns',
+      )
+    }
+  })
+
+  it('indexes the specification-driven development guide and its stable headings', () => {
+    const topic = getHandbookTopic('specification-driven-development')
+    expect(topic).toBeDefined()
+    expect(topic!.headings).toEqual(
+      expect.arrayContaining([
+        {
+          depth: 2,
+          title: 'Artifact boundaries and requirement provenance',
+          id: 'artifact-boundaries-and-requirement-provenance',
+        },
+        {
+          depth: 2,
+          title: 'Validate interpretation before implementation',
+          id: 'validate-interpretation-before-implementation',
+        },
+        {
+          depth: 2,
+          title: 'Extract traceable feature specifications',
+          id: 'extract-traceable-feature-specifications',
+        },
+        {
+          depth: 2,
+          title: 'Reusable prompt sequence',
+          id: 'reusable-prompt-sequence',
+        },
+        {
+          depth: 3,
+          title: 'Reveal scope assumptions',
+          id: 'reveal-scope-assumptions',
+        },
+        {
+          depth: 2,
+          title: 'Evidence, examples, and limits',
+          id: 'evidence-examples-and-limits',
+        },
+      ]),
+    )
+
+    for (const query of [
+      'product specification',
+      'scope creep',
+      'traceability',
+    ]) {
+      expect(searchHandbook(query)[0]?.topic.slug).toBe(
+        'specification-driven-development',
       )
     }
   })

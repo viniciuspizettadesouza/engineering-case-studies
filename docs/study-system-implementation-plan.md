@@ -98,6 +98,8 @@ This document is the implementation source of truth for the Study System.
   - [ ] Deduplicate imported concepts against the existing handbook and cards.
   - [ ] Preserve the strongest provenance and interview evidence.
   - [ ] Expand the card catalog only after canonical handbook integration.
+  - [ ] After the practical stability log records a Proceed decision, add the planned Specification-Driven Development cards: `specification-artifact-boundaries`, `specification-requirement-provenance`, `specification-mockup-validation`, `specification-stress-test-vs-gap-analysis`, `specification-feature-traceability`, and `specification-bounded-scaffold`.
+  - [ ] Link those cards to the canonical Specification-Driven Development headings and use `source: 'literature'`, `interviewEvidence: 'none'`, and normal priority.
   - [ ] After a stability proceed decision and architecture-content deduplication, add the planned literature-derived scaling cards: `architecture-failure-driven-scaling`, `architecture-stateless-horizontal-scaling`, `architecture-database-scaling-diagnosis`, `architecture-cache-consistency`, `architecture-background-job-contract`, and `architecture-sharding-tradeoffs`.
   - [ ] Link those cards to canonical handbook headings and use `source: 'literature'`, `interviewEvidence: 'none'`, and normal priority.
   - [ ] Use real-session gaps to guide useful handbook and card coverage.

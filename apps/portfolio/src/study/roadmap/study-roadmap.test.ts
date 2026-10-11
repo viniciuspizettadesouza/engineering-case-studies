@@ -14,6 +14,19 @@ describe('study roadmap', () => {
     expect(
       studyRoadmapStages.flatMap((stage) => stage.topicSlugs),
     ).toHaveLength(handbookTopics.length)
+    expect(
+      studyRoadmapStages.find((stage) => stage.id === 'quality-and-delivery')
+        ?.topicSlugs,
+    ).toEqual([
+      'specification-driven-development',
+      'testing-delivery-and-devops',
+      'developer-tooling',
+    ])
+    expect(
+      studyRoadmapStages
+        .flatMap((stage) => stage.topicSlugs)
+        .filter((slug) => slug === 'specification-driven-development'),
+    ).toHaveLength(1)
     expect(validateStudyRoadmap(studyRoadmapStages)).toEqual([])
   })
 

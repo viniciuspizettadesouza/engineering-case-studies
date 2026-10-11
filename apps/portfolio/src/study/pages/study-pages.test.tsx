@@ -75,6 +75,17 @@ describe('study pages', () => {
       screen.getByRole('link', { name: 'Asynchronous execution' }),
     ).toHaveAttribute('href', '#/handbook/javascript#asynchronous-execution')
     expect(
+      screen.getByRole('link', { name: 'Specification-Driven Development' }),
+    ).toHaveAttribute('href', '#/handbook/specification-driven-development')
+    expect(
+      screen.getByRole('link', {
+        name: 'Artifact boundaries and requirement provenance',
+      }),
+    ).toHaveAttribute(
+      'href',
+      '#/handbook/specification-driven-development#artifact-boundaries-and-requirement-provenance',
+    )
+    expect(
       screen.queryByRole('link', { name: 'HTTP semantics and contracts' }),
     ).not.toBeInTheDocument()
     expect(

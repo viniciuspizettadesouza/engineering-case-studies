@@ -38,8 +38,12 @@ export const studyRoadmapStages: readonly StudyRoadmapStageDefinition[] = [
     id: 'quality-and-delivery',
     title: 'Quality and Delivery',
     description:
-      'Strengthen testing, security, reliability, delivery practices, and the tools used to operate the work.',
-    topicSlugs: ['testing-delivery-and-devops', 'developer-tooling'],
+      'Shape specifications, then strengthen testing, security, reliability, delivery practices, and the tools used to operate the work.',
+    topicSlugs: [
+      'specification-driven-development',
+      'testing-delivery-and-devops',
+      'developer-tooling',
+    ],
   },
   {
     id: 'career-growth',
