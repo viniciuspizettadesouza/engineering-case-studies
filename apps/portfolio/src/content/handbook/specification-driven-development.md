@@ -2,6 +2,8 @@
 
 A specification gives people and AI assistants a shared account of what should be built, why it matters, and where the boundaries are. It is a living decision record, not a promise that planning will remove uncertainty or make implementation correct on the first attempt.
 
+This chapter combines two related course workflows. **Course teaching** identifies ideas demonstrated or explicitly described in the lessons. **Reconstructed prompt/template** identifies original reusable material derived from those workflows rather than copied course assets. **Engineering recommendation** identifies safeguards or interpretations added for practical use.
+
 ## Why specification improves AI-assisted delivery
 
 AI can turn an underspecified request into plausible software quickly, but plausibility is not approval. When goals, users, workflows, constraints, and non-goals are implicit, an assistant must either stop for clarification or fill the gaps. Silent inference creates avoidable rework and can introduce unwanted data, permissions, dependencies, or features.
@@ -76,7 +78,143 @@ Before accepting generated work:
 
 The course scaffold used Laravel, Inertia.js, Vue.js, MySQL, and Tailwind CSS. That stack was specific to its example and does not prescribe technology for another repository.
 
+## From product specifications to change specifications
+
+**Course teaching:** Product specification and change specification solve different problems. The product workflow above decides what product or feature should exist: its users, outcomes, scope, and major behavior. The OpenSpec workflow starts from one proposed change to a codebase and preserves the intent, behavioral difference, implementation plan, and history of that change.
+
+They form a useful progression:
+
+```text
+Product intent → feature boundaries → focused change proposal
+→ behavioral delta → implementation and evidence → living behavior
+```
+
+Do not treat the artifacts as interchangeable. A product specification may authorize a capability without deciding its implementation. A change proposal narrows one increment and connects it to the current system. An implementation plan names technical work, while behavioral requirements and scenarios state what users or other systems should observe.
+
+OpenSpec is a tool-specific example of spec-driven development, not a requirement for applying the underlying practice. This repository teaches the workflow; it must not be initialized as an OpenSpec project merely because the workflow is documented here.
+
+## OpenSpec lifecycle and change artifacts
+
+**Course teaching:** The smallest demonstrated lifecycle is **Propose → Apply → Archive**. Explore is optional discovery before a proposal, review and refinement happen before implementation, and Verify is an optional alignment workflow. Testing and code review remain separate evidence.
+
+```text
+Explore uncertainty (optional)
+→ Propose a focused change
+→ Review and refine its artifacts
+→ Apply the implementation tasks
+→ Test, inspect, and manually validate where appropriate
+→ Verify artifact-to-code alignment (optional)
+→ Archive the change and deliberately sync eligible deltas
+```
+
+The course demonstrated these agent commands. Their names and behavior are version-dependent; inspect the installed tool's current help and official documentation before operational use.
+
+| Command                       | Purpose                                                      | Boundary                                       |
+| ----------------------------- | ------------------------------------------------------------ | ---------------------------------------------- |
+| `/opsx:explore <question>`    | Investigate the codebase or clarify an uncertain feature     | Should not silently become implementation      |
+| `/opsx:propose <change>`      | Generate a focused set of change artifacts                   | Requires human review before Apply             |
+| `/opsx:apply <change-slug>`   | Implement or resume one named change                         | Checklist progress is not correctness evidence |
+| `/opsx:verify <change-slug>`  | Compare implementation with accepted artifacts               | Does not replace tests or manual review        |
+| `/opsx:archive <change-slug>` | Preserve completed change history and optionally sync deltas | Archive and sync have different effects        |
+
+One demonstrated version used this representative structure:
+
+```text
+openspec/
+├── config.yaml
+├── changes/
+│   ├── <active-change>/
+│   │   ├── proposal.md
+│   │   ├── design.md
+│   │   ├── tasks.md
+│   │   └── specs/<capability>/spec.md
+│   └── archive/<completed-change>/
+└── specs/<capability>/spec.md
+```
+
+The artifact responsibilities are more durable than the exact directory shape:
+
+| Artifact    | Responsibility                                                         | Review focus                                                             |
+| ----------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| Proposal    | Why the change exists, what changes, affected capabilities, and impact | Product value, scope, exclusions, and compatibility                      |
+| Design      | Context, goals/non-goals, decisions, risks, and trade-offs             | Architecture fit, alternatives, migrations, rollback, and operations     |
+| Tasks       | Dependency-ordered execution checklist                                 | Missing integration paths, tests, deployment work, and safe resumability |
+| Delta spec  | Requirements and scenarios added, changed, or removed by this proposal | Observable behavior and preserved invariants                             |
+| Living spec | Current intended behavior after accepted deltas are synchronized       | Accuracy after concurrent or superseding changes                         |
+| Archive     | Historical proposal, reasoning, and change artifacts                   | Why behavior evolved, even when a stale delta must not be synced         |
+
+**Course teaching:** Cross-referenced artifacts can be refined through ordinary conversation. In the example, the instructor replaced a generated accessor decision with a plain method and had the related design and tasks updated before Apply. Interrupted work retained task progress and could be resumed.
+
+**Engineering recommendation:** Before resuming, inspect partial edits, migrations, jobs, and other side effects; a task checkbox does not prove an operation is idempotent. Stop immediately for destructive, security-sensitive, or irreversible mistakes. For a minor mismatch, reconcile the accepted artifacts rather than allowing an ad hoc code fix to make the specification stale.
+
+## Delta specs and living behavior
+
+**Course teaching:** A delta describes only the requirements changed by one proposal. The course compared a living spec to an account balance and deltas to the transactions that produced it.
+
+| Delta section           | Meaning                                                      | Example                                                        |
+| ----------------------- | ------------------------------------------------------------ | -------------------------------------------------------------- |
+| `ADDED Requirements`    | Introduces new observable behavior                           | Allow editing an account name                                  |
+| `MODIFIED Requirements` | Changes an existing requirement while the capability remains | Allow addresses previously rejected by a disposable-email rule |
+| `REMOVED Requirements`  | Retires an entire requirement                                | Stop feedback-comment email notifications                      |
+
+Classify the requirement boundary, not the verb in the request. “Remove disposable-email blocking” modifies the broader email-acceptance behavior because email validation still exists. Removing comment notifications can remove a complete notification requirement.
+
+A spec delta and a code diff answer different questions:
+
+- the delta states which intended behavior should change;
+- the proposal and design preserve why and with which trade-offs;
+- the code diff shows how the implementation changed;
+- tests and validation provide evidence about actual behavior.
+
+**Engineering recommendation:** Scenarios should cover observable success, validation or failure, boundaries, backward compatibility, and important existing behavior that must remain unchanged. Precise requirements are useful; polished but untested artifacts are only spec theater.
+
+## Collaboration, verification, and archive order
+
+**Course teaching:** OpenSpec artifacts live beside application code so proposals can be reviewed through the same branches and pull requests before implementation. This preserves context for teammates and agents, supports onboarding, and makes partially completed work resumable.
+
+Concurrent changes require behavioral ordering as well as clean Git merges. The course used two proposals affecting account names: editing the original name and later replacing it with first and last names. Archiving the newer change first made the older delta stale. The older change was preserved in the archive without syncing its outdated `users.name` requirement into the newer living specification.
+
+Archive and sync are distinct:
+
+- **Archive** preserves completed change history and reasoning.
+- **Sync** incorporates eligible delta requirements into the current living spec.
+
+A conflict-free merge does not prove compatible requirements. Compare affected capabilities, decide whether one change depends on or supersedes another, and agree on merge, verification, sync, and archive order.
+
+**Course teaching:** Verify compares tasks, requirements, scenarios, design decisions, and implementation evidence. In the branding demonstration it reported complete task and scenario mappings with no issues, but the instructor still required review of the original specification.
+
+**Engineering recommendation:** “Scenario satisfied” may be static agent judgment rather than an executed test. Keep evidence channels distinct:
+
+| Evidence                        | Question                                                   | Limitation                                         |
+| ------------------------------- | ---------------------------------------------------------- | -------------------------------------------------- |
+| Proposal/design review          | Are the intended change and approach appropriate?          | Reviewers can miss requirements                    |
+| Automated tests                 | Did executable assertions pass?                            | Untested behavior remains unknown                  |
+| Manual or end-to-end validation | Does the relevant workflow operate correctly?              | Coverage can be incomplete or environment-specific |
+| OpenSpec Verify                 | Does the implementation appear aligned with the artifacts? | Agent analysis is fallible                         |
+| Git review                      | Is the implementation scoped and maintainable?             | Code alone does not explain intended behavior      |
+| Living-spec review              | Is current intended behavior accurately recorded?          | Depends on correct synchronization and ordering    |
+
+## Proportional adoption and failure modes
+
+**Course teaching:** Sustainable use rests on three habits: correct the plan when intended behavior is wrong, keep changes independently reviewable, and adopt incrementally instead of backfilling every historical feature. Existing systems can start with the next meaningful change.
+
+Avoid full change-specification ceremony for trivial non-behavioral edits or disposable exploration. Prototype to learn when necessary, discard unsafe experimental code, and specify the chosen behavior before building the durable version. A change that looks cosmetic or routine may still need planning when accessibility, security, data, or compatibility risk is material.
+
+The main failure modes are:
+
+- **Over-proposing:** process cost exceeds the risk or behavioral value of the change.
+- **Skipping review:** generated artifacts merely move unexamined assumptions earlier.
+- **Stale specifications:** code or ad hoc prompts change behavior without reconciling the written contract.
+- **Oversized proposals:** unrelated behaviors become difficult to review, apply, or abandon independently.
+- **Solo adoption:** teammates bypass the practice and the shared record drifts.
+- **False green:** checked tasks or a successful Verify report are mistaken for tested correctness.
+- **Unsafe recovery:** partially executed migrations or jobs are repeated without inspecting side effects.
+
+**Engineering recommendation:** Urgent production remediation should not wait for perfect documentation. Apply a safe hotfix when required, then reconcile the intended behavior promptly. Team adoption should define minimum artifact quality, ownership, and how drift is detected when work bypasses the workflow.
+
 ## Reusable prompt sequence
+
+The nine product-specification prompts below are **reconstructed prompts** derived from the earlier course workflow, not verbatim course assets.
 
 ### Draft the initial specification
 
@@ -114,7 +252,57 @@ The course scaffold used Laravel, Inertia.js, Vue.js, MySQL, and Tailwind CSS. T
 
 > Using the approved product specification, feature specifications, and design references, plan the minimal application shell. Limit work to shared layout, navigation, routes, and placeholders. Do not implement authentication or business logic. Minimize dependencies and define the validation required before commit.
 
+## Reconstructed OpenSpec prompts
+
+These prompts are **reconstructed prompts**, not instructor files or verbatim course prompts. Adapt command syntax to the installed OpenSpec and agent versions.
+
+### Explore and prioritize with evidence
+
+> `/opsx:explore` Inspect this codebase for maintainability, reliability, and performance risks. For each material finding, provide its code location, observable evidence, impact, confidence, and a low-risk validation method. Recommend one priority with a concise comparison to the next-best option. Do not change code or combine unrelated fixes.
+
+### Explore an uncertain design
+
+> `/opsx:explore` We need [behavior]. Inspect the current implementation and ask the questions needed to clarify user behavior, failures, compatibility, security, constraints, and non-goals. Present two or three viable approaches and their trade-offs. Do not generate code before the decisions are approved.
+
+### Generate a narrow proposal
+
+> `/opsx:propose` Implement [specific observable change] because [reason]. In scope: [behaviors and integration paths]. Out of scope: [exclusions]. Preserve: [contracts and compatibility]. Include acceptance scenarios, failure behavior, trade-offs, and implementation and verification tasks.
+
+### Audit artifact consistency
+
+> Review `proposal.md`, `design.md`, `tasks.md`, and every change-specific delta spec. Identify contradictions, invented business assumptions, incorrect ADDED/MODIFIED/REMOVED classifications, missing edge cases, and dependencies. Rank findings by risk and cite the affected artifacts. Do not implement.
+
+### Refine a decision across artifacts
+
+> For task [ID], prefer [approach] over [generated choice] because [reason]. Update every affected change artifact while preserving the accepted functional requirement. Explain the changed trade-offs and do not modify implementation code yet.
+
+### Examine migration safety
+
+> Explain the migration and backfill for existing records, including data-shape edge cases, old-consumer compatibility, locking and transaction risks, rollback, idempotency, and verification evidence. Separate documented facts from unresolved decisions. Do not run the migration.
+
+### Split and order changes
+
+> Split this proposal into the smallest independently useful behavioral changes. Show affected capabilities, dependencies, review boundaries, and implementation, merge, sync, and archive order. Do not split solely by source file or implement anything.
+
+### Review implementation against intent
+
+> Compare the implementation with its proposal, design, delta specs, and tasks. Build a requirement-to-code-to-test evidence matrix. Report missing behavior, unintended behavior, incomplete tests, stale documentation, and uncertain evidence with file references and severity. Do not auto-fix.
+
+### Detect stale living specifications
+
+> Compare living specifications and archived reasoning with current code. Identify documented behavior that differs from implementation and meaningful implemented behavior absent from the specs. Propose reconciliation steps without silently rewriting living requirements.
+
+### Assess overlapping changes
+
+> Review active changes for overlapping requirements or capabilities. Recommend a dependency-aware merge, verification, sync, and archive sequence. Identify stale deltas that must not overwrite newer living behavior. Do not merge, sync, or archive without explicit approval.
+
+### Run a pre-archive gate
+
+> Before archiving [slug], review incomplete tasks, artifact-to-code alignment, actual automated test results, manual checks, merge dependencies, and stale-delta risks. Distinguish observed evidence from inferred coverage. Return READY or BLOCKED with reasons; do not archive automatically.
+
 ## Templates and review checklist
+
+The templates in this section are **reconstructed templates** intended to be adapted to established team conventions.
 
 A compact product specification can start with:
 
@@ -163,8 +351,76 @@ Before implementation, confirm that:
 - scaffolding avoids unrequested business logic and dependencies;
 - generated code and commands will be reviewed and validated.
 
+For a change-level artifact review, confirm that:
+
+- the business problem, desired outcome, and impacted user are clear;
+- one coherent behavior is scoped and non-goals are explicit;
+- affected capabilities and integration paths are identified;
+- ADDED, MODIFIED, and REMOVED describe requirement semantics correctly;
+- success, validation, failure, boundary, and regression scenarios are covered;
+- existing contracts, data, and necessary backward compatibility are preserved;
+- technical decisions include rationale, alternatives, and trade-offs;
+- migration, deployment, rollback, security, and operational risks are considered;
+- tasks cover implementation and evidence in dependency order;
+- assumptions and contradictions across artifacts are resolved.
+
+An acceptance-scenario pattern can start with:
+
+```md
+### Requirement: <observable behavior>
+
+The system SHALL <specific action or invariant> when <condition>.
+
+#### Scenario: <successful path>
+
+- GIVEN <relevant initial state, when useful>
+- WHEN <user or system event>
+- THEN <observable result>
+
+#### Scenario: <validation or failure>
+
+- WHEN <invalid input or failure event>
+- THEN <defined outcome and preserved invariant>
+
+#### Scenario: <regression boundary>
+
+- WHEN <an unaffected workflow is exercised>
+- THEN <the existing behavior remains unchanged>
+```
+
+The course displayed WHEN/THEN-style scenario descriptions. Including GIVEN is an **engineering recommendation**, not a claim about a required OpenSpec parser grammar.
+
+Keep verification evidence explicit:
+
+| Requirement or scenario | Implementing code     | Executable test       | Manual validation | Result or gap                      |
+| ----------------------- | --------------------- | --------------------- | ----------------- | ---------------------------------- |
+| `<requirement>`         | `<path and location>` | `<test name or none>` | `<check or none>` | `<supported, partial, or unknown>` |
+
+An agent statement that a scenario is satisfied belongs in analysis evidence; it must not be recorded as a passing executable test.
+
+## OpenSpec course examples and trade-offs
+
+The examples below are **course teaching** unless a qualification is explicitly marked as an engineering recommendation.
+
+| Example                                       | Teaching point                                                                               | Important qualification                                                                 |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Add editable account name                     | Full proposal, Apply, browser validation, Archive, and Sync cycle                            | One small sentence can begin a proposal, but generated artifacts still need review      |
+| Split `name` into first and last names        | Design choices, migration/backfill concerns, and wider integration impact                    | Data splitting is not automatically lossless; migration safety needs evidence           |
+| Prefer a method over an accessor              | Revise a generated technical decision across related artifacts                               | The user-visible behavior matters more than the implementation mechanism                |
+| Stop disposable-email blocking                | Removing one rule can modify a broader email requirement                                     | Classification follows the requirement boundary, not the word “remove”                  |
+| Remove comment-email notifications            | A complete behavior can be a REMOVED requirement                                             | Check whether other notification behavior remains                                       |
+| Paginate idea-board endpoints                 | Explore and prioritize one performance proposal                                              | **Engineering recommendation:** measure the bottleneck before accepting agent diagnosis |
+| Move notification fan-out asynchronously      | Keep independent performance changes in separate proposals                                   | Queue semantics, retries, idempotency, and operations require separate review           |
+| Explore passwordless authentication           | Clarify coexistence with passwords, exclude passkeys, and compare email OTP with magic links | Demo defaults were not a production-ready security design                               |
+| Merge overlapping name proposals              | Capability overlap requires dependency-aware merge and archive order                         | A successful Git merge does not reconcile stale requirements                            |
+| Replace hardcoded branding with configuration | Verify can map requirements and scenarios to implementation evidence                         | A green Verify report does not prove tests ran or behavior is correct                   |
+
 ## Evidence, examples, and limits
 
-This chapter synthesizes a ten-lesson course workflow from user-provided notes; it does not reproduce course transcripts or proprietary templates. The course compared a vaguely prompted to-do application with a preplanned demonstration, but that comparison was not a controlled benchmark. Treat its speed and polish as illustrative, not proof of a universal productivity effect.
+The product-level sections synthesize the ten-lesson Unlearn course _Spec a Product Before AI Builds It_. The change-level sections synthesize the nine-lesson course _Spec-Driven Development with OpenSpec_. Both are based on learner-provided transcripts and notes; this chapter does not reproduce transcripts or proprietary templates. Prompts, templates, matrices, and combined playbooks labeled reconstructed are original study aids derived from the workflows.
+
+The product course compared a vaguely prompted to-do application with a preplanned demonstration, but that comparison was not a controlled benchmark. Treat its speed and polish as illustrative, not proof of a universal productivity effect.
 
 Other example decisions were contextual too. Combining overlapping administrator roles reduced one example's complexity; excluding duplicate merging or attachments kept its V1 narrow; choosing pagination, rate limits, password recovery, and disposable-email blocking addressed its particular gaps. Real products require their own evidence, threat model, legal review, and accessibility work. Non-functional constraints belong early whenever they change the product decision, even if the first draft is intentionally lean.
+
+The OpenSpec course demonstrated one 2026 tool environment. It does not establish a permanent command set or universal file schema, that unqualified Apply safely handles every active proposal, that Verify executes scenarios as tests, that checked tasks prove correctness, or that Archive equals deployment. Existing systems need not backfill every historical feature, and trivial non-behavioral changes or throwaway prototypes do not automatically require the full workflow.

@@ -224,7 +224,7 @@ const topicDefinitions: readonly TopicDefinition[] = [
     slug: 'specification-driven-development',
     title: 'Specification-Driven Development',
     summary:
-      'Turn product intent into traceable specifications, validated workflows, bounded features, and safer AI-assisted delivery.',
+      'Move from product intent to reviewed change proposals, behavioral deltas, implementation evidence, and safer AI-assisted delivery.',
     category: 'Delivery',
     keywords: [
       'product specification',
@@ -237,6 +237,12 @@ const topicDefinitions: readonly TopicDefinition[] = [
       'mockups',
       'ai-assisted development',
       'prompt library',
+      'openspec',
+      'change proposal',
+      'delta spec',
+      'living spec',
+      'archive sync',
+      'spec verification',
     ],
     order: 10,
     content: specificationContent,

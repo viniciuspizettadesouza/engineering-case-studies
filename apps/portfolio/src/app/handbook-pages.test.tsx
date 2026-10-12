@@ -59,7 +59,7 @@ describe('handbook pages', () => {
     const scrollIntoView = vi.fn()
     Element.prototype.scrollIntoView = scrollIntoView
     window.location.hash =
-      '#/handbook/specification-driven-development#reusable-prompt-sequence'
+      '#/handbook/specification-driven-development#openspec-lifecycle-and-change-artifacts'
     render(<App />)
 
     expect(
@@ -70,7 +70,9 @@ describe('handbook pages', () => {
       ),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: 'Reusable prompt sequence' }),
+      screen.getByRole('button', {
+        name: 'OpenSpec lifecycle and change artifacts',
+      }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('link', { name: 'AI-assisted engineering workflow' }),

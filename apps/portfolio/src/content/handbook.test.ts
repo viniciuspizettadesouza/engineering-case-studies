@@ -149,6 +149,31 @@ describe('handbook content', () => {
           id: 'reusable-prompt-sequence',
         },
         {
+          depth: 2,
+          title: 'From product specifications to change specifications',
+          id: 'from-product-specifications-to-change-specifications',
+        },
+        {
+          depth: 2,
+          title: 'OpenSpec lifecycle and change artifacts',
+          id: 'openspec-lifecycle-and-change-artifacts',
+        },
+        {
+          depth: 2,
+          title: 'Delta specs and living behavior',
+          id: 'delta-specs-and-living-behavior',
+        },
+        {
+          depth: 2,
+          title: 'Collaboration, verification, and archive order',
+          id: 'collaboration-verification-and-archive-order',
+        },
+        {
+          depth: 2,
+          title: 'Reconstructed OpenSpec prompts',
+          id: 'reconstructed-openspec-prompts',
+        },
+        {
           depth: 3,
           title: 'Reveal scope assumptions',
           id: 'reveal-scope-assumptions',
@@ -165,6 +190,10 @@ describe('handbook content', () => {
       'product specification',
       'scope creep',
       'traceability',
+      'OpenSpec',
+      'delta spec',
+      'living spec',
+      'archive sync',
     ]) {
       expect(searchHandbook(query)[0]?.topic.slug).toBe(
         'specification-driven-development',

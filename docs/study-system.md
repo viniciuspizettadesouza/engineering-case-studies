@@ -18,7 +18,7 @@ The roadmap provides an open, five-stage path through every canonical handbook t
 
 The roadmap is deliberately editorial in its first version. It has no completion controls, deadlines, locked stages, or alternative branches. Its sequence does not change FSRS scheduling or imply memory mastery; the adaptive review queue and knowledge map remain the sources for recall work and memory state.
 
-Specification-Driven Development is maintained as a canonical Delivery handbook topic and appears in the quality-and-delivery roadmap stage. Its reusable prompts and templates live with the explanatory chapter rather than in a parallel prompt library. Six planned recall cards remain deferred until the practical stability log records a Proceed decision.
+Specification-Driven Development is maintained as a canonical Delivery handbook topic and appears in the quality-and-delivery roadmap stage. Its product-specification and OpenSpec guidance, reusable prompts, and templates live with the explanatory chapter rather than in a parallel prompt library. Six previously proposed specification cards and the OpenSpec handoff's forty-question Q&A bank remain inactive source material until the practical stability log records a Proceed decision; future work must curate and deduplicate them before registration.
 
 ## Local persistence and privacy
 
@@ -42,4 +42,4 @@ A central clock boundary supports deterministic scheduling tests. Source links u
 
 ## Limitations and future work
 
-The initial catalog prioritizes the nineteen migrated technical exercises and selected interview-derived concepts. It does not yet add recall cards for the Specification-Driven Development chapter, import `software-architecture-playbook`, optimize personal FSRS parameters, synchronize devices, support multiple learners, or generate canonical cards with AI. Those extensions should follow only after real use validates the current learning loop. Record that evidence and the proceed/hold decision in the [practical stability log](study-system-stability-log.md).
+The initial catalog prioritizes the nineteen migrated technical exercises and selected interview-derived concepts. It does not yet add recall cards for the Specification-Driven Development chapter or its OpenSpec source material, import `software-architecture-playbook`, optimize personal FSRS parameters, synchronize devices, support multiple learners, or generate canonical cards with AI. Those extensions should follow only after real use validates the current learning loop. Record that evidence and the proceed/hold decision in the [practical stability log](study-system-stability-log.md).

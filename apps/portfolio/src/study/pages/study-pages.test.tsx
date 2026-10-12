@@ -86,6 +86,14 @@ describe('study pages', () => {
       '#/handbook/specification-driven-development#artifact-boundaries-and-requirement-provenance',
     )
     expect(
+      screen.getByRole('link', {
+        name: 'OpenSpec lifecycle and change artifacts',
+      }),
+    ).toHaveAttribute(
+      'href',
+      '#/handbook/specification-driven-development#openspec-lifecycle-and-change-artifacts',
+    )
+    expect(
       screen.queryByRole('link', { name: 'HTTP semantics and contracts' }),
     ).not.toBeInTheDocument()
     expect(
