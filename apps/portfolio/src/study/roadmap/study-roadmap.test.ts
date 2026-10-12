@@ -23,6 +23,10 @@ describe('study roadmap', () => {
       'developer-tooling',
     ])
     expect(
+      studyRoadmapStages.find((stage) => stage.id === 'quality-and-delivery')
+        ?.description,
+    ).toContain('product, change, and feature specifications')
+    expect(
       studyRoadmapStages
         .flatMap((stage) => stage.topicSlugs)
         .filter((slug) => slug === 'specification-driven-development'),

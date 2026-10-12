@@ -59,7 +59,7 @@ describe('handbook pages', () => {
     const scrollIntoView = vi.fn()
     Element.prototype.scrollIntoView = scrollIntoView
     window.location.hash =
-      '#/handbook/specification-driven-development#openspec-lifecycle-and-change-artifacts'
+      '#/handbook/specification-driven-development#from-approved-change-to-reviewable-feature-design'
     render(<App />)
 
     expect(
@@ -71,14 +71,42 @@ describe('handbook pages', () => {
     ).toBeInTheDocument()
     expect(
       screen.getByRole('button', {
-        name: 'OpenSpec lifecycle and change artifacts',
+        name: 'From approved change to reviewable feature design',
       }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('link', { name: 'AI-assisted engineering workflow' }),
+      screen.getByRole('link', { name: 'AI-agent implementation controls' }),
     ).toHaveAttribute(
       'href',
-      '#/handbook/testing-delivery-and-devops#ai-assisted-engineering-workflow',
+      '#/handbook/testing-delivery-and-devops#ai-agent-implementation-controls',
+    )
+    expect(scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
+  })
+
+  it('renders and deep-links into the AI-agent implementation controls', async () => {
+    const scrollIntoView = vi.fn()
+    Element.prototype.scrollIntoView = scrollIntoView
+    window.location.hash =
+      '#/handbook/testing-delivery-and-devops#ai-agent-implementation-controls'
+    render(<App />)
+
+    expect(
+      await screen.findByRole(
+        'heading',
+        { name: 'Testing, Delivery, and DevOps' },
+        { timeout: 3000 },
+      ),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', {
+        name: 'AI-agent implementation controls',
+      }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('link', { name: 'feature or change specification' }),
+    ).toHaveAttribute(
+      'href',
+      '#/handbook/specification-driven-development#from-approved-change-to-reviewable-feature-design',
     )
     expect(scrollIntoView).toHaveBeenCalledWith({ block: 'start' })
   })

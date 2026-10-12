@@ -145,6 +145,11 @@ describe('handbook content', () => {
         },
         {
           depth: 2,
+          title: 'From approved change to reviewable feature design',
+          id: 'from-approved-change-to-reviewable-feature-design',
+        },
+        {
+          depth: 2,
           title: 'Reusable prompt sequence',
           id: 'reusable-prompt-sequence',
         },
@@ -194,9 +199,56 @@ describe('handbook content', () => {
       'delta spec',
       'living spec',
       'archive sync',
+      'behavioral test plan',
+      'Plan Mode',
     ]) {
       expect(searchHandbook(query)[0]?.topic.slug).toBe(
         'specification-driven-development',
+      )
+    }
+  })
+
+  it('indexes AI-agent implementation controls and their stable headings', () => {
+    const topic = getHandbookTopic('testing-delivery-and-devops')
+    expect(topic).toBeDefined()
+    expect(topic!.headings).toEqual(
+      expect.arrayContaining([
+        {
+          depth: 2,
+          title: 'AI-agent implementation controls',
+          id: 'ai-agent-implementation-controls',
+        },
+        {
+          depth: 3,
+          title: 'Guardrails, permissions, and task entry',
+          id: 'guardrails-permissions-and-task-entry',
+        },
+        {
+          depth: 3,
+          title: 'Fast feedback without false confidence',
+          id: 'fast-feedback-without-false-confidence',
+        },
+        {
+          depth: 3,
+          title: 'Review architecture and data integrity',
+          id: 'review-architecture-and-data-integrity',
+        },
+        {
+          depth: 3,
+          title: 'Focused branches, resumability, and remediation',
+          id: 'focused-branches-resumability-and-remediation',
+        },
+      ]),
+    )
+
+    for (const query of [
+      'AGENTS.md',
+      'PostToolUse',
+      'stacked pull requests',
+      'concurrency review',
+    ]) {
+      expect(searchHandbook(query)[0]?.topic.slug).toBe(
+        'testing-delivery-and-devops',
       )
     }
   })

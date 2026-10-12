@@ -224,11 +224,14 @@ const topicDefinitions: readonly TopicDefinition[] = [
     slug: 'specification-driven-development',
     title: 'Specification-Driven Development',
     summary:
-      'Move from product intent to reviewed change proposals, behavioral deltas, implementation evidence, and safer AI-assisted delivery.',
+      'Move from product intent through reviewed change and feature specifications to behavioral evidence and safer AI-assisted delivery.',
     category: 'Delivery',
     keywords: [
       'product specification',
       'feature specification',
+      'feature design',
+      'behavioral test plan',
+      'plan mode',
       'requirements',
       'scope',
       'scope creep',
@@ -251,7 +254,7 @@ const topicDefinitions: readonly TopicDefinition[] = [
     slug: 'testing-delivery-and-devops',
     title: 'Testing, Delivery, and DevOps',
     summary:
-      'Test boundaries, application security, code quality, continuous delivery, observability, reliability, and operations.',
+      'Control agent-assisted implementation with tests, executable guardrails, review, secure delivery, observability, and operations.',
     category: 'Delivery',
     keywords: [
       'testing',
@@ -262,6 +265,12 @@ const topicDefinitions: readonly TopicDefinition[] = [
       'adr',
       'cyclomatic complexity',
       'ai review',
+      'ai agent',
+      'agents md',
+      'posttooluse',
+      'stacked pull requests',
+      'resumability',
+      'concurrency review',
       'security',
       'authentication',
       'authorization',

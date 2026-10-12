@@ -94,6 +94,20 @@ describe('study pages', () => {
       '#/handbook/specification-driven-development#openspec-lifecycle-and-change-artifacts',
     )
     expect(
+      screen.getByRole('link', {
+        name: 'From approved change to reviewable feature design',
+      }),
+    ).toHaveAttribute(
+      'href',
+      '#/handbook/specification-driven-development#from-approved-change-to-reviewable-feature-design',
+    )
+    expect(
+      screen.getByRole('link', { name: 'AI-agent implementation controls' }),
+    ).toHaveAttribute(
+      'href',
+      '#/handbook/testing-delivery-and-devops#ai-agent-implementation-controls',
+    )
+    expect(
       screen.queryByRole('link', { name: 'HTTP semantics and contracts' }),
     ).not.toBeInTheDocument()
     expect(

@@ -12,6 +12,8 @@ Test observable behavior rather than internal implementation. Use deterministic 
 
 Coverage can reveal unexecuted code, but a universal percentage target does not prove useful assertions. Review risk, branches, failure recovery, accessibility, and regression history alongside coverage.
 
+For AI-assisted feature work, use a reviewed tests-first cycle: agree on observable behavior, let the agent propose tests, review the assertions and boundaries, confirm that the initial failure represents missing functionality rather than a broken environment, implement the smallest approved change, then run layered checks and inspect the diff. A red test is useful only when it fails for the expected reason, and a green suite is one evidence source rather than proof of the complete user flow. The feature chapter explains how to write the upstream [behavioral test plan](#/handbook/specification-driven-development#from-approved-change-to-reviewable-feature-design).
+
 ## Code quality
 
 Static tools such as TypeScript, ESLint, Stylelint, and formatters provide fast feedback. Code review should examine correctness, clarity, security, accessibility, operations, and whether the change is proportionate.
@@ -31,6 +33,86 @@ A useful sequence is research → plan → decision record when consequential �
 Context engineering means selecting the information that helps the model perform the current task: relevant code and documentation, constraints, examples, prior decisions, tool output, and a clear completion test. Context windows are finite, so compress old discussion into durable decisions and retrieve source material on demand instead of repeatedly carrying everything. Treat summaries as lossy indexes back to canonical sources, not as replacements for them.
 
 Automated loops, scheduled tasks, hooks, and generated project wikis can reduce repetitive work, but their names and behavior are tool-specific. Review their permissions, stopping conditions, sources, and update policy before relying on them. Ask assistants for direct, rigorous feedback while keeping review language constructive and psychologically safe for the humans who will act on it.
+
+## AI-agent implementation controls
+
+This section synthesizes the course _Build Features with an AI Agent_. **Course teaching** identifies demonstrated practices, **reconstructed prompt/template** identifies portable material authored from those practices, and **engineering recommendation** identifies additional safeguards. Exact agent commands, hook schemas, model permissions, and saved-plan paths are version-dependent examples rather than stable interfaces.
+
+### Guardrails, permissions, and task entry
+
+**Course teaching:** Advisory repository guidance and executable guardrails have different jobs. A file such as `AGENTS.md` can explain architecture, conventions, canonical specifications, commands, and prohibited actions, but it cannot enforce those instructions. Formatters, linters, static analysis, tests, database constraints, protected branches, and CI provide executable feedback or enforcement. Establish a clean baseline before agent coding so new failures can be attributed to the change.
+
+Give the agent only the context and permissions needed for the approved increment. Plan Mode or another read-only phase should expose scope, commands, files, dependencies, and assumptions before mutation. Avoid indiscriminate context dumps; provide the canonical feature or change artifact, relevant code, repository conventions, and a concrete completion test. Keep destructive, privileged, dependency-changing, and external actions behind explicit approval.
+
+**Reconstructed task-entry contract:**
+
+```md
+- Approved requirement and current step:
+- Canonical specification and relevant code:
+- In scope / explicit non-goals:
+- Existing framework patterns to reuse:
+- Allowed commands and permission boundaries:
+- Required tests and manual evidence:
+- Stop conditions and unresolved decisions:
+```
+
+### Fast feedback without false confidence
+
+**Course teaching:** PostToolUse-style hooks can run fast, scoped checks after an editing tool completes and return failures while context is fresh. Use them for deterministic feedback such as formatting, linting, static analysis, or a focused test. Keep the hook quick, make failures visible, and avoid recursive auto-fix loops or broad commands after every edit.
+
+Hooks can be skipped, misconfigured, scoped incorrectly, or unsupported by another agent version. They do not replace an independent CI pipeline or the final comprehensive validation. This repository documents that distinction; it does not install agent hooks merely to demonstrate it.
+
+### Review architecture and data integrity
+
+**Course teaching:** Review whether generated code uses the established framework before reviewing syntax alone. The demonstrated Laravel stack replaced redundant authentication code with Fortify capabilities and checked appropriate Inertia helpers, named routes, and narrow input handling instead of `request()->all()`. These choices are contextual examples. The portable rule is to inspect existing primitives, input and authorization boundaries, dependency cost, and repository conventions before accepting custom code.
+
+Independent agent review can add another perspective, but not guaranteed correctness. Give the reviewer the approved specification, diff, tests, and constraints; require code locations and evidence; then reproduce or disprove every finding. The course used Critical, Error, Warning, Suggestion, and Nitpick severities. Severity labels support triage but do not turn an assertion into evidence.
+
+The voting demonstration surfaced a race condition that made the change unsafe to ship even though ordinary tests could pass. **Engineering recommendation:** For counters, quotas, uniqueness, inventory, idempotency, and other shared writes, reason explicitly about concurrent transactions, database constraints, retries, and failure recovery. A passing unit suite does not rule out lost updates or duplicate side effects.
+
+**Reconstructed review prompt:**
+
+> Compare this diff with the approved feature or change specification. Inspect framework reuse, authorization and input boundaries, migrations and side effects, concurrency and idempotency, failure handling, tests, and unintended scope. Report Critical, Error, Warning, Suggestion, or Nitpick findings with file locations, evidence, and a validation method. Do not modify code.
+
+### Focused branches, resumability, and remediation
+
+**Course teaching:** Keep branches and pull requests focused on independently reviewable behavior. A stacked pull request depends on another branch or pull request, so reviewers must see the dependency and the merge order. Saved plans and checklists preserve decisions across context limits or interrupted sessions, but tool-specific locations such as `.claude/plans` are examples, not repository requirements.
+
+Before resuming partial work, inspect the accepted specification and plan, checklist state, Git status and diff, current tests, migrations, jobs, and other side effects. Do not blindly replay a command because a checklist is incomplete. Stop when state is ambiguous or a repeated operation could be destructive or non-idempotent.
+
+**Reconstructed resume protocol:**
+
+```md
+1. Re-read the approved specification, plan, and remaining checklist.
+2. Inspect Git status and the complete diff; identify unrelated or partial edits.
+3. Check executed migrations, jobs, external calls, and other side effects.
+4. Run the smallest diagnostic checks that establish the current state.
+5. Restate the next single outcome, risks, permissions, and stop conditions.
+```
+
+Convert accepted findings into a persistent remediation checklist linked to the originating review. Process one item at a time: reproduce or validate it, apply the smallest correction, run the agreed evidence, inspect the diff, and record the result before continuing. Rejected or superseded findings should retain a reason rather than disappear.
+
+**Reconstructed remediation template:**
+
+```md
+# Remediation: <feature> (review <link or identifier>)
+
+## Constraints
+
+- Preserve:
+- Do not change:
+- Required validation:
+
+## Findings
+
+- [ ] <severity> <finding, location, evidence, expected correction>
+
+## Progress log
+
+- <finding>: <validation, change, result, reviewer decision>
+```
+
+**Engineering recommendation:** Close a finding only after its correction and evidence have been reviewed. When implementation reveals a changed requirement, reconcile the upstream [feature or change specification](#/handbook/specification-driven-development#from-approved-change-to-reviewable-feature-design) rather than allowing the checklist to become a competing source of product truth.
 
 ## Application security
 

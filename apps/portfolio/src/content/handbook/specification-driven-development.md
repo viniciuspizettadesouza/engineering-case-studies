@@ -64,6 +64,34 @@ Order features by real dependencies rather than presentation preference. If feat
 
 Acceptance criteria should describe observable success and important boundaries. Technical tasks belong in the later implementation plan. This separation keeps product intent stable while allowing the implementation to evolve.
 
+## From approved change to reviewable feature design
+
+**Course teaching:** A product or change specification can authorize a capability without giving an implementation agent enough detail to build it safely. Before coding, extract one bounded feature, trace it to the approved requirements or delta, and resolve the behavioral and consequential technical decisions that would otherwise be inferred during implementation.
+
+Ask how the agent proposes to use existing framework capabilities, dependencies, routes, authentication and authorization boundaries, validation, data, and integrations. Classify every answer using the existing provenance model: mandated requirement, recommendation awaiting approval, or unresolved decision. The course used Laravel Fortify and disposable-email validation while designing authentication; these are contextual examples of reviewing framework reuse and dependency choices, not prescriptions for this React and TypeScript repository.
+
+Non-goals deserve the same precision as intended behavior. Record unrequested flows, fields, routes, packages, background work, permissions, and refactors as excluded or explicitly deferred. A plausible agent suggestion is not an approved feature. If design work changes product behavior, reconcile the decision into the upstream product or change specification before treating the feature document as approved.
+
+**Course teaching:** Reviewable steps represent independently understandable outcomes, not arbitrary file groups. In the authentication example, an initial four-step plan became three steps—setup, registration, and login/logout—when guest-route protection did not justify its own delivery stage. Each step should name its outcome, prerequisites, behavior and non-goals, likely change boundary, test plan, and approval checkpoint.
+
+Plan Mode or an equivalent read-only preview lets reviewers inspect proposed files, commands, dependencies, and assumptions before edits begin. It is a review aid, not proof that the eventual implementation will follow the plan. Continue with the handbook's [AI-agent implementation controls](#/handbook/testing-delivery-and-devops#ai-agent-implementation-controls) when executing an approved step.
+
+A **behavioral test plan** states what evidence the feature needs before framework-specific tests are written. It records the precondition, stimulus, observable outcome, failure or edge case, and required evidence level. The test implementation then encodes appropriate parts of that plan. Review generated assertions before trusting them: a passing test can preserve the wrong behavior, and unit tests alone do not prove the UI, persistence, authorization, or integration path works. See [Test strategy](#/handbook/testing-delivery-and-devops#test-strategy) for the controlled tests-first cycle.
+
+### Reconstructed feature-design prompts
+
+These are **reconstructed prompts**, not instructor wording or copied course assets.
+
+> Based only on this approved feature specification, identify the technical decisions required before implementation. For each, cite the source requirement and label it mandated, recommended, or unresolved. Prefer existing framework capabilities where appropriate, name dependencies and trade-offs, and do not write code.
+
+> Audit the feature and proposed design for inferred flows, fields, routes, packages, jobs, permissions, or refactors. Recommend retain, defer, or exclude for each item, but do not convert a suggestion into scope without approval.
+
+> Decompose this feature into the fewest independently understandable and verifiable outcomes. For each step, state prerequisites, behavior, explicit non-goals, likely change boundary, evidence, and an approval checkpoint. Merge steps that do not produce a meaningful review boundary.
+
+> Preview how you would implement step [N]. List the files and commands likely to be involved, existing code to reuse, assumptions, dependencies, risks, and validation. Stop before editing so the approach can be reviewed.
+
+> Write a behavioral test plan for each approved step before generating test code. Include preconditions, stimulus, observable success, validation and failure cases, preserved behavior, authorization boundaries, and the required unit, integration, browser, persistence, or manual evidence. Flag any behavior the specification does not decide.
+
 ## Scaffold and verify within agreed boundaries
 
 Once the specification, feature boundaries, and design references agree, plan the smallest useful application shell. Establish shared layout, navigation, routes, and placeholder content without prematurely implementing authentication or business rules.
@@ -339,6 +367,23 @@ A feature specification can start with:
 - Dependencies:
 ```
 
+A reviewable feature step and its behavioral evidence can be planned together:
+
+```md
+### Step <N>: <observable outcome>
+
+- Requirement references:
+- Prerequisites:
+- In scope / explicit non-goals:
+- Expected change boundary:
+- Approval checkpoint:
+
+| Scenario            | Preconditions | Stimulus  | Observable outcome                 | Evidence level                      |
+| ------------------- | ------------- | --------- | ---------------------------------- | ----------------------------------- |
+| Happy path          | `<state>`     | `<event>` | `<result>`                         | `<unit/integration/browser/manual>` |
+| Failure or boundary | `<state>`     | `<event>` | `<result and preserved invariant>` | `<evidence>`                        |
+```
+
 Before implementation, confirm that:
 
 - a teammate can explain the purpose and behavior without reading code;
@@ -417,7 +462,7 @@ The examples below are **course teaching** unless a qualification is explicitly 
 
 ## Evidence, examples, and limits
 
-The product-level sections synthesize the ten-lesson Unlearn course _Spec a Product Before AI Builds It_. The change-level sections synthesize the nine-lesson course _Spec-Driven Development with OpenSpec_. Both are based on learner-provided transcripts and notes; this chapter does not reproduce transcripts or proprietary templates. Prompts, templates, matrices, and combined playbooks labeled reconstructed are original study aids derived from the workflows.
+The product-level sections synthesize the ten-lesson Unlearn course _Spec a Product Before AI Builds It_. The change-level sections synthesize the nine-lesson course _Spec-Driven Development with OpenSpec_. The feature-design section synthesizes the seven-lesson course _Design a Feature AI Can Execute Without Guessing_. These are based on learner-provided transcripts, notes, and lesson-level reconstruction; the feature-design handoff has high-confidence topic coverage but was not re-audited line by line against every transcript. This chapter does not reproduce transcripts or proprietary templates. Prompts, templates, matrices, and combined playbooks labeled reconstructed are original study aids derived from the workflows.
 
 The product course compared a vaguely prompted to-do application with a preplanned demonstration, but that comparison was not a controlled benchmark. Treat its speed and polish as illustrative, not proof of a universal productivity effect.
 
