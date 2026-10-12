@@ -18,7 +18,7 @@ The roadmap provides an open, five-stage path through every canonical handbook t
 
 The roadmap is deliberately editorial in its first version. It has no completion controls, deadlines, locked stages, or alternative branches. Its sequence does not change FSRS scheduling or imply memory mastery; the adaptive review queue and knowledge map remain the sources for recall work and memory state.
 
-Specification-Driven Development is maintained as a canonical Delivery handbook topic and appears in the quality-and-delivery roadmap stage. Its product-specification and OpenSpec guidance, reusable prompts, and templates live with the explanatory chapter rather than in a parallel prompt library. Six previously proposed specification cards and the OpenSpec handoff's forty-question Q&A bank remain inactive source material until the practical stability log records a Proceed decision; future work must curate and deduplicate them before registration.
+Specification-Driven Development is maintained as a canonical Delivery handbook topic and appears in the quality-and-delivery roadmap stage. Its product-specification and OpenSpec guidance, reusable prompts, and templates live with the explanatory chapter rather than in a parallel prompt library. The [product-specification handoff](knowledge-sources/spec-a-product-before-ai-builds-it-handoff.md) preserves six proposed questions, and the [OpenSpec handoff](knowledge-sources/openspec-spec-driven-development-handoff.md) preserves a forty-question Q&A bank. Both remain inactive source material until the practical stability log records a Proceed decision; future work must curate and deduplicate them before registration.
 
 ## Local persistence and privacy
 
